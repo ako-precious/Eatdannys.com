@@ -42,14 +42,12 @@ export default {
       transparent: colors.transparent,
       black: colors.black,
       white: colors.white,
-      snow: '#FCF7F8',
-      lavender: '#FFE9F3',
-      persian: '#1B998B',
-      oynx: '#303633',
-      oynx_alt: '#313638',
-      lighred: '#FE6D73',
-      polynesian: '#004E98',
-
+      imperial_red: '#E54B4B',
+      piction_blue: '#00A6ED',
+      raisin_black: '#221E22',
+      hunyadi_yellow: '#ECA72C',
+      baby_powder: 'FFFCF9',
+      
       slate: {
         DEFAULT: colors.slate,
         50: "#f8fafc",
