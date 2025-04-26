@@ -43,11 +43,12 @@ export default {
       black: colors.black,
       white: colors.white,
       imperial_red: '#E54B4B',
-      piction_blue: '#00A6ED',
+      picton_blue: '#00A6ED',
+      true_blue: '#00A6ED',
       raisin_black: '#221E22',
       hunyadi_yellow: '#ECA72C',
-      baby_powder: 'FFFCF9',
-      
+      baby_powder: '#FFFCF9',
+
       slate: {
         DEFAULT: colors.slate,
         50: "#f8fafc",
