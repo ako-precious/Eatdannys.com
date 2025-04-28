@@ -1,6 +1,6 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3';
-import Header from '@/Components/Header.vue';
+import Header from './Header/Index.vue';
 defineProps({
     canLogin: {
         type: Boolean,

@@ -4,8 +4,7 @@ import { Head, Link, usePage } from "@inertiajs/vue3";
 import DropBarNav from "./DropBarNav.vue";
 import Navbar from "./Navbar.vue";
 import axios from "axios";
-import { subscribeUserToPush } from "/resources/js/bootstrap.js"; // Adjust the path as necessary
-import { route } from 'ziggy-js';
+// import { route } from 'ziggy-js';
 
 
 defineProps({
@@ -16,24 +15,7 @@ defineProps({
     pushSub: Boolean,
 });
 
-// const notificationPermission = ref(Notification.permission);
 
-// const showEnableButton = computed(
-//     () => notificationPermission.value !== "granted"
-// );
-
-// async function requestNotificationPermission() {
-//     const permission = await Notification.requestPermission();
-
-//     if (permission === "granted") {
-//         await subscribeUserToPush();
-//         notificationPermission.value = permission;
-//     } else {
-//         alert(
-//             "You need to enable notifications in your browser settings to receive push notifications."
-//         );
-//     }
-// }
 </script>
 
 <script>
@@ -42,39 +24,39 @@ export default {
 
     data() {
         return {
-            meals: [],
-            page: 1, // Current page
-            perPage: 12, // Number of items per page
-            hasMoreData: true,
-            isHeaderFixed: false,
+            // meals: [],
+            // page: 1, // Current page
+            // perPage: 12, // Number of items per page
+            // hasMoreData: true,
+            // isHeaderFixed: false,
         };
     },
     beforeDestroy() {
         window.removeEventListener("scroll", this.handleScroll);
     },
     computed: {
-    isSpecialOrderRoute() {
-      return route().current('special-order');
-    },
-    isBulkRoute() {
-      return route().current('bulk-meal');
-    },
-    isWelcome() {
-      return route().current('welcome');
-    },
+    // isSpecialOrderRoute() {
+    //   return route().current('special-order');
+    // },
+    // isBulkRoute() {
+    //   return route().current('bulk-meal');
+    // },
+    // isWelcome() {
+    //   return route().current('welcome');
+    // },
   },
 
 
     mounted() {
-        window.addEventListener("scroll", this.handleScroll);
-        if (this.$page.props.auth.user) {
-            if (
-                this.$page.props.auth.user.phone_number == null ||
-                this.$page.props.auth.user.address == null
-            ) {
-                this.$inertia.visit(`/user/profile`);
-            }
-        }
+        // window.addEventListener("scroll", this.handleScroll);
+        // if (this.$page.props.auth.user) {
+        //     if (
+        //         this.$page.props.auth.user.phone_number == null ||
+        //         this.$page.props.auth.user.address == null
+        //     ) {
+        //         this.$inertia.visit(`/user/profile`);
+        //     }
+        // }
     },
     created() {
         this.handleScroll();

@@ -2,7 +2,7 @@
 import Dropdown from "@/Components/Dropdown.vue";
 
 import SettingsDropdown from "@/Components/SettingsDropdown.vue";
-import { Link } from "@inertiajs/vue3";
+// import { Link } from "@inertiajs/vue3";
 defineProps({
     canLogin: Boolean,
     canRegister: Boolean,
