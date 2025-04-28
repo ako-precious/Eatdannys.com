@@ -8,12 +8,12 @@
              <!-- Logo -->
              <Link :href="route('welcome')">
              <div class="w-full flex items-center">
-                    <ApplicationMark class="block w-auto" />
-                    <span
+                    <ApplicationMark class="block w-auto h-12" />
+                    <!-- <span
                         class="hidden md:block ml-2 font-bold transition-all duration-200 ease-in-out text-2xl uppercase text-oynx dark:text-snow"
                     >
-                        Ounjemi
-                    </span>
+                        Danny's
+                    </span> -->
                 </div>
             </Link>
                
@@ -27,7 +27,7 @@
             <ul class="ml-4 xl:w-48 flex items-center justify-end">
               
                   <slot name="dropdown"> </slot>
-                <div class="sm uppercase:hidden px-4 flex items-center">
+                <div class="sm:hidden px-4 flex items-center">
                     <a
                         mini-sidenav-burger=""
                         href="javascript:;"
@@ -63,7 +63,13 @@
                                          :href="route('welcome')"
                                         class="relative flex items-center rounded-md px-4 py-2 text-sm text-oynx hover:text-polynesian dark:text-snow dark:hover:text-lighred cursor-pointer transition-all duration-200 ease-in-out"
                                     >
-                                        <p>Catering</p>
+                                        <p>Event Catering</p>
+                                    </DropdownLink>
+                                    <DropdownLink
+                                         :href="route('welcome')"
+                                        class="relative flex items-center rounded-md px-4 py-2 text-sm text-oynx hover:text-polynesian dark:text-snow dark:hover:text-lighred cursor-pointer transition-all duration-200 ease-in-out"
+                                    >
+                                        <p>Private Catering</p>
                                     </DropdownLink>
                                     <DropdownLink
                                          :href="route('welcome')"

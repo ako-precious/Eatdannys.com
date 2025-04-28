@@ -2,7 +2,7 @@
 import Dropdown from "@/Components/Dropdown.vue";
 
 import SettingsDropdown from "@/Components/SettingsDropdown.vue";
-// import { Link } from "@inertiajs/vue3";
+import { Link } from "@inertiajs/vue3";
 defineProps({
     canLogin: Boolean,
     canRegister: Boolean,
@@ -28,7 +28,7 @@ defineProps({
                 >
                     <font-awesome-icon
                         icon="user"
-                        class="h-3 lg:h-4 p-2 svg-inline--fa fa-user fa-w-14 fa-9x"
+                        class="h-3 lg:h-4 p-2 svg-inline--fa fa-user "
                     />
                   
                 </button>
@@ -64,7 +64,7 @@ defineProps({
                                 /></Link>
 
                                 <Link
-                                    v-if="canRegister"
+                                    
                                     :href="route('register')"
                                     class="flex items-center rounded-md px-4 py-2 text-sm text-oynx hover:text-polynesian dark:text-snow dark:hover:text-lighred cursor-pointer"
                                     >Sign up<font-awesome-icon

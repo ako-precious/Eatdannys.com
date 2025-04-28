@@ -6,7 +6,6 @@ import Navbar from "./Navbar.vue";
 import axios from "axios";
 // import { route } from 'ziggy-js';
 
-
 defineProps({
     canLogin: Boolean,
     canRegister: Boolean,
@@ -14,8 +13,6 @@ defineProps({
     phpVersion: String,
     pushSub: Boolean,
 });
-
-
 </script>
 
 <script>
@@ -35,17 +32,16 @@ export default {
         window.removeEventListener("scroll", this.handleScroll);
     },
     computed: {
-    // isSpecialOrderRoute() {
-    //   return route().current('special-order');
-    // },
-    // isBulkRoute() {
-    //   return route().current('bulk-meal');
-    // },
-    // isWelcome() {
-    //   return route().current('welcome');
-    // },
-  },
-
+        // isSpecialOrderRoute() {
+        //   return route().current('special-order');
+        // },
+        // isBulkRoute() {
+        //   return route().current('bulk-meal');
+        // },
+        // isWelcome() {
+        //   return route().current('welcome');
+        // },
+    },
 
     mounted() {
         // window.addEventListener("scroll", this.handleScroll);
@@ -62,20 +58,17 @@ export default {
         this.handleScroll();
     },
     methods: {
-       
         handleScroll() {
             // Adjust the scroll threshold as needed
             const scrollThreshold = 20;
             this.isHeaderFixed = window.scrollY > scrollThreshold;
         },
-        
     },
 };
 </script>
 
-
 <template>
-     <div class="  ">
+    <div class="  ">
         <!-- <div
             v-if="notificationPermission !== 'granted' && pushSub === false"
             class="bg-gray-500 m-auto"
@@ -104,29 +97,61 @@ export default {
                             name=""
                             id=""
                         >
-                            <Link   :class="{ 'dark:text-snow text-oynx':  !isWelcome, 'border-b': isWelcome }"
+                            <!-- :class="{ 'dark:text-snow text-oynx':  !isWelcome, 'border-b': isWelcome }" -->
+                            <Link
                                 class="py-2 px-3 navbar-link"
                                 :href="route('welcome')"
                             >
-                                <p>Explore</p>
-                            </Link>
-                            <Link   :class="{'dark:text-snow text-oynx':  !isBulkRoute,  'border-b ': isBulkRoute }"
-                                class="py-2 px-3 navbar-link"
-                                 :href="route('welcome')"
-                            >
-                                <p>Bulk Meal</p>
+                                <p class="font-bold two">
+                                    <span>Bulk </span>
+                                    <span
+                                        class="absolute bottom-1 left-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"
+                                    ></span>
+                                    <span
+                                        class="absolute bottom-1 right-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"
+                                    ></span>
+                                </p>
                             </Link>
                             <Link
-                            
-                            class="py-2 px-3 navbar-link"
-                            :class="{ 'dark:text-snow text-oynx':  !isSpecialOrderRoute, 'border-b': isSpecialOrderRoute }"
-                                 :href="route('welcome')"
-                            >
-                                <p>Special Meal</p>
+                                class="py-2 px-3 navbar-link"
+                                :href="route('welcome')"
+                                ><p class="font-bold two">
+                                    <span>Catering</span>
+                                    <span
+                                        class="absolute bottom-1 left-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"
+                                    ></span>
+                                    <span
+                                        class="absolute bottom-1 right-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"
+                                    ></span>
+                                </p>
+                            </Link>
+                            <Link
+                                class="py-2 px-3 navbar-link"
+                                :href="route('welcome')"
+                                ><p class="font-bold two">
+                                    <span>dining & take out</span>
+                                    <span
+                                        class="absolute bottom-1 left-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"
+                                    ></span>
+                                    <span
+                                        class="absolute bottom-1 right-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"
+                                    ></span></p
+                            ></Link>
+                            <Link
+                                class="py-2 px-3 navbar-link"
+                                :href="route('welcome')"
+                                ><p class="font-bold two">
+                                    <span>Bakery</span>
+                                    <span
+                                        class="absolute bottom-1 left-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"
+                                    ></span>
+                                    <span
+                                        class="absolute bottom-1 right-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"
+                                    ></span>
+                                </p>
                             </Link>
                         </div>
-                        <slot  name="search-content"></slot>
-                       
+                        <slot name="search-content"></slot>
                     </div>
                 </template>
                 <template #dropdown>
@@ -138,8 +163,7 @@ export default {
                     />
                 </template>
             </Navbar>
-             <slot  name="extra-content"></slot>
-          
+            <slot name="extra-content"></slot>
         </header>
     </div>
 </template>
@@ -153,5 +177,7 @@ export default {
     padding: 0.4rem 2rem;
     z-index: 1000; /* Adjust z-index as needed */
 }
-
+.two:hover span {
+    width: 50%;
+}
 </style>
