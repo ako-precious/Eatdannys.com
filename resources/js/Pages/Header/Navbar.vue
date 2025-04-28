@@ -25,40 +25,7 @@
         <!-- buttons -->
         <nav class="contents">
             <ul class="ml-4 xl:w-48 flex items-center justify-end">
-                <!-- hso -->
-                <div v-if="!isLoading">
-                <li v-if="check" class="text-nowrap py-2 px-4 navbar-link">
-                    <Link :href="`/cook/menu`">
-                        <a class="" href="">
-                            <p>Your Menu</p>
-                        </a>
-                    </Link>
-                </li>
-                <li v-else class="text-nowrap py-2 px-4 navbar-link">
-                    <Link :href="`/cook/setup`">
-                        <a class="" href="">
-                            <p>Be a Cook</p>
-                        </a>
-                    </Link>
-                </li>
-            </div>
-            <li v-else class="text-nowrap py-2 px-4 navbar-link">
-                <Link :href="`/cook/setup`">
-                    <a class="" href="">
-                        <p>Be a Cook</p>
-                    </a>
-                </Link>
-
-            </li>
-          
-                <!-- <li class="navbar-link">
-                    <a class="" href="">
-                        <font-awesome-icon
-                            icon="globe"
-                            class="h-3 lg:h-4 p-2 svg-inline--fa fa-user fa-w-14 fa-9x"
-                        />
-                    </a>
-                </li> -->
+              
                   <slot name="dropdown"> </slot>
                 <div class="sm uppercase:hidden px-4 flex items-center">
                     <a
@@ -84,29 +51,29 @@
 
                             <template #content class="bg-snow dark:bg-oynx">
                                 <div
-                                    class="origin-top-right absolute right-0 mt-2 w-48 delay-75 rounded-md border-snow ring-1 bg-gradient-to-br from-[#e3dedf] to-[#ffffff] -shadow-snow-sm uppercase hover:shadow-snow-sm uppercase dark:bg-gradient-to-br dark:from-[#2b312e] dark:to-[#333a37] dark:-shadow-oynx-sm uppercase hover:dark:shadow-oynx-sm uppercase z-20 transition-all duration-250 ease-in dark:border-oynx"
+                                    class="origin-top-right absolute right-0 mt-2 w-48 delay-75 rounded-md border-snow ring-1 bg-gradient-to-br from-[#e3dedf] to-[#ffffff] -shadow-snow-sm  hover:shadow-snow-sm uppercase dark:bg-gradient-to-br dark:from-[#2b312e] dark:to-[#333a37] dark:-shadow-oynx-sm  hover:dark:shadow-oynx-sm  z-20 transition-all duration-250 ease-in dark:border-oynx"
                                 >
                                     <DropdownLink
                                         :href="route('welcome')"
-                                        class="flex w-full items-center rounded-md px-4 py-2 text-sm uppercase text-oynx hover:text-polynesian dark:text-snow dark:hover:text-lighred cursor-pointer transition-all duration-200 ease-in-out"
+                                        class="flex w-full items-center rounded-md px-4 py-2 text-sm text-oynx hover:text-polynesian dark:text-snow dark:hover:text-lighred cursor-pointer transition-all duration-200 ease-in-out"
                                     >
                                         <p>Bulk</p>
                                     </DropdownLink>
                                     <DropdownLink
                                          :href="route('welcome')"
-                                        class="relative flex items-center rounded-md px-4 py-2 text-sm uppercase text-oynx hover:text-polynesian dark:text-snow dark:hover:text-lighred cursor-pointer transition-all duration-200 ease-in-out"
+                                        class="relative flex items-center rounded-md px-4 py-2 text-sm text-oynx hover:text-polynesian dark:text-snow dark:hover:text-lighred cursor-pointer transition-all duration-200 ease-in-out"
                                     >
                                         <p>Catering</p>
                                     </DropdownLink>
                                     <DropdownLink
                                          :href="route('welcome')"
-                                        class="relative flex items-center rounded-md px-4 py-2 text-sm uppercase text-oynx hover:text-polynesian dark:text-snow dark:hover:text-lighred cursor-pointer transition-all duration-200 ease-in-out"
+                                        class="relative flex items-center rounded-md px-4 py-2 text-sm text-oynx hover:text-polynesian dark:text-snow dark:hover:text-lighred cursor-pointer transition-all duration-200 ease-in-out"
                                     >
                                         <p>dining and take out</p>
                                     </DropdownLink>
                                     <DropdownLink
                                           :href="route('welcome')"
-                                        class="relative flex items-center rounded-md px-4 py-2 text-sm uppercase text-oynx hover:text-polynesian dark:text-snow dark:hover:text-lighred cursor-pointer transition-all duration-200 ease-in-out"
+                                        class="relative flex items-center rounded-md px-4 py-2 text-sm text-oynx hover:text-polynesian dark:text-snow dark:hover:text-lighred cursor-pointer transition-all duration-200 ease-in-out"
                                     >
                                         
                                             <p>bakery</p>
@@ -140,43 +107,14 @@ import axios from "axios";
 export default {
     data() {
         return {
-            check: false,
-            notifications: '',            
-            isLoading: true,
+          
         };
     },
     created() {
-       this.checkNotification();
-        this.chekUser(); // Fetch images from the backend when the component is created
-    },
-    mounted(){
-        this.chekUser()
-    },
+         },
+   
     methods: {
-      async chekUser() {
-          await axios
-                .get("/checkUser")
-                .then((response) => {
-                    this.check = response.data.checkUser;
-                })
-                .catch((error) => {
-                    // Handle error
-                    console.error("Error saving data:", error);
-                }).finally(() => {
-                    // Set loading state to false when fetching completes
-                    this.isLoading = false;
-                });
-        },
-      async checkNotification() {
-        await axios
-                .get("/checkUser")
-                .then((response) => {
-                    this.notifications = response.data.notifications;
-                })
-                .catch((error) => {                    // Handle error
-                    console.error("Error saving data:", error);
-                });
-        },
+     
     },
 };
 </script>
