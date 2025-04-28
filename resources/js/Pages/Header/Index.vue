@@ -62,6 +62,11 @@ export default {
         handleScroll() {
             // Adjust the scroll threshold as needed
             const scrollThreshold = 20;
+            console.log(this.isHeaderFixed = window.scrollY > scrollThreshold);
+            console.log(window.scrollY > scrollThreshold);
+            console.log(window.scrollY);
+            console.log(scrollThreshold);
+            
             this.isHeaderFixed = window.scrollY > scrollThreshold;
         },
     },
@@ -73,14 +78,14 @@ export default {
        
         <header
             :class="{
-                'fix align-bottom shadow-sm py-4 px-8 lg ': isHeaderFixed,
+                'fix align-bottom shadow-sm py-4 px-8 bg-snow dark:bg-oynx': isHeaderFixed,
             }"
-            class="py-5 bg-snow dark:bg-oynx z-990 transition-all duration-300 delay-75 ease-in animate-fade-in"
+            class="py-5  z-990 transition-all duration-300 delay-75 ease-in animate-fade-in"
         >
-            <Navbar class="bg-snow dark:bg-oynx">
+            <Navbar class="">
                 <template #search>
                     <div
-                        class="w-full p-4 max-w-xs lg:max-w-lg 2xl:max-w-2xl bg-snow dark:bg-oynx rounded-md hidden lg:flex items-center"
+                        class="w-full p-4 max-w-sm lg:max-w-lg 2xl:max-w-2xl bg-snow dark:bg-oynx rounded-md hidden md:flex items-center"
                     >
                         <div
                             v-if="!isHeaderFixed"
@@ -94,7 +99,7 @@ export default {
                                 :href="route('welcome')"
                             >
                                 <p class="font-bold two">
-                                    <span>Bulk Order </span>
+                                    <span>Bulk </span>
                                     <span
                                         class="absolute bottom-1 left-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"
                                     ></span>
@@ -143,24 +148,13 @@ export default {
                              
                             </template>
                         </Dropdown>
-                            <!-- <Link
-                                class="py-2 px-3 navbar-link"
-                                :href="route('welcome')"
-                                ><p class="font-bold two">
-                                    <span>Catering</span>
-                                    <span
-                                        class="absolute bottom-1 left-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"
-                                    ></span>
-                                    <span
-                                        class="absolute bottom-1 right-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"
-                                    ></span>
-                                </p>
-                            </Link> -->
+                          
                             <Link
                                 class="py-2 px-3 navbar-link"
                                 :href="route('welcome')"
                                 ><p class="font-bold two">
-                                    <span>dining & take out</span>
+                                    <span class="hidden lg:block">dining  & take out</span>
+                                    <span  class="lg:hidden block">dining...</span>
                                     <span
                                         class="absolute bottom-1 left-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"
                                     ></span>
@@ -186,7 +180,7 @@ export default {
                     </div>
                 </template>
                 <template #dropdown>
-                    <DropBarNav
+                    <DropBarNav 
                         :canLogin="canLogin"
                         :canRegister="canRegister"
                         :laravelVersion="laravelVersion"

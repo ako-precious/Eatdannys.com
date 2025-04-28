@@ -14,17 +14,17 @@ defineProps({
    
     <div v-if="$page.props.auth.user">
 
-        <SettingsDropdown class="w-10 h-10"></SettingsDropdown>
+        <SettingsDropdown class="w-10 h-10 bg-snow dark:bg-onyx rounded-full"></SettingsDropdown>
     </div>
     <div v-else
-    class="ml-2 w-10 h-10  lg:mr-4 relative text-oynx active:text-persian hover:text-polynesian dark:text-snow dark:active:text-persian border border-gray-600 hover:border-none dark:hover:text-lighred rounded-full p-1 bg-gradient-to-br from-[#e3dedf] to-[#ffffff]  hover:shadow-snow-sm dark:bg-gradient-to-br dark:from-[#2b312e] dark:to-[#333a37]   hover:dark:shadow-oynx-sm z-20 transition-all duration-250 ease-in"
+    class="ml-2 w-10 h-10  lg:mr-4 relative bg-snow dark:bg-onyx text-oynx active:text-persian hover:text-polynesian dark:text-snow dark:active:text-persian border border-gray-600 hover:border-none dark:hover:text-lighred rounded-full p-1 bg-gradient-to-br from-[#e3dedf] to-[#ffffff]  hover:shadow-snow-sm dark:bg-gradient-to-br dark:from-[#2b312e] dark:to-[#333a37]   hover:dark:shadow-oynx-sm z-20 transition-all duration-250 ease-in"
     >
     <Dropdown >
         <template #trigger>
            
             <button
                    
-                    class="flex transition-all duration-200 ease-in-out"
+                    class="flex transition-all duration-200 ease-in-out "
                 >
                     <font-awesome-icon
                         icon="user"

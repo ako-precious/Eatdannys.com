@@ -28,7 +28,7 @@
             <ul class="ml-4 xl:w-48 flex items-center justify-end">
               
                   <slot name="dropdown"> </slot>
-                <div class="sm:hidden px-4 flex items-center">
+                <div class="md:hidden px-4 flex items-center">
                     <a
                         mini-sidenav-burger=""
                         href="javascript:;"

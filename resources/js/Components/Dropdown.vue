@@ -64,7 +64,7 @@ const alignmentClasses = computed(() => {
             leave-to-class="transform opacity-0 scale-95"
         >
         <div
-        class="absolute z-50 mt-2 rounded-md shadow-lg"
+        class="absolute z-50 mt-2 rounded-md shadow-lg bg-snow dark:bg-oynx"
                 v-show="open"
                 :class="[widthClass, alignmentClasses]"
                 style="display: none;"
