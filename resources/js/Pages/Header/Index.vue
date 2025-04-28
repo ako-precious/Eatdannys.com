@@ -3,8 +3,6 @@ import { onMounted } from "vue";
 import { Head, Link, usePage } from "@inertiajs/vue3";
 import DropBarNav from "./DropBarNav.vue";
 import Navbar from "./Navbar.vue";
-
-import DropdownLink from "@/Components/DropdownLink.vue";
 import Dropdown from "@/Components/Dropdown.vue";
 import axios from "axios";
 // import { route } from 'ziggy-js';
@@ -105,7 +103,7 @@ export default {
                                     ></span>
                                 </p>
                             </Link>
-                            <Dropdown >
+                            <Dropdown  class="py-2 px-3 navbar-link cursor-pointer" >
                             <template #trigger>
                                 
                                     <p class="font-bold two">
@@ -120,23 +118,26 @@ export default {
                                 
                             </template>
 
-                            <template #content class="bg-snow w-24 dark:bg-oynx">
+                            <template #content class="bg-snow w-30 dark:bg-oynx">
                                 <div
-                                    class=" absolute right-0 mt-2 delay-75 rounded-md border-snow ring-1 bg-gradient-to-br from-[#e3dedf] to-[#ffffff] -shadow-snow-sm  hover:shadow-snow-sm uppercase dark:bg-gradient-to-br dark:from-[#2b312e] dark:to-[#333a37] dark:-shadow-oynx-sm  hover:dark:shadow-oynx-sm  z-20 transition-all duration-250 ease-in dark:border-oynx"
+                                    class=" absolute right-0 mt-2 delay-75 rounded-md border-snow ring-1 bg-gradient-to-br from-[#e3dedf] to-[#ffffff]  hover:shadow-snow-sm uppercase dark:bg-gradient-to-br dark:from-[#2b312e] dark:to-[#333a37]   z-20 transition-all duration-250 ease-in dark:border-oynx"
                                 >
                                   
-                                    <DropdownLink
+                                <!-- class="relative flex items-center rounded-md px-4 py-2 text-sm text-oynx hover:text-polynesian dark:text-snow dark:hover:text-lighred cursor-pointer transition-all duration-200 ease-in-out" -->
+                                    <Link
+                                         :href="route('welcome')"
+                                         class="flex items-center rounded-md px-4 py-2 text-sm text-oynx hover:text-polynesian dark:text-snow dark:hover:text-lighred cursor-pointer transition-all duration-200 ease-in-out"
+                                   
+                                    >
+                                        <p>Event </p>
+                                    </Link>
+                                    <hr class="m-2" />
+                                    <Link
                                          :href="route('welcome')"
                                         class="relative flex items-center rounded-md px-4 py-2 text-sm text-oynx hover:text-polynesian dark:text-snow dark:hover:text-lighred cursor-pointer transition-all duration-200 ease-in-out"
                                     >
-                                        <p>Event <br> Catering</p>
-                                    </DropdownLink>
-                                    <DropdownLink
-                                         :href="route('welcome')"
-                                        class="relative flex items-center rounded-md px-4 py-2 text-sm text-oynx hover:text-polynesian dark:text-snow dark:hover:text-lighred cursor-pointer transition-all duration-200 ease-in-out"
-                                    >
-                                        <p>Private <br> Catering</p>
-                                    </DropdownLink>
+                                        <p>Private </p>
+                                    </Link>
                                    
                                 </div>
                              

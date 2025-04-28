@@ -57,23 +57,23 @@ defineProps({
                                 <Link
                                     :href="route('login')"
                                     class="flex items-center rounded-md px-4 py-2 text-sm text-oynx hover:text-polynesian dark:text-snow dark:hover:text-lighred cursor-pointer transition-all duration-200 ease-in-out"
-                                    >Sign in
-                                    <font-awesome-icon
+                                    ><font-awesome-icon
                                         icon="right-to-bracket"
-                                        class="ml-2"
-                                /></Link>
+                                        class="mr-2"
+                                />Sign in
+                                    </Link>
 
+                                    <hr class="my-2" />
                                 <Link
                                     
                                     :href="route('register')"
                                     class="flex items-center rounded-md px-4 py-2 text-sm text-oynx hover:text-polynesian dark:text-snow dark:hover:text-lighred cursor-pointer"
-                                    >Sign up<font-awesome-icon
+                                    ><font-awesome-icon
                                         icon="user-plus"
-                                        class="ml-2"
-                                /></Link>
+                                        class="mr-2"/>Sign up
+                                </Link>
                             </div>
                         </div>
-                        <hr class="my-2" />
                        
                     </div>
                 </div>
