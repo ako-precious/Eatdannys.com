@@ -8,12 +8,13 @@
              <!-- Logo -->
              <Link :href="route('welcome')">
              <div class="w-full flex items-center">
-                    <ApplicationMark class="block w-auto h-12" />
+                    <ApplicationMark class="block " />
                     <!-- <span
                         class="hidden md:block ml-2 font-bold transition-all duration-200 ease-in-out text-2xl uppercase text-oynx dark:text-snow"
                     >
                         Danny's
                     </span> -->
+                    
                 </div>
             </Link>
                
