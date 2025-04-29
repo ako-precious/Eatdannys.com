@@ -26,7 +26,7 @@ export default {
             // page: 1, // Current page
             // perPage: 12, // Number of items per page
             // hasMoreData: true,
-            // isHeaderFixed: false,
+            isHeaderFixed: false,
         };
     },
     beforeDestroy() {
@@ -45,7 +45,7 @@ export default {
     },
 
     mounted() {
-        // window.addEventListener("scroll", this.handleScroll);
+        window.addEventListener("scroll", this.handleScroll);
         // if (this.$page.props.auth.user) {
         //     if (
         //         this.$page.props.auth.user.phone_number == null ||
@@ -61,7 +61,7 @@ export default {
     methods: {
         handleScroll() {
             // Adjust the scroll threshold as needed
-            const scrollThreshold = 20;
+            const scrollThreshold = 50;
             console.log(this.isHeaderFixed = window.scrollY > scrollThreshold);
             console.log(window.scrollY > scrollThreshold);
             console.log(window.scrollY);
