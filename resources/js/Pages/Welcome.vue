@@ -31,16 +31,16 @@ function handleImageError() {
 
 <template>
     <Head title="Welcome" />
-    <div class="bg-snow text-black/50 dark:bg-oynx dark:text-white/50 pattern  ">
+    <div class="bg-snow text-black/50 dark:bg-oynx dark:text-white/50 pattern   ">
         <Header >
-            <template v-slot:search-content>
+            <!-- <template v-slot:search-content>
     <Search
                             @filter-meals="filterMeals"
                             v-if="isHeaderFixed"
                             class="transition-all duration-300 delay-75 ease-in"
                         ></Search>
     </template>
-    <!-- <template v-slot:extra-content>
+    <template v-slot:extra-content>
         <Search
                 v-if="!isHeaderFixed"
                 @filter-meals="filterMeals"
