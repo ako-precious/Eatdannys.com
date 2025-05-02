@@ -61,12 +61,7 @@ export default {
     methods: {
         handleScroll() {
             // Adjust the scroll threshold as needed
-            const scrollThreshold = 50;
-            console.log(this.isHeaderFixed = window.scrollY > scrollThreshold);
-            console.log(window.scrollY > scrollThreshold);
-            console.log(window.scrollY);
-            console.log(scrollThreshold);
-            
+            const scrollThreshold = 50;            
             this.isHeaderFixed = window.scrollY > scrollThreshold;
         },
     },
@@ -78,14 +73,14 @@ export default {
        
         <header
             :class="{
-                'fix align-bottom shadow-sm py-4 px-8 bg-snow dark:bg-oynx': isHeaderFixed,
+                'fix align-bottom shadow-sm py-4 px-8 bg-snow dark:bg-oynx text-oynx': isHeaderFixed,
             }"
             class="py-5  z-990 transition-all duration-300 delay-75 ease-in animate-fade-in"
         >
             <Navbar class="">
                 <template #search>
                     <div
-                        class="w-full p-4 max-w-sm lg:max-w-lg 2xl:max-w-2xl bg-snow dark:bg-oynx rounded-md hidden md:flex items-center"
+                        class="w-full p-4 max-w-sm lg:max-w-lg 2xl:max-w-2xl rounded-md hidden md:flex items-center"
                     >
                         <div
                             v-if="!isHeaderFixed"
@@ -125,7 +120,7 @@ export default {
 
                             <template #content class="bg-snow w-30 dark:bg-oynx">
                                 <div
-                                    class=" absolute right-0 mt-2 delay-75 rounded-md border-snow ring-1 bg-gradient-to-br from-[#e3dedf] to-[#ffffff]  hover:shadow-snow-sm uppercase dark:bg-gradient-to-br dark:from-[#2b312e] dark:to-[#333a37]   z-20 transition-all duration-250 ease-in dark:border-oynx"
+                                    class=" absolute right-0 mt-2 delay-75 rounded-md  border-snow ring-1 bg-gradient-to-br from-[#e3dedf] to-[#ffffff]  hover:shadow-snow-sm uppercase dark:bg-gradient-to-br dark:from-[#2b312e] dark:to-[#333a37]   z-20 transition-all duration-250 ease-in dark:border-oynx"
                                 >
                                   
                                 <!-- class="relative flex items-center rounded-md px-4 py-2 text-sm text-oynx hover:text-polynesian dark:text-snow dark:hover:text-lighred cursor-pointer transition-all duration-200 ease-in-out" -->
@@ -153,7 +148,7 @@ export default {
                                 class="py-2 px-3 navbar-link"
                                 :href="route('welcome')"
                                 ><p class="font-bold two">
-                                    <span class="hidden lg:block">dining  & take out</span>
+                                    <span class="hidden text-nowrap lg:block">dining  & take out</span>
                                     <span  class="lg:hidden block">dining...</span>
                                     <span
                                         class="absolute bottom-1 left-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"
