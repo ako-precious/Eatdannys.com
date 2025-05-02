@@ -32,14 +32,15 @@ function handleImageError() {
 <template>
     <Head title="Welcome" />
     <div class="bg-snow text-black/50 dark:bg-oynx dark:text-white/50 pattern  ">
-        <Header ><template v-slot:search-content>
+        <Header >
+            <template v-slot:search-content>
     <Search
                             @filter-meals="filterMeals"
                             v-if="isHeaderFixed"
                             class="transition-all duration-300 delay-75 ease-in"
                         ></Search>
     </template>
-    <template v-slot:extra-content>
+    <!-- <template v-slot:extra-content>
         <Search
                 v-if="!isHeaderFixed"
                 @filter-meals="filterMeals"
@@ -49,7 +50,8 @@ function handleImageError() {
                 @filter-meals="filterMeals"
                 class="lg:hidden transition-all duration-300 delay-75 ease-in animate-fade-in w-full"
             ></Search> 
-    </template></Header>
+    </template> -->
+</Header>
         <!-- <img id="background" class="absolute -left-20 -z-0 top-0 max-w-[877px]" src="https://laravel.com/assets/img/welcome/background.svg" /> -->
         <div class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
             <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
