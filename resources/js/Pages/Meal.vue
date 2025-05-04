@@ -4,7 +4,7 @@
 
 <!-- ✅ Grid Section - Starts Here 👇 -->
 <section id="Projects" 
-    class="w-fit mx-auto pattern grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-10 p-16">
+    class="w-fit mx-auto pattern grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-10 p-16  ">
 
     <!--   ✅ Product card 1 - Starts Here 👇 -->
     <div class="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">

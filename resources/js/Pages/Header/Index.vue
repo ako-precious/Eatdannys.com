@@ -88,7 +88,6 @@ export default {
                             name=""
                             id=""
                         >
-                            <!-- :class="{ 'dark:text-snow text-oynx':  !isWelcome, 'border-b': isWelcome }" -->
                             <Link
                                 class="py-2 px-3 navbar-link"
                                 :href="route('welcome')"
@@ -112,8 +111,7 @@ export default {
                                         class="absolute bottom-1 left-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"
                                     ></span>
                                     <span
-                                        class="absolute bottom-1 right-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"
-                                    ></span>
+                                        class="absolute bottom-1 right-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"></span>
                                 </p>
                                 
                             </template>
@@ -159,8 +157,7 @@ export default {
                             ></Link>
                             <Link
                                 class="py-2 px-3 navbar-link"
-                                :href="route('welcome')"
-                                ><p class="font-bold two">
+                                :href="route('welcome')"><p class="font-bold two">
                                     <span>Bakery</span>
                                     <span
                                         class="absolute bottom-1 left-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"
@@ -175,7 +172,7 @@ export default {
                     </div>
                 </template>
                 <template #dropdown>
-                    <DropBarNav 
+                    <DropBarNav class="cursor-pointer"
                         :canLogin="canLogin"
                         :canRegister="canRegister"
                         :laravelVersion="laravelVersion"
