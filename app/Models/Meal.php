@@ -11,8 +11,12 @@ class Meal extends Model
     use HasFactory;
     protected $table = 'meals';
     protected $fillable = ['category_id', 'name', 'description', 'price'];
-    public function category()
-{
+
+    protected $casts = [
+        'prices' => 'array',
+    ];    
+    
+    public function category(){
 
     return $this->belongsTo(Category::class);
 }
