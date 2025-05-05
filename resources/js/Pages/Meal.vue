@@ -58,7 +58,7 @@
                     </div>
                     
                     <button
-                    class="mt-3 px-4 text-bold w-full  rounded"
+                    class="mt-3 px-4 text-bold w-full  rounded cursor-pointer"
                     @click="addToCart(item)"
                     :disabled="!selectedOptions[item.id]"
                     >
