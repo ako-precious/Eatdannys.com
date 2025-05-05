@@ -9,13 +9,13 @@ import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faUser,  faUserPlus, faRightToBracket, faBagShopping, faCartPlus, faMagnifyingGlass,
+import { faUser,  faUserPlus, faRightToBracket, faBagShopping, faCartPlus, faMagnifyingGlass, faCartShopping,
 } from "@fortawesome/free-solid-svg-icons";
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 
 /* Add icons to the library */
 library.add( 
-    faUser, faUserPlus, faRightToBracket, faBagShopping, faCartPlus, faMagnifyingGlass
+    faUser, faUserPlus, faRightToBracket, faBagShopping, faCartPlus, faMagnifyingGlass, faCartShopping
 );
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';

@@ -57,10 +57,11 @@
                         </div>
                     </div>
                     
+                    <!-- :disabled="!selectedOptions[item.id]" -->
                     <button
                     class="mt-3 px-4 text-bold w-full  rounded cursor-pointer"
-                    @click="addToCart(item)"
-                    :disabled="!selectedOptions[item.id]"
+                    @click="addToCart(item, selectedOptions[item.id])"
+"
                     >
                     <p class=" flex font-bold justify-between w-full items-center text-sm m-auto relative w-max three py-1 px-3">
                       <!-- <div>
@@ -68,7 +69,7 @@
                       </div> -->
                       <font-awesome-icon icon="fa-solid fa-cart-plus" class="text-lg mr-2" />
   <span class="px-1">Add To Cart</span>
-  <span class="absolute left-0 -bottom-1 w-full h-1 transition-all bg-persian" style="z-index: -9;"></span>
+  <span class="absolute left-0 -bottom-1 w-full h-6 transition-all bg-persian" style="z-index: -9;"></span>
 </p>
                     </button>
                 </div>
@@ -79,8 +80,24 @@
 
 <script>
 import axios from "axios";
-
+import { useCartStore } from '@/stores/cart'
 export default {
+    setup() {
+    const cart = useCartStore()
+
+    function addToCart(mentem, selectedOption) {
+      cart.addItem({
+        name: menuItem.name,
+        price: selectedOption.price,
+        size_or_quantity: selectedOption.size || selectedOption.quantity,
+      })
+    }
+
+    return {
+      cart,
+      addToCart
+    }
+  },
     data() {
         return {
             meals: [],
@@ -99,20 +116,7 @@ export default {
             });
     },
     methods: {
-        addToCart(item) {
-            const selected = this.selectedOptions[item.id];
-            if (!selected) return;
-
-            this.cart.push({
-                id: item.id,
-                name: item.name,
-                size_or_quantity: selected.size ?? selected.quantity,
-                price: selected.price,
-            });
-
-            // Optionally: Emit an event or sync with backend
-            console.log("Cart:", this.cart);
-        },
+        
     },
 };
 </script>
