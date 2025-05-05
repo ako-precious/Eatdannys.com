@@ -38,7 +38,7 @@
                                 v-model="selectedOptions[item.id]"
                             />
                             <label
-                                class="flex flex-col p-1 border-2"
+                                class="flex flex-col  px-2 border-2"
                                 :class="{
                                     'border-oynx bg-blue-100':
                                         selectedOptions[item.id] === price,
@@ -52,7 +52,7 @@
                                 >
                                     {{ price.size ?? price.quantity }}
                                 </span>
-                                <span class="text-sm font-bold">
+                                <span class="text-[0.8rem] font-bold">
                                     ${{ price.price }}
                                 </span>
                             </label>
@@ -61,7 +61,7 @@
 
                     <button
                         class="mt-3 px-4 text-bold w-full rounded cursor-pointer"
-                        @click="addToCart(item, selectedOptions[item.id])"
+                        @click="addToCart(item, selectedOptions[item.id])" title="Select an option before clicking"
                         :disabled="!selectedOptions[item.id]"
                     >
                         <p
@@ -109,6 +109,7 @@ export default {
 
             this.cart.addItem({
                 name: menuItem.name,
+                category: menuItem.category.name,
                 price: selectedOption.price,
                 size_or_quantity:
                     selectedOption.size || selectedOption.quantity,
