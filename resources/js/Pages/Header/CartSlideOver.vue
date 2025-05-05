@@ -65,7 +65,7 @@
                                         role="list"
                                         class="-my-6 divide-y divide-gray-200"
                                     >
-                                        <li class="flex py-6">
+                                        <li class="flex py-6" >
                                             <div
                                                 class="size-24 shrink-0 overflow-hidden rounded-md border border-gray-200"
                                             >
@@ -160,3 +160,7 @@
         </div>
     </div>
 </template>
+<script setup>
+import { useCartStore } from '@/stores/cart'
+const cart = useCartStore()
+</script>
