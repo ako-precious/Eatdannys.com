@@ -19,7 +19,7 @@
                 <div class="px-4 py-3 w-72">
                     <span class="text-gray-600 mr-3 uppercase text-xs">{{
                         item.category.name
-                    }}</span>
+                    }}</span> 
                     <p
                         class="text-lg mb-1 font-bold text-oynx truncate block capitalize"
                     >
@@ -38,7 +38,7 @@
                                 v-model="selectedOptions[item.id]"
                             />
                             <label
-                                class="flex flex-col  px-2 border-2"
+                                class="flex flex-col px-2 border-2"
                                 :class="{
                                     'border-oynx bg-blue-100':
                                         selectedOptions[item.id] === price,
@@ -61,7 +61,8 @@
 
                     <button
                         class="mt-3 px-4 text-bold w-full rounded cursor-pointer"
-                        @click="addToCart(item, selectedOptions[item.id])" title="Select an option before clicking"
+                        @click="addToCart(item, selectedOptions[item.id])"
+                        title="Select an option before clicking"
                         :disabled="!selectedOptions[item.id]"
                     >
                         <p
@@ -121,6 +122,16 @@ export default {
             .get("/api/meal")
             .then((response) => {
                 this.meals = response.data;
+
+                this.meals.forEach((item) => {
+                    if (item.prices && item.prices.length > 0) {
+                        this.$set(
+                            this.selectedOptions,
+                            item.id,
+                            item.prices[0]
+                        );
+                    }
+                });
             })
             .catch((error) => {
                 console.error("Failed to load menu:", error);

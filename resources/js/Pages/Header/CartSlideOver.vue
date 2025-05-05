@@ -1,24 +1,28 @@
-<template>
-    <div v-if="isCartOpen">
-      <div
-        class="fixed inset-0  bg-oynx/75 transition-opacity"
-        aria-hidden="true"
-      ></div>
+
+   <template>
+    <div>
+      <button @click="openCart">
+        <CartIcon />
+      </button>
+      <div v-if="ui.isCartOpen">
+        <div
+          class="fixed inset-0 bg-oynx/75 transition-opacity"
+          aria-hidden="true"
+        ></div>
   
-      <div class="fixed inset-0 overflow-hidden">
-        <div class="absolute inset-0 overflow-hidden">
+        <div class="fixed inset-0 overflow-hidden">
           <div
             class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10"
           >
             <transition
-              enter-active-class="transform transition ease-in-out duration-1000 sm:duration-700"
+              enter-active-class="transform transition ease-in-out duration-500 sm:duration-700"
               enter-from-class="translate-x-full"
               enter-to-class="translate-x-0"
               leave-active-class="transform transition ease-in-out duration-500 sm:duration-700"
               leave-from-class="translate-x-0"
               leave-to-class="translate-x-full"
             >
-              <div v-if="isCartOpen" class="pointer-events-auto w-screen max-w-md z-50">
+              <div v-if="ui.isCartOpen" class="pointer-events-auto w-screen max-w-md">
                 <div
                   class="flex h-full flex-col overflow-y-scroll bg-snow shadow-xl"
                 >
@@ -34,7 +38,7 @@
                         <button
                           type="button"
                           class="relative -m-2 p-2 text-gray-400 hover:text-gray-500 cursor-pointer"
-                          @click="isCartOpen = false"
+                          @click="closeCart"
                         >
                           <span class="absolute -inset-0.5"></span>
                           <span class="sr-only">Close panel</span>
@@ -82,7 +86,7 @@
                                 <p
                                   class="mt-1 text-sm text-gray-500"
                                 >
-                                  {{ item.name }}
+                                  {{ item.category }}
                                 </p>
                               </div>
                               <div
@@ -91,10 +95,11 @@
                                 <p class="text-gray-500">
                                   Qty
                                   <input
-                                    type="number"
-                                    name=""
-                                    class="w-14 h-8"
-                                    id=""
+                                  type="number"
+                                  name=""
+                                  class="w-14 h-8"
+                                  id=""
+                                  value="1"
                                   />
                                 </p>
   
@@ -142,7 +147,7 @@
                         <button
                           type="button"
                           class="font-medium text-indigo-600 hover:text-indigo-500"
-                          @click="isCartOpen = false"
+                          @click="closeCart"
                         >
                           Continue Shopping
                           <span aria-hidden="true"> &rarr;</span>
@@ -161,9 +166,40 @@
   <script setup>
   import { ref } from 'vue';
   import { useCartStore } from '@/stores/cart';
+  import CartIcon from './CartIcon.vue'; // Import your CartIcon component
+  import { useUIStore } from '@/stores/ui';
+  import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+  import { faXmark } from '@fortawesome/free-solid-svg-icons';
+  import { library } from '@fortawesome/fontawesome-svg-core';
   
   const cart = useCartStore();
-  const isCartOpen = ref(true); // Start with cart open for demonstration, change to false later
+  const ui = useUIStore();
   
+  library.add(faXmark);
+  
+  const openCart = () => {
+    ui.openCart();
+  };
+  const closeCart = () => {
+    ui.closeCart();
+  };
   </script>
+  
+  <!-- <script setup>
+  import { useCartStore } from '@/stores/cart';
+  import CartIcon from './CartIcon.vue'; // Import your CartIcon component
+  import { useUIStore } from '@/stores/ui';
+  
+  
+  const cart = useCartStore();
+
+const ui = useUIStore();
+
+const openCart = () => {
+  ui.openCart();
+};
+const closeCart = () => {
+  ui.closeCart();
+};
+  </script> -->
   
