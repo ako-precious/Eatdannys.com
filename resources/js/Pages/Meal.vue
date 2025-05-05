@@ -10,7 +10,7 @@
             v-for="(item, index) in meals"
             :key="index"
         >
-            <a href="#" class="text-oynx">
+            <a href="#" class="text-oynx/70">
                 <img
                     src="https://images.unsplash.com/photo-1646753522408-077ef9839300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NjZ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
                     alt="Product"

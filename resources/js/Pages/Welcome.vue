@@ -31,7 +31,7 @@ function handleImageError() {
 
 <template>
     <Head title="Welcome" />
-    <div class="bg-snow text-black/50 dark:bg-oynx dark:text-white/50 pattern   ">
+    <div class="bg-snow text-black/50 dark:bg-oynx dark:text-snow/50 pattern   ">
         <Header >
             <!-- <template v-slot:search-content>
     <Search
@@ -52,8 +52,8 @@ function handleImageError() {
             ></Search> 
     </template> -->
 </Header>
-        <!-- <img id="background" class="absolute -left-20 -z-0 top-0 max-w-[877px]" src="https://laravel.com/assets/img/welcome/background.svg" /> -->
-        <div class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
+       
+        <div class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-snow">
             <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
                
 
@@ -61,12 +61,25 @@ function handleImageError() {
                    <Meal></Meal>
                 </main>
 
-                <footer class="py-16 text-center text-sm text-black dark:text-white/70">
+                <footer class="py-16 text-center text-sm text-black dark:text-snow/70">
                     Laravel v{{ laravelVersion }} (PHP v{{ phpVersion }})
                 </footer>
             </div>
         </div>
-    </div>
+        <div class="relative z-10" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
+  <!--
+    Background backdrop, show/hide based on slide-over state.
+
+    Entering: "ease-in-out duration-500"
+      From: "opacity-0"
+      To: "opacity-100"
+    Leaving: "ease-in-out duration-500"
+      From: "opacity-100"
+      To: "opacity-0"
+  -->
+  
+</div></div>
+
 </template>
 <style scoped>
 .pattern{
