@@ -76,7 +76,7 @@ export default {
             :class="{
                 'fix align-bottom shadow-sm py-4 px-8 bg-snow dark:bg-oynx text-oynx': isHeaderFixed,
             }"
-            class="py-5  z-990 transition-all duration-300 delay-75 ease-in animate-fade-in"
+            class="py-5  z-10 transition-all duration-300 delay-75 ease-in animate-fade-in"
         >
             <Navbar class="">
                 <template #search>
@@ -181,7 +181,9 @@ export default {
                     :laravelVersion="laravelVersion"
                     :phpVersion="phpVersion"
                     />
-                    <CartIcon></CartIcon>
+                    <button @click="openCart">
+  <CartIcon />
+</button>
                   
                     
                 </template>

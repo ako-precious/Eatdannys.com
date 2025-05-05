@@ -1,6 +1,7 @@
 <script setup>
 import { useCartStore } from '@/stores/cart'
 const cart = useCartStore()
+// const isCartOpen = ref(true); 
 </script>
 
 <template>
