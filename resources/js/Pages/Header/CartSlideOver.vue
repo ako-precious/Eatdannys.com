@@ -65,6 +65,13 @@
                                         role="list"
                                         class="-my-6 divide-y divide-gray-200"
                                     >
+                                    <ul>
+    <li v-for="(item, index) in cart.items" :key="index">
+      <div>{{ item.name }} - {{ item.size_or_quantity }} - ${{ item.price }}</div>
+      <button @click="cart.removeItem(index)">Remove</button>
+    </li>
+  </ul>
+  <p>Total: ${{ cart.subtotal }}</p>
                                         <li class="flex py-6" >
                                             <div
                                                 class="size-24 shrink-0 overflow-hidden rounded-md border border-gray-200"

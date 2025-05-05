@@ -27,7 +27,7 @@
                     </p>
 
                     <!-- Component Start -->
-                    <div class="grid grid-cols-3 gap-2 w-full max-w-screen-xs">
+                    <div class="grid grid-cols-3 gap-2 w-full max-w-screen-sm">
                         <div v-for="(price, index) in item.prices" :key="index">
                             <input
                                 class="hidden"
@@ -38,7 +38,7 @@
                                 v-model="selectedOptions[item.id]"
                             />
                             <label
-                                class="flex flex-col p-2 border-2"
+                                class="flex flex-col p-1 border-2"
                                 :class="{
                                     'border-oynx bg-blue-100':
                                         selectedOptions[item.id] === price,
@@ -47,7 +47,9 @@
                                 }"
                                 :for="`radio_${item.id}_${index}`"
                             >
-                                <span class="text-[0.68rem] font-semibold uppercase">
+                                <span
+                                    class="text-[0.68rem] font-semibold uppercase"
+                                >
                                     {{ price.size ?? price.quantity }}
                                 </span>
                                 <span class="text-sm font-bold">
@@ -56,21 +58,28 @@
                             </label>
                         </div>
                     </div>
-                    
-                    <!-- :disabled="!selectedOptions[item.id]" -->
+
                     <button
-                    class="mt-3 px-4 text-bold w-full  rounded cursor-pointer"
-                    @click="addToCart(item, selectedOptions[item.id])"
-"
+                        class="mt-3 px-4 text-bold w-full rounded cursor-pointer"
+                        @click="addToCart(item, selectedOptions[item.id])"
+                        :disabled="!selectedOptions[item.id]"
                     >
-                    <p class=" flex font-bold justify-between w-full items-center text-sm m-auto relative w-max three py-1 px-3">
-                      <!-- <div>
+                        <p
+                            class="flex font-bold justify-between w-full items-center text-sm m-auto relative w-max three py-1 px-3"
+                        >
+                            <!-- <div>
                         
                       </div> -->
-                      <font-awesome-icon icon="fa-solid fa-cart-plus" class="text-lg mr-2" />
-  <span class="px-1">Add To Cart</span>
-  <span class="absolute left-0 -bottom-1 w-full h-6 transition-all bg-persian" style="z-index: -9;"></span>
-</p>
+                            <font-awesome-icon
+                                icon="fa-solid fa-cart-plus"
+                                class="text-lg mr-2"
+                            />
+                            <span class="px-1">Add To Cart</span>
+                            <span
+                                class="absolute left-0 -bottom-1 w-full h-6 transition-all bg-persian"
+                                style="z-index: -9"
+                            ></span>
+                        </p>
                     </button>
                 </div>
             </a>
@@ -80,30 +89,31 @@
 
 <script>
 import axios from "axios";
-import { useCartStore } from '@/stores/cart'
+import { useCartStore } from "@/stores/cart";
+
 export default {
-    setup() {
-    const cart = useCartStore()
-
-    function addToCart(mentem, selectedOption) {
-      cart.addItem({
-        name: menuItem.name,
-        price: selectedOption.price,
-        size_or_quantity: selectedOption.size || selectedOption.quantity,
-      })
-    }
-
-    return {
-      cart,
-      addToCart
-    }
-  },
     data() {
         return {
             meals: [],
             selectedOptions: {}, // Stores selected size/quantity per item
-            cart: [],
         };
+    },
+    computed: {
+        cart() {
+            return useCartStore();
+        },
+    },
+    methods: {
+        addToCart(menuItem, selectedOption) {
+            if (!selectedOption) return;
+
+            this.cart.addItem({
+                name: menuItem.name,
+                price: selectedOption.price,
+                size_or_quantity:
+                    selectedOption.size || selectedOption.quantity,
+            });
+        },
     },
     mounted() {
         axios
@@ -115,11 +125,9 @@ export default {
                 console.error("Failed to load menu:", error);
             });
     },
-    methods: {
-        
-    },
 };
 </script>
+
 <style scoped>
 input:checked + label {
     border-color: black;
@@ -128,6 +136,6 @@ input:checked + label {
 }
 
 .three:hover span {
-  height: 120%;
+    height: 120%;
 }
 </style>

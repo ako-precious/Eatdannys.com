@@ -75,7 +75,7 @@ function handleImageError() {
             role="dialog"
             aria-modal="true"
         ></div>
-        <!-- <CartSlideOver ></CartSlideOver> -->
+        <CartSlideOver ></CartSlideOver>
     </div>
 </template>
 <style scoped>
