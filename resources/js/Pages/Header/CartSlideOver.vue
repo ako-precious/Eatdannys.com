@@ -74,19 +74,19 @@
                             <div class="ml-4 flex flex-1 flex-col">
                               <div>
                                 <div
-                                  class="flex justify-between text-base font-medium text-gray-900"
+                                  class="flex justify-between text-base font-medium text-oynx"
                                 >
                                   <h3>
                                     <a href="#">{{ item.name }}</a>
                                   </h3>
                                   <p class="ml-4">
-                                    {{ item.size_or_quantity }}${{ item.price }}
+                                   ${{ item.price }}
                                   </p>
                                 </div>
                                 <p
-                                  class="mt-1 text-sm text-gray-500"
+                                  class="mt-1 flex justify-between text-sm text-oynx/75"
                                 >
-                                  {{ item.category }}
+                               <span> {{ item.category }}</span>   <span>{{ item.size_or_quantity }}</span> 
                                 </p>
                               </div>
                               <div
@@ -97,9 +97,9 @@
                                   <input
                                   type="number"
                                   name=""
-                                  class="w-14 h-8"
-                                  id=""
-                                  value="1"
+                                  class="w-14 h-8 border-none"
+                                  readonly
+                                   v-model.number="item.quantity"
                                   />
                                 </p>
   
@@ -107,9 +107,9 @@
                                   <button
                                     type="button"
                                     @click="cart.removeItem(index)"
-                                    class="font-medium text-indigo-600 hover:text-indigo-500"
+                                    class="font-medium text-lg text-lighred/80 hover:text-lighred cursor-pointer"
                                   >
-                                    Remove
+                                  <font-awesome-icon icon="fa-solid fa-trash" />
                                   </button>
                                 </div>
                               </div>
@@ -135,25 +135,11 @@
                     <div class="mt-6">
                       <a
                         href="#"
-                        class="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-snow shadow-xs hover:bg-indigo-700"
+                        class="flex items-center justify-center rounded-md border border-transparent bg-polynesian/80 px-6 py-3 text-base font-medium text-snow shadow-xs hover:bg-polynesian "
                         >Checkout</a
                       >
                     </div>
-                    <div
-                      class="mt-6 flex justify-center text-center text-sm text-gray-500"
-                    >
-                      <p>
-                        or
-                        <button
-                          type="button"
-                          class="font-medium text-indigo-600 hover:text-indigo-500"
-                          @click="closeCart"
-                        >
-                          Continue Shopping
-                          <span aria-hidden="true"> &rarr;</span>
-                        </button>
-                      </p>
-                    </div>
+                    
                   </div>
                 </div>
               </div>
@@ -164,7 +150,7 @@
     </div>
   </template>
   <script setup>
-  import { ref } from 'vue';
+  
   import { useCartStore } from '@/stores/cart';
   import CartIcon from './CartIcon.vue'; // Import your CartIcon component
   import { useUIStore } from '@/stores/ui';

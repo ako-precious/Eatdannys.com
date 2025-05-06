@@ -35,9 +35,9 @@ export default {
     };
   },
   methods: {
-    submitFilterForm() {
-      this.$emit("filter-meals", this.searchText);
-    },
+    // submitFilterForm() {
+    //   this.$emit("filter-meals", this.searchText);
+    // },
   },
 };
 </script>
