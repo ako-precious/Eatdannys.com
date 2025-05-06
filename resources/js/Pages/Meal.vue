@@ -2,15 +2,16 @@
     <!-- source: https://github.com/mfg888/Responsive-Tailwind-CSS-Grid/blob/main/index.html -->
     <div
         id="Projects"
-        class="flex flex-col items-center py-16 bg-snow! dark:bg-oynx!"
+        class="flex flex-col items-center py-12 bg-snow! dark:bg-oynx! relative"
     >
-        <Search
-            class="flex transition-all duration-300 delay-75 ease-in animate-fade-in"
+            <Search @search="handleSearch" 
+            class="flex my-6 sticky transition-all duration-300 delay-75 ease-in animate-fade-in w-80/100 "
         ></Search>
+    
 
         <section
             id="Projects"
-            class="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-16 gap-x-8"
+            class="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-16 gap-x-10"
         >
             <div
                 class="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
@@ -136,6 +137,18 @@ export default {
         },
     },
     methods: {
+        handleSearch(term) {
+    axios
+      .get("/api/meal", {
+        params: { search: term }
+      })
+      .then((response) => {
+        this.meals = response.data;
+      })
+      .catch((error) => {
+        console.error("Search failed:", error);
+      });
+  },
         addToCart(menuItem, selectedOption) {
             if (!selectedOption) return;
 
@@ -151,6 +164,7 @@ export default {
                     selectedOption.size || selectedOption.quantity,
             });
         },
+
     },
     mounted() {
         axios
