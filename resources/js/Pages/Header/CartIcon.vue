@@ -6,7 +6,7 @@ const cart = useCartStore();
 const ui = useUIStore();
 
 const openCart = () => {
-  ui.openCart();
+  ui.toggleCart();
 };
 
 </script>
