@@ -4,17 +4,17 @@
         id="Projects"
         class="flex flex-col items-center py-12 bg-snow! dark:bg-oynx! relative"
     >
-            <Search @search="handleSearch" 
-            class="flex my-6 sticky transition-all duration-300 delay-75 ease-in animate-fade-in w-80/100 "
+        <Search
+            @search="handleSearch"
+            class="flex my-6 sticky top-0 transition-all duration-300 delay-75 ease-in animate-fade-in w-80/100 "
         ></Search>
-    
 
         <section
             id="Projects"
             class="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-16 gap-x-10"
         >
             <div
-                class="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
+                class="w-[19rem] bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
                 v-for="(item, index) in meals"
                 :key="index"
             >
@@ -23,10 +23,10 @@
                         <img
                             src="https://images.unsplash.com/photo-1646753522408-077ef9839300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NjZ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
                             alt="Product"
-                            class="h-72 w-72 object-cover rounded-t-xl"
+                            class="h-72 w-[19rem] object-cover rounded-t-xl"
                         />
                     </a>
-                    <div class="px-4 py-3 w-72">
+                    <div class="px-4 py-3 w-[19rem]">
                         <div class="flex justify-between items-center">
                             <span
                                 class="text-gray-600 mr-3 uppercase text-xs"
@@ -128,7 +128,7 @@ export default {
             meals: [],
             quantity: 1,
             selectedOptions: {}, // Stores selected size/quantity per item
-            quantities: {}  ,
+            quantities: {},
         };
     },
     computed: {
@@ -138,17 +138,17 @@ export default {
     },
     methods: {
         handleSearch(term) {
-    axios
-      .get("/api/meal", {
-        params: { search: term }
-      })
-      .then((response) => {
-        this.meals = response.data;
-      })
-      .catch((error) => {
-        console.error("Search failed:", error);
-      });
-  },
+            axios
+                .get("/api/meal", {
+                    params: { search: term },
+                })
+                .then((response) => {
+                    this.meals = response.data;
+                })
+                .catch((error) => {
+                    console.error("Search failed:", error);
+                });
+        },
         addToCart(menuItem, selectedOption) {
             if (!selectedOption) return;
 
@@ -164,7 +164,6 @@ export default {
                     selectedOption.size || selectedOption.quantity,
             });
         },
-
     },
     mounted() {
         axios
