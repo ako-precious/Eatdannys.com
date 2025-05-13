@@ -27,7 +27,9 @@
         "@fortawesome/free-regular-svg-icons": "^6.7.2",
         "@fortawesome/free-solid-svg-icons": "^6.7.2",
         "@fortawesome/vue-fontawesome": "^3.0.8",
+        "@stripe/stripe-js": "^7.3.0",
         "@vueuse/core": "^13.1.0",
-        "pinia": "^3.0.2"
+        "pinia": "^3.0.2",
+        "vue-stripe-js": "^2.0.2"
     }
 }
