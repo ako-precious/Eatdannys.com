@@ -27,7 +27,13 @@ class PaymentController extends Controller
                 'quantity' => $item['quantity'],
             ];
         })->toArray();
-
+        
+        foreach ($request->items as $item) {
+            if (!isset($item['name'], $item['unit_price'], $item['quantity'])) {
+                return response()->json(['error' => 'Invalid cart data'], 400);
+            }
+        }
+        
         $session = Session::create([
             'payment_method_types' => ['card'],
             'line_items' => $lineItems,
