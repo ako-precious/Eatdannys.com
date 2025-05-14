@@ -38,11 +38,29 @@ class PaymentController extends Controller
             'payment_method_types' => ['card'],
             'line_items' => $lineItems,
             'mode' => 'payment',
-            'success_url' => url('/success'),
-            'cancel_url' => url('/cancel'),
+           'success_url' => route('checkout.success', ['session_id' => '{CHECKOUT_SESSION_ID}']),
+    'cancel_url' => route('checkout.cancel'),
         ]);
 
         return response()->json(['id' => $session->id]);
     }
+
+    public function success(Request $request)
+{
+    $sessionId = $request->get('session_id');
+
+    if (!$sessionId) {
+        abort(400, 'Session ID is required');
+    }
+
+    \Stripe\Stripe::setApiKey(config('stripe.secret'));
+
+    $session = \Stripe\Checkout\Session::retrieve($sessionId);
+
+    // Fetch order using $session->metadata or session details
+    return view('checkout.success', [
+        'session' => $session
+    ]);
+}
 
 }
