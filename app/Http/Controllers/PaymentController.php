@@ -5,25 +5,38 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Stripe\Stripe;
 use Stripe\PaymentIntent;
+use Stripe\Checkout\Session;
 
 class PaymentController extends Controller
 {
     //
 
-    public function createPaymentIntent(Request $request)
+    public function createSession(Request $request)
     {
-        Stripe::setApiKey(config('services.stripe.secret'));
+        Stripe::setApiKey(env('STRIPE_SECRET'));
 
-        try {
-            $paymentIntent = PaymentIntent::create([
-                'amount' => $request->amount, // Amount in cents
-                'currency' => 'usd', // Or your desired currency
-                // Add any other necessary parameters
-            ]);
+        $lineItems = collect($request->items)->map(function ($item) {
+            return [
+                'price_data' => [
+                    'currency' => 'usd',
+                    'product_data' => [
+                        'name' => $item['name'],
+                    ],
+                    'unit_amount' => $item['unit_price'] * 100, // in cents
+                ],
+                'quantity' => $item['quantity'],
+            ];
+        })->toArray();
 
-            return response()->json(['clientSecret' => $paymentIntent->client_secret]);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
+        $session = Session::create([
+            'payment_method_types' => ['card'],
+            'line_items' => $lineItems,
+            'mode' => 'payment',
+            'success_url' => url('/success'),
+            'cancel_url' => url('/cancel'),
+        ]);
+
+        return response()->json(['id' => $session->id]);
     }
+
 }
