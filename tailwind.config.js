@@ -42,12 +42,14 @@ export default {
       transparent: colors.transparent,
       black: colors.black,
       white: colors.white,
-      imperial_red: '#E54B4B',
-      piction_blue: '#00A6ED',
-      raisin_black: '#221E22',
-      hunyadi_yellow: '#ECA72C',
-      baby_powder: 'FFFCF9',
-      
+      snow: '#FFFCF9',
+      lavender: '#FFE9F3',
+      persian: '#ECA72C',
+      oynx: '#221E22',
+      oynx_alt: '#363036',
+      lighred: '#E54B4B',
+      polynesian: '#00A6ED',
+
       slate: {
         DEFAULT: colors.slate,
         50: "#f8fafc",
@@ -1025,7 +1027,7 @@ export default {
       max: "max-content",
       fit: "fit-content",
     }),
-    maxWidth: ({ theme, breakpoints }) => ({
+    maxWidth: ({ theme }) => ({
       ...theme("spacing"),
       sidebar: "15.625rem",
       none: "none",
@@ -1046,8 +1048,8 @@ export default {
       max: "max-content",
       fit: "fit-content",
       prose: "65ch",
-      ...breakpoints(theme("screens")),
-    }),
+  }),
+  
     minHeight: ({ theme }) => ({
       auto: "auto",
       ...theme("spacing"),

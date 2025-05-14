@@ -1,0 +1,48 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Stripe\Stripe;
+use Stripe\PaymentIntent;
+use Stripe\Checkout\Session;
+
+class PaymentController extends Controller
+{
+    //
+
+    public function createSession(Request $request)
+    {
+        Stripe::setApiKey(env('STRIPE_SECRET'));
+
+        $lineItems = collect($request->items)->map(function ($item) {
+            return [
+                'price_data' => [
+                    'currency' => 'cad',
+                    'product_data' => [
+                        'name' => $item['name'],
+                    ],
+                    'unit_amount' => $item['unit_price'] * 100, // in cents
+                ],
+                'quantity' => $item['quantity'],
+            ];
+        })->toArray();
+
+        foreach ($request->items as $item) {
+            if (!isset($item['name'], $item['unit_price'], $item['quantity'])) {
+                return response()->json(['error' => 'Invalid cart data'], 400);
+            }
+        }
+        
+        $session = Session::create([
+            'payment_method_types' => ['card'],
+            'line_items' => $lineItems,
+            'mode' => 'payment',
+            'success_url' => url('/success'),
+            'cancel_url' => url('/cancel'),
+        ]);
+
+        return response()->json(['id' => $session->id]);
+    }
+
+}
