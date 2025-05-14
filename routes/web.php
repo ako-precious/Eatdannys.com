@@ -1,7 +1,36 @@
 <?php
 
+use App\Http\Controllers\PaymentController;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
+use Illuminate\Http\Request;
+use Stripe\Stripe;
+use Stripe\PaymentIntent;
 
 Route::get('/', function () {
-    return view('welcome');
+    return Inertia::render('Welcome', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
+})->name('welcome');
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
 });
+
+// routes/web.php
+
+
+Route::get('/payment-status',[PaymentController::class, 'createPaymentIntent'])->name('payment.status');
+
+// Create a simple Blade view for payment status (resources/views/payment-status.blade.php)
+// You could also use a Vue component for this page if you prefer SPA routing.
