@@ -133,10 +133,10 @@
                       Shipping and taxes calculated at checkout.
                     </p>
                     <div class="mt-6">
-                      <a
+                      <button @click="checkout" 
                         href="#"
                         class="flex items-center justify-center rounded-md border border-transparent bg-polynesian/80 px-6 py-3 text-base font-medium text-snow shadow-xs hover:bg-polynesian "
-                        >Checkout</a
+                        >Checkout</button
                       >
                     </div>
                     
@@ -154,14 +154,11 @@
   import { useCartStore } from '@/stores/cart';
   import CartIcon from './CartIcon.vue'; // Import your CartIcon component
   import { useUIStore } from '@/stores/ui';
-  import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-  import { faXmark } from '@fortawesome/free-solid-svg-icons';
-  import { library } from '@fortawesome/fontawesome-svg-core';
+  import { loadStripe } from '@stripe/stripe-js'
+  import axios from 'axios'
   
   const cart = useCartStore();
   const ui = useUIStore();
-  
-  library.add(faXmark);
   
   const openCart = () => {
     ui.openCart();
@@ -169,23 +166,31 @@
   const closeCart = () => {
     ui.closeCart();
   };
+  
+ 
+  const stripePromise = loadStripe('your-publishable-key')
+  
+  async function checkout() {
+      const stripe = await stripePromise
+  
+      const response = await axios.post('/api/create-checkout-session', {
+          items: cart.items
+      })
+  
+      const result = await stripe.redirectToCheckout({
+          sessionId: response.data.id
+      })
+  
+      if (result.error) {
+          console.error(result.error.message)
+      }
+  }
   </script>
+ 
   
-  <!-- <script setup>
-  import { useCartStore } from '@/stores/cart';
-  import CartIcon from './CartIcon.vue'; // Import your CartIcon component
-  import { useUIStore } from '@/stores/ui';
-  
-  
-  const cart = useCartStore();
-
-const ui = useUIStore();
-
-const openCart = () => {
-  ui.openCart();
-};
-const closeCart = () => {
-  ui.closeCart();
-};
-  </script> -->
+  <!-- <template>
+    <button @click="checkout" class="bg-blue-600 text-white px-4 py-2 rounded">
+      Pay Now ${{ cart.subtotal.toFixed(2) }}
+    </button>
+  </template> -->
   
