@@ -1,45 +1,50 @@
 <template>
-  <div class="card">
-    <h2>{{ message }}</h2>
+  <div class="flex min-h-screen justify-center items-center p-12 bg-snow">
+    <div class="card max-h-[360px] max-w-[360px] shadow-2xl bg-snow/70 p-4">
+      
+      <h2 class="text-oynx text-sm ">{{ session }}</h2>
+    </div>
+
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+// import { useRoute } from 'vue-router'
 
-const message = ref('')
-const route = useRoute()
-
-onMounted(() => {
-  if (route.path.includes('success')) {
-    message.value = 'Payment Successful ✅'
-  } else if (route.path.includes('cancel')) {
-    message.value = 'Payment Cancelled ❌'
-  } else {
-    message.value = 'Unknown Status'
+defineProps({
+  session: {
+    type: Object,
+    required: true
   }
-})
+});
+// const route = useRoute()
+
+// onMounted(() => {
+//   if (route.path.includes('success')) {
+//     message.value = 'Payment Successful ✅'
+//   } else if (route.path.includes('cancel')) {
+//     message.value = 'Payment Cancelled ❌'
+//   } else {
+//     message.value = 'Unknown Status'
+//   }
+// })
 </script>
 
 <style scoped>
 .card {
-  width: 260px;
-  height: 260px;
-  background: #07182E;
+  
   position: relative;
   display: flex;
   place-content: center;
   place-items: center;
   overflow: hidden;
-  border-radius: 20px;
+  border-radius: 15px;
   text-align: center;
 }
 
 .card h2 {
   z-index: 1;
-  color: white;
-  font-size: 1.5em;
   padding: 1rem;
 }
 
@@ -47,10 +52,10 @@ onMounted(() => {
   content: '';
   position: absolute;
   width: 100px;
-  background-image: linear-gradient(180deg, rgb(0, 183, 255), rgb(255, 48, 255));
-  height: 130%;
+  background-image: linear-gradient(180deg,  #ECA72C, #00A6ED);
+  height: 230%;
   animation: rotBGimg 3s linear infinite;
-  transition: all 0.2s linear;
+  transition: all 3s linear;
 }
 
 @keyframes rotBGimg {
@@ -66,7 +71,7 @@ onMounted(() => {
 .card::after {
   content: '';
   position: absolute;
-  background: #07182E;
+  background-color: #FFFCF9;
   inset: 5px;
   border-radius: 15px;
 }
