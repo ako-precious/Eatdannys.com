@@ -18,7 +18,7 @@ class PaymentController extends Controller
         $lineItems = collect($request->items)->map(function ($item) {
             return [
                 'price_data' => [
-                    'currency' => 'usd',
+                    'currency' => 'cad',
                     'product_data' => [
                         'name' => $item['name'],
                     ],
@@ -27,7 +27,7 @@ class PaymentController extends Controller
                 'quantity' => $item['quantity'],
             ];
         })->toArray();
-        
+
         foreach ($request->items as $item) {
             if (!isset($item['name'], $item['unit_price'], $item['quantity'])) {
                 return response()->json(['error' => 'Invalid cart data'], 400);

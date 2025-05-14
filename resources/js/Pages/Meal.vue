@@ -179,6 +179,8 @@ export default {
                             item.prices[0]
                         );
                         this.$set(this.quantities, item.id, 1); // default quantity
+                        // this.$set(this.selectedOptions, item.id, item.prices[0])
+
                     }
                 });
             })

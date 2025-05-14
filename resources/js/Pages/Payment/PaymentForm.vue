@@ -44,7 +44,7 @@
           'Content-Type': 'application/json',
         },
         // Send any necessary data to your backend, e.g., order amount
-        body: JSON.stringify({ amount: 2500, currency: 'usd' }), // Example: $25.00
+        body: JSON.stringify({ amount: 2500, currency: 'cad' }), // Example: $25.00
       });
   
       if (!response.ok) {

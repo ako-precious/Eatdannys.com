@@ -168,7 +168,7 @@
   };
   
  
-  const stripePromise = loadStripe('your-publishable-key')
+  const stripePromise = loadStripe('pk_test_51IvR8jAFJD6o0rICZ3MCmT7M8K0RNwvscS75G6T5cvT7mK2hnDXG7RSiqs2JK6nGskhEFo9QMNvP5VvGTmpyksEn00uGLkrESc')
   
   async function checkout() {
       const stripe = await stripePromise
