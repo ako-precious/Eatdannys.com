@@ -135,7 +135,7 @@
                     <div class="mt-6">
                       <button @click="checkout" 
                         href="#"
-                        class="flex items-center justify-center rounded-md border border-transparent bg-polynesian/80 px-6 py-3 text-base font-medium text-snow shadow-xs hover:bg-polynesian "
+                        class="flex items-center justify-center rounded-md border border-transparent bg-polynesian/80 px-6 py-3 text-base font-medium text-snow shadow-xs hover:bg-polynesian cursor-pointer "
                         >Checkout</button
                       >
                     </div>
