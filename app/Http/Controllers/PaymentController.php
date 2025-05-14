@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Stripe\Stripe;
 use Stripe\PaymentIntent;
@@ -62,22 +63,38 @@ class PaymentController extends Controller
     }
     
     public function success(Request $request)
-    {
-        Stripe::setApiKey(env('STRIPE_SECRET'));
-        
-        $sessionId = $request->get('session_id');
+{
+    Stripe::setApiKey(config('stripe.secret'));
 
-        if (!$sessionId) {
-            abort(400, 'Session ID is required');
-        }
+    $sessionId = $request->get('session_id');
 
-        // \Stripe\Stripe::setApiKey(config('stripe.secret'));
-
-        $session = \Stripe\Checkout\Session::retrieve($sessionId);
-
-        // Fetch order using $session->metadata or session details
-        return inertia('Payment/Success', [
-            'session' => $session
-        ]);
+    if (!$sessionId) {
+        abort(400, 'Session ID is required');
     }
+
+    $session = Session::retrieve($sessionId);
+
+    return Inertia::render('Payment/Success', [
+        'session' => $session
+    ]);
+}
+    // public function success(Request $request)
+    // {
+    //     Stripe::setApiKey(env('STRIPE_SECRET'));
+        
+    //     $sessionId = $request->get('session_id');
+
+    //     if (!$sessionId) {
+    //         abort(400, 'Session ID is required');
+    //     }
+
+    //     \Stripe\Stripe::setApiKey(config('stripe.secret'));
+
+    //     $session = \Stripe\Checkout\Session::retrieve($sessionId);
+
+    //     // Fetch order using $session->metadata or session details
+    //     return inertia('Payment/Success', [
+    //         'session' => $session
+    //     ]);
+    // }
 }
