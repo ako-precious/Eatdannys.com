@@ -52,17 +52,19 @@ class PaymentController extends Controller
         ]);
     
         // Save order to database
-        $order = new Order();
-        $order->status = 'unpaid';
-        $order->total_price = $total;
-        $order->session_id  = $session->id;
-        $order->save();
+        // $order = new Order();
+        // $order->status = 'unpaid';
+        // $order->total_price = $total;
+        // $order->session_id  = $session->id;
+        // $order->save();
     
         return response()->json(['id' => $session->id]);
     }
     
     public function success(Request $request)
     {
+        Stripe::setApiKey(env('STRIPE_SECRET'));
+        
         $sessionId = $request->get('session_id');
 
         if (!$sessionId) {
