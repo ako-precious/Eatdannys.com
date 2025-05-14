@@ -15,8 +15,9 @@ class PaymentController extends Controller
 
     public function createSession(Request $request)
     {
-        Stripe::setApiKey(env('STRIPE_SECRET'));
-    
+        // Stripe::setApiKey(env('STRIPE_SECRET'));
+        Stripe::setApiKey(config('services.stripe.secret'));
+
         // Validate all items first
         foreach ($request->items as $item) {
             if (!isset($item['name'], $item['unit_price'], $item['quantity'])) {
@@ -48,8 +49,8 @@ class PaymentController extends Controller
             'payment_method_types' => ['card'],
             'line_items' => $lineItems,
             'mode' => 'payment',
-            'success_url' => route('checkout.success', ['session_id' => '{CHECKOUT_SESSION_ID}']),
-            'cancel_url' => route('checkout.cancel'),
+            'success_url' => route('checkout.success', [], true)."?session_id={CHECKOUT_SESSION_ID}",
+            'cancel_url' => route('checkout.cancel', [], true),
         ]);
     
         // Save order to database
@@ -64,7 +65,9 @@ class PaymentController extends Controller
     
     public function success(Request $request)
 {
-    Stripe::setApiKey(config('stripe.secret'));
+    // Stripe::setApiKey(config('stripe.secret'));
+    Stripe::setApiKey(config('services.stripe.secret'));
+
 
     $sessionId = $request->get('session_id');
 
