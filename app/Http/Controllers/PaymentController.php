@@ -76,9 +76,10 @@ class PaymentController extends Controller
     }
 
     $session = Session::retrieve($sessionId);
+    $customer = \Stripe\Customer::retrieve($session->customer);
 
     return Inertia::render('Payment/Success', [
-        'session' => $session
+        'session' => $customer
     ]);
 }
     // public function success(Request $request)
