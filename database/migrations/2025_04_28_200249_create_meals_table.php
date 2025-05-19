@@ -22,7 +22,7 @@ return new class extends Migration
             $table->unsignedBigInteger('category_id')->nullable(); // Foreign key to categories table
             $table->string('name'); // Name of the meal 
             $table->text('description')->nullable(); // Description of the meal
-            $table->json('price');       // Price of the meal in JSON format
+            $table->json('prices');       // Price of the meal in JSON format
             $table->timestamps(); // created_at and updated_at columns
 
             // Foreign key constraint (optional, but recommended)
