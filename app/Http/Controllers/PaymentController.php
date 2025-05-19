@@ -8,111 +8,114 @@ use Stripe\Stripe;
 use Stripe\PaymentIntent;
 use Stripe\Checkout\Session;
 use App\Models\Order;
+use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
 {
     //
 
     public function createSession(Request $request)
-    {
-        // Stripe::setApiKey(env('STRIPE_SECRET'));
-        Stripe::setApiKey(config('services.stripe.secret'));
+{
+    Stripe::setApiKey(config('services.stripe.secret'));
 
-        // Validate all items first
-        foreach ($request->items as $item) {
-            if (!isset($item['name'], $item['unit_price'], $item['quantity'])) {
-                return response()->json(['error' => 'Invalid cart data'], 400);
-            }
-        }
-    
-        // Build Stripe line items and calculate total price
-        $lineItems = [];
-        $total = 0;
-    
-        foreach ($request->items as $item) {
-            $lineItems[] = [
-                'price_data' => [
-                    'currency' => 'cad',
-                    'product_data' => [
-                        'name' => $item['name'],
-                    ],
-                    'unit_amount' => $item['unit_price'] * 100, // in cents
-                ],
-                'quantity' => $item['quantity'],
-            ];
-    
-            $total += $item['unit_price'] * $item['quantity'];
-        }
-    
-        // Create the Stripe checkout session
-        $session = Session::create([
-            'payment_method_types' => ['card'],
-            'line_items' => $lineItems,
-            'mode' => 'payment',
-            'success_url' => route('checkout.success', [], true)."?session_id={CHECKOUT_SESSION_ID}",
-            'cancel_url' => route('checkout.cancel', [], true),
-            'billing_address_collection' => 'required'
-        ]);
-    
-        // Save order to database
-        // $order = new Order();
-        // $order->status = 'unpaid';
-        // $order->total_price = $total;
-        // $order->session_id  = $session->id;
-        // $order->save();
-    
-        return response()->json(['id' => $session->id]);
+    // Validate request structure
+    $request->validate([
+        'items' => 'required|array|min:1',
+        'items.*.name' => 'required|string',
+        'items.*.unit_price' => 'required|numeric|min:0',
+        'items.*.quantity' => 'required|integer|min:1',
+    ]);
+
+    // Build Stripe line items and calculate total
+    $lineItems = [];
+    $total = 0;
+    $rawItems = []; // To store original items
+
+    foreach ($request->items as $item) {
+        // Store original item data
+        $rawItems[] = [
+            'name' => $item['name'],
+            'unit_price' => $item['unit_price'],
+            'quantity' => $item['quantity']
+        ];
+
+        // Stripe format
+        $lineItems[] = [
+            'price_data' => [
+                'currency' => 'cad',
+                'product_data' => ['name' => $item['name']],
+                'unit_amount' => $item['unit_price'] * 100,
+            ],
+            'quantity' => $item['quantity'],
+        ];
+
+        $total += $item['unit_price'] * $item['quantity'];
     }
 
-    public function success(Request $request)
-{
-    \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
-
-    $session = \Stripe\Checkout\Session::retrieve([
-        'id' => $request->get('session_id'),
-        'expand' => ['payment_intent'],
+    // Create Stripe session
+    $session = Session::create([
+        'payment_method_types' => ['card'],
+        'line_items' => $lineItems,
+        'mode' => 'payment',
+        'success_url' => route('checkout.success', [], true) . "?session_id={CHECKOUT_SESSION_ID}",
+        'cancel_url' => route('checkout.cancel', [], true),
+        'billing_address_collection' => 'required'
     ]);
 
-    $paymentIntent = \Stripe\PaymentIntent::retrieve([
-        'id' => $session->payment_intent->id,
-        'expand' => ['charges.data.billing_details'], // 👈 expand the charge billing details
-    ]);
+    // Create order record
+    $order = new Order();
+    $order->status = 'unpaid';
+    $order->items = $rawItems;  // Store original items data
+    $order->total_price = $total;
+    $order->session_id = $session->id;
+    $order->user_id = Auth::check() ? Auth::id() : null;
+    $order->address = null;
+    $order->save();
 
-    $charge = $paymentIntent->charges->data[0] ?? null;
-
-    return response()->json([
-        'status' => $paymentIntent->status,
-        'paid' => $paymentIntent->status === 'succeeded',
-        'billing_details' => $charge ? $charge->billing_details : 'no billing info found',
-    ]);
+    return response()->json(['id' => $session->id]);
 }
 
-//     public function success(Request $request)
-// {
-//     \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
+    public function success(Request $request)
+    {
+        \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
 
-//     $session = \Stripe\Checkout\Session::retrieve([
-//         'id' => $request->get('session_id'),
-//         'expand' => ['payment_intent'],
-//     ]);
+        try {
+            $session = \Stripe\Checkout\Session::retrieve([
+                'id' => $request->get('session_id'),
+                'expand' => [
+                    'customer',
+                    'payment_intent',
+                    'payment_intent.charges.data.billing_details'
+                ],
+            ]);
 
-//     $paymentIntent = $session->payment_intent;
+            // Primary source: Checkout Session's customer_details
+            $billingDetails = $session->customer_details ?? null;
 
-//     // Now expand the charges of the PaymentIntent
-//     $paymentIntent = \Stripe\PaymentIntent::retrieve([
-//         'id' => $paymentIntent->id,
-//         'expand' => ['charges'],
-//     ]);
+            // Fallback: Charge-level details (if needed)
+            $chargeDetails = $session->amount_total ?? null;
 
-//     // Get the first charge if it exists
-//     $charge = $paymentIntent->charges->data[0] ?? null;
 
-//     return response()->json([
-//         'status' => $paymentIntent->status,
-//         'paymentIntent' => $paymentIntent,
-//         'paid' => $paymentIntent->status === 'succeeded',
-//         'billing_details' => $charge ? $charge->billing_details : null,
-//     ]);
-// }
-
+            
+            
+            // Save order to database
+        $order = new Order();
+        $order->status = 'unpaid';
+        $order->total_price = $chargeDetails;
+        $order->session_id  = $session->id;
+        $order->user_id  = $session->id;
+        $order->address  = $session->id;
+    
+        // $order->save();
+            return response()->json([
+                'paid'        => $session->payment_status === 'paid',
+                'customer'    => $billingDetails,
+                'charge_data' => $chargeDetails,
+            ]);
+        } catch (\Stripe\Exception\ApiErrorException $e) {
+            // Always log Stripe errors
+            // \Log::error('Stripe API Error: '.$e->getMessage());
+            return response()->json(['error' => 'Payment verification failed'], 400);
+        }
+    }
 }
