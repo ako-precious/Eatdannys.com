@@ -149,48 +149,48 @@
       </div>
     </div>
   </template>
-  <script setup>
+   <script setup>
   
-  import { useCartStore } from '@/stores/cart';
-  import CartIcon from './CartIcon.vue'; // Import your CartIcon component
-  import { useUIStore } from '@/stores/ui';
-  import { loadStripe } from '@stripe/stripe-js'
-  import axios from 'axios'
+   import { useCartStore } from '@/stores/cart';
+   import CartIcon from './CartIcon.vue'; // Import your CartIcon component
+   import { useUIStore } from '@/stores/ui';
+   import { loadStripe } from '@stripe/stripe-js'
+   import axios from 'axios'
+   
+   const cart = useCartStore();
+   const ui = useUIStore();
+   
+   const openCart = () => {
+     ui.openCart();
+   };
+   const closeCart = () => {
+     ui.closeCart();
+   };
+   
   
-  const cart = useCartStore();
-  const ui = useUIStore();
-  
-  const openCart = () => {
-    ui.openCart();
-  };
-  const closeCart = () => {
-    ui.closeCart();
-  };
-  
+   const stripePromise = loadStripe('pk_test_51IvR8jAFJD6o0rICZ3MCmT7M8K0RNwvscS75G6T5cvT7mK2hnDXG7RSiqs2JK6nGskhEFo9QMNvP5VvGTmpyksEn00uGLkrESc')
+   
+   async function checkout() {
+   const stripe = await stripePromise
  
-  const stripePromise = loadStripe('pk_test_51IvR8jAFJD6o0rICZ3MCmT7M8K0RNwvscS75G6T5cvT7mK2hnDXG7RSiqs2JK6nGskhEFo9QMNvP5VvGTmpyksEn00uGLkrESc')
-  
-  async function checkout() {
-      const stripe = await stripePromise
-  
-      const response = await axios.post('/api/create-checkout-session', {
-          items: cart.items
-      })
-  
-      const result = await stripe.redirectToCheckout({
-          sessionId: response.data.id
-      })
-  
-      if (result.error) {
-          console.error(result.error.message)
-      }
-  }
-  </script>
+   try {
+     const response = await axios.post('/api/create-checkout-session', {
+       items: cart.items
+     })
  
-  
-  <!-- <template>
-    <button @click="checkout" class="bg-blue-600 text-white px-4 py-2 rounded">
-      Pay Now ${{ cart.subtotal.toFixed(2) }}
-    </button>
-  </template> -->
-  
+     const result = await stripe.redirectToCheckout({
+       sessionId: response.data.id
+     })
+ 
+     if (result.error) {
+       console.error(result.error.message)
+     } else {
+       // ✅ Clear cart only after Stripe starts redirecting
+       cart.clearCart()
+     }
+   } catch (error) {
+     console.error('Checkout error:', error)
+   }
+ }
+ 
+   </script>
