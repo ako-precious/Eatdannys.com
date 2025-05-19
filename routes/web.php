@@ -31,8 +31,9 @@ Route::middleware([
 
 
 Route::get('/payment-status',[PaymentController::class, 'createPaymentIntent'])->name('payment.status');
-Route::get('/checkout/success', [PaymentController::class, 'success'])->name('checkout.success');
-Route::get('/checkout/cancel', [PaymentController::class, 'cancel'])->name('checkout.cancel');
+Route::get('/checkout/success', function () {
+    return Inertia::render('Payment/Success',);})->name('checkout.success');
+
 
 // Create a simple Blade view for payment status (resources/views/payment-status.blade.php)
 // You could also use a Vue component for this page if you prefer SPA routing.

@@ -1,4 +1,50 @@
+
+
 <template>
+  <div v-if="paymentResult">
+    <div v-if="paymentResult.paid" class="success-message">
+      <h2>Payment Successful! 🎉</h2>
+      
+      <div v-if="paymentResult.requires_signup" class="signup-prompt">
+        <h3>Almost done!</h3>
+        <p>Please complete your account setup to access order history.</p>
+        <button @click="redirectToSignup">Complete Signup</button>
+      </div>
+
+      <!-- <order-details :customer="paymentResult.customer" /> -->
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  methods: {
+    async checkPaymentStatus() {
+      try {
+        const response = await axios.get('/api/checkout/success', {
+          params: { session_id: this.sessionId }
+        });
+        
+        if (response.data.requires_signup) {
+          localStorage.setItem('pending_user_email', response.data.customer.email);
+        }
+        
+        this.paymentResult = response.data;
+      } catch (error) {
+        this.handleError(error);
+      }
+    },
+    redirectToSignup() {
+      this.$router.push({
+        path: '/signup',
+        query: { email: this.paymentResult.customer.email }
+      });
+    }
+  }
+}
+</script>
+
+<!-- <template>
   <div class="flex min-h-screen justify-center items-center p-12 bg-snow">
     <div class="card max-h-[360px] max-w-[360px] shadow-2xl bg-snow/70 p-4">
       
@@ -75,4 +121,4 @@ defineProps({
   inset: 5px;
   border-radius: 15px;
 }
-</style>
+</style> -->
