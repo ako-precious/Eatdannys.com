@@ -65,7 +65,7 @@ class PaymentController extends Controller
     // Create order record
     $order = new Order();
     $order->status = 'unpaid';
-    $order->items = $rawItems;  // Store original items data
+    $order->menu = $rawItems;  // Store original items data
     $order->total_price = $total;
     $order->session_id = $session->id;
     $order->user_id = Auth::check() ? Auth::id() : null;
