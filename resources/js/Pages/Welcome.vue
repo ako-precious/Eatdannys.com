@@ -4,7 +4,7 @@ import { Head, Link } from "@inertiajs/vue3";
 import Meal from "./Meal.vue";
 import ScrollToTop from "@/Components/ScrollToTop.vue";
 import CartSlideOver from "./Header/CartSlideOver.vue";
-import Background from "./Layout/Background.vue";
+import Background from "@/Layouts/Background.vue";
 defineProps({
     canLogin: {
         type: Boolean,

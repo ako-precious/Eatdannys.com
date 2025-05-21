@@ -42,7 +42,7 @@ class WelcomeNotification extends \Illuminate\Auth\Notifications\ResetPassword
                 'token' => $this->token,
                 'email' => $notifiable->getEmailForPasswordReset(),
             ], false)))
-            ->line('This link will expire in 24 hours.');
+            ->line('This link will expire in 2 hours.');
     }
 
     /**
