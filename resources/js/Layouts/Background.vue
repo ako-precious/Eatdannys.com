@@ -1,5 +1,5 @@
 <script setup>
-import Header from "../Header/Index.vue";
+import Header from "@/Pages/Header/Index.vue";
 
 </script>
 

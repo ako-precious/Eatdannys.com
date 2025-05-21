@@ -74,7 +74,7 @@ export default {
        
         <header
             :class="{
-                'fix align-bottom shadow-sm py-4 px-8 bg-snow dark:bg-oynx text-oynx': isHeaderFixed,
+                'fix align-bottom shadow-sm py-4 px-8 bg-snow dark:bg-oynx text-oynx dark:text-snow': isHeaderFixed,
             }"
             class="py-5  z-10 transition-all duration-300 delay-75 ease-in animate-fade-in"
         >
