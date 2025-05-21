@@ -1,4 +1,156 @@
 <template>
+  <div>
+    <div>
+      <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        Order Complete
+      </h2>
+    </div>
+
+    <div class="py-12">
+      <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div v-if="loading" class="text-center">
+          <jet-spinner class="h-12 w-12 mx-auto" />
+          <p class="mt-4 text-gray-600 dark:text-gray-400">Verifying payment...</p>
+        </div>
+
+        <div v-else-if="error" class="bg-red-50 dark:bg-red-900 p-6 rounded-lg">
+          <h3 class="text-red-800 dark:text-red-100 text-xl font-bold mb-4">Payment Verification Failed</h3>
+          <p class="text-red-700 dark:text-red-200">{{ error }}</p>
+          <jet-button class="mt-4" @click.native="retryVerification">
+            Try Again
+          </jet-button>
+        </div>
+
+        <div v-else class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+          <div class="p-6 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+            <div class="flex items-center mb-6">
+              <svg class="h-12 w-12 text-green-500 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              <h3 class="text-2xl font-semibold text-gray-900 dark:text-gray-100">
+                Payment Successful!
+              </h3>
+            </div>
+
+            <div v-if="requiresPasswordSetup" class="mt-8 bg-blue-50 dark:bg-blue-900 p-6 rounded-lg">
+              <h4 class="text-lg font-medium text-blue-800 dark:text-blue-100 mb-4">
+                Almost Done!
+              </h4>
+              <p class="text-blue-700 dark:text-blue-200">
+                We've sent a password setup link to <span class="font-semibold">{{ customerEmail }}</span>.
+                Check your inbox to complete your account setup.
+              </p>
+              
+              <div class="mt-6 flex items-center space-x-4">
+                <jet-button @click.native="resendVerificationEmail">
+                  Resend Email
+                </jet-button>
+                <span class="text-sm text-blue-700 dark:text-blue-300">
+                  Didn't receive it? Check spam folder first
+                </span>
+              </div>
+            </div>
+
+            <div class="mt-8 border-t border-gray-200 dark:border-gray-700 pt-6">
+              <h4 class="text-lg font-medium mb-4 text-gray-900 dark:text-gray-100">
+                Next Steps
+              </h4>
+              <ul class="list-disc pl-6 space-y-2 text-gray-600 dark:text-gray-300">
+                <li>You'll receive an order confirmation email shortly</li>
+                <li v-if="!requiresPasswordSetup">Track your order in <inertia-link href="/orders" class="text-blue-600 dark:text-blue-400">Order History</inertia-link></li>
+                <li>Contact support if you have any questions</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+
+import JetButton from '@/Components/PrimaryButton.vue'
+import JetSpinner from '@/Components/Spinner.vue'
+
+export default {
+  components: {
+    
+    JetButton,
+    JetSpinner
+  },
+
+  data() {
+    return {
+      loading: true,
+      error: null,
+      requiresPasswordSetup: false,
+      customerEmail: null
+    }
+  },
+
+  mounted() {
+    this.verifyPayment()
+  },
+
+  methods: {
+    async verifyPayment() {
+      try {
+        const sessionId = new URLSearchParams(window.location.search).get('session_id')
+        
+        const response = await this.$inertia.get(route('checkout.success'), {
+          session_id: sessionId
+        }, {
+          preserveState: true,
+          only: ['success', 'requires_password_setup', 'customer_email']
+        })
+
+        if (response.data.success) {
+          this.requiresPasswordSetup = response.data.requires_password_setup
+          this.customerEmail = response.data.customer_email
+        } else {
+          this.error = 'Payment verification failed. Please contact support.'
+        }
+      } catch (error) {
+        this.error = this.extractErrorMessage(error)
+        if (error.response?.status === 404) {
+          this.$inertia.visit(route('checkout.cancel'))
+        }
+      } finally {
+        this.loading = false
+      }
+    },
+
+    async resendVerificationEmail() {
+      try {
+        await axios.post(route('password.email'), {
+          email: this.customerEmail
+        })
+        this.$page.props.flash = {
+          message: 'New verification email sent!',
+          type: 'success'
+        }
+      } catch (error) {
+        this.error = this.extractErrorMessage(error)
+      }
+    },
+
+    retryVerification() {
+      this.loading = true
+      this.error = null
+      this.verifyPayment()
+    },
+
+    extractErrorMessage(error) {
+      return error.response?.data?.error || 
+             error.message || 
+             'An unexpected error occurred'
+    }
+  }
+}
+</script>
+
+<!-- <template>
   <div v-if="success">
     <h2>Payment Successful! 🎉</h2>
     <div v-if="needsPassword">
@@ -25,7 +177,7 @@ export default {
     this.success = true;
   }
 };
-</script>
+</script> -->
 
 <!-- 
 

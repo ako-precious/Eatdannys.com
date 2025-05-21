@@ -10,6 +10,7 @@ use Stripe\Checkout\Session;
 use App\Models\Order;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Jetstream\Jetstream; // Add this import
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str; // Add this for password generation
 
@@ -86,22 +87,23 @@ class PaymentController extends Controller
     //         'payment_intent.charges.data.billing_details'
     //     ],
     // ]);
-  public function success(Request $request)
+
+public function success(Request $request)
 {
     try {
-        // 1. Get Stripe session
+        // Retrieve Stripe session
         $session = \Stripe\Checkout\Session::retrieve($request->session_id);
-        
-        // 2. Find the order
+
+        // Find the order
         $order = Order::where('session_id', $session->id)->firstOrFail();
 
-        // 3. Update order status and address
+        // Update order status and address
         $order->update([
             'status' => $session->payment_status,
-            'address' => $session->customer_details->address ?? null
+            'address' => json_encode($session->customer_details->address ?? null)
         ]);
 
-        // 4. Handle user creation
+        // Handle user creation/association
         $email = $session->customer_details->email;
         $user = User::firstOrCreate(
             ['email' => $email],
@@ -111,16 +113,20 @@ class PaymentController extends Controller
             ]
         );
 
-        // 5. If new user, send password setup email
-        if ($user->wasRecentlyCreated) {
-            Password::sendResetLink(['email' => $email]);
-            return response()->json(['needs_password_setup' => true]);
+        // If new user, send Jetstream-style verification
+       if ($user->wasRecentlyCreated) {
+            $token = Password::createToken($user); // Simplified token generation
+            $user->sendWelcomeNotification($token);
         }
 
-        // 6. Link order to user
+
+        // Associate order with user
         $order->update(['user_id' => $user->id]);
 
-        return response()->json(['success' => true]);
+        return response()->json([
+            'order' => $order,
+            'requires_password_setup' => $user->wasRecentlyCreated
+        ]);
 
     } catch (\Exception $e) {
         return response()->json(['error' => $e->getMessage()], 500);

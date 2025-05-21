@@ -171,6 +171,7 @@
    const stripePromise = loadStripe('pk_test_51IvR8jAFJD6o0rICZ3MCmT7M8K0RNwvscS75G6T5cvT7mK2hnDXG7RSiqs2JK6nGskhEFo9QMNvP5VvGTmpyksEn00uGLkrESc')
    
    async function checkout() {
+     cart.clearCart()
    const stripe = await stripePromise
  
    try {
@@ -186,7 +187,6 @@
        console.error(result.error.message)
      } else {
        // ✅ Clear cart only after Stripe starts redirecting
-       cart.clearCart()
      }
    } catch (error) {
      console.error('Checkout error:', error)

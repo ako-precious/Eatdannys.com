@@ -29,7 +29,7 @@ Route::middleware([
 });
 
 // routes/web.php
-Auth::routes(['reset' => true]); // This enables password reset routes
+// Auth::routes(['reset' => true]); // This enables password reset routes
 
 Route::get('/payment-status',[PaymentController::class, 'createPaymentIntent'])->name('payment.status');
 Route::get('/checkout/success', function () {
