@@ -171,10 +171,9 @@
    const stripePromise = loadStripe('pk_test_51IvR8jAFJD6o0rICZ3MCmT7M8K0RNwvscS75G6T5cvT7mK2hnDXG7RSiqs2JK6nGskhEFo9QMNvP5VvGTmpyksEn00uGLkrESc')
    
    async function checkout() {
-     cart.clearCart()
-   const stripe = await stripePromise
- 
-   try {
+     const stripe = await stripePromise
+     
+     try {
      const response = await axios.post('/api/create-checkout-session', {
        items: cart.items
      })
@@ -182,10 +181,11 @@
      const result = await stripe.redirectToCheckout({
        sessionId: response.data.id
      })
- 
+     
      if (result.error) {
        console.error(result.error.message)
-     } else {
+      } else {
+       cart.clearCart()
        // ✅ Clear cart only after Stripe starts redirecting
      }
    } catch (error) {

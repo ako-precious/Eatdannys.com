@@ -33,7 +33,7 @@ Route::middleware([
 
 Route::get('/payment-status',[PaymentController::class, 'createPaymentIntent'])->name('payment.status');
 Route::get('/checkout/success', function () {
-    return Inertia::render('Payment/Success',);})->name('checkout.success');
+    return Inertia::render('Payment/Success',);})->name('success');
 
 
 // Create a simple Blade view for payment status (resources/views/payment-status.blade.php)

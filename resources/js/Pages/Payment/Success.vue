@@ -1,3 +1,7 @@
+<script setup>
+import { Link } from '@inertiajs/inertia-vue3'
+</script>
+
 <template>
   <div>
     <div>
@@ -8,7 +12,7 @@
 
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div v-if="loading" class="text-center">
+        <!-- <div v-if="loading" class="text-center">
           <jet-spinner class="h-12 w-12 mx-auto" />
           <p class="mt-4 text-gray-600 dark:text-gray-400">Verifying payment...</p>
         </div>
@@ -19,9 +23,9 @@
           <jet-button class="mt-4" @click.native="retryVerification">
             Try Again
           </jet-button>
-        </div>
+        </div> -->
 
-        <div v-else class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+        <div  class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
           <div class="p-6 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
             <div class="flex items-center mb-6">
               <svg class="h-12 w-12 text-green-500 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -57,7 +61,7 @@
               </h4>
               <ul class="list-disc pl-6 space-y-2 text-gray-600 dark:text-gray-300">
                 <li>You'll receive an order confirmation email shortly</li>
-                <li v-if="!requiresPasswordSetup">Track your order in <inertia-link href="/orders" class="text-blue-600 dark:text-blue-400">Order History</inertia-link></li>
+                <li v-if="!requiresPasswordSetup">Track your order in  <Link href="/welcome" class="text-blue-600 dark:text-blue-400">Order History </Link> </li>
                 <li>Contact support if you have any questions</li>
               </ul>
             </div>
@@ -82,7 +86,7 @@ export default {
 
   data() {
     return {
-      loading: true,
+      loading: false,
       error: null,
       requiresPasswordSetup: false,
       customerEmail: null
@@ -104,6 +108,8 @@ export default {
           preserveState: true,
           only: ['success', 'requires_password_setup', 'customer_email']
         })
+        // console.log(response);
+        
 
         if (response.data.success) {
           this.requiresPasswordSetup = response.data.requires_password_setup
@@ -136,7 +142,7 @@ export default {
     },
 
     retryVerification() {
-      this.loading = true
+      // this.loading = true
       this.error = null
       this.verifyPayment()
     },

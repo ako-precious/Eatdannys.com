@@ -92,8 +92,16 @@ public function success(Request $request)
 {
     try {
         // Retrieve Stripe session
-        $session = \Stripe\Checkout\Session::retrieve($request->session_id);
-
+        // $session = \Stripe\Checkout\Session::retrieve($request->session_id);
+  Stripe::setApiKey(config('services.stripe.secret'));
+        $session = \Stripe\Checkout\Session::retrieve([
+        'id' => $request->get('session_id'),
+        'expand' => [
+            'customer',
+            'payment_intent',
+            'payment_intent.charges.data.billing_details'
+        ],
+    ]);
         // Find the order
         $order = Order::where('session_id', $session->id)->firstOrFail();
 
