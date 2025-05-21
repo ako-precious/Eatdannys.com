@@ -1,21 +1,5 @@
 <script setup>
 import Header from "../Header/Index.vue";
-defineProps({
-    canLogin: {
-        type: Boolean,
-    },
-    canRegister: {
-        type: Boolean,
-    },
-    laravelVersion: {
-        type: String,
-        required: true,
-    },
-    phpVersion: {
-        type: String,
-        required: true,
-    },
-});
 
 </script>
 
