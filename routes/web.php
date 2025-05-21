@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Stripe\Stripe;
 use Stripe\PaymentIntent;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -28,7 +29,7 @@ Route::middleware([
 });
 
 // routes/web.php
-
+Auth::routes(['reset' => true]); // This enables password reset routes
 
 Route::get('/payment-status',[PaymentController::class, 'createPaymentIntent'])->name('payment.status');
 Route::get('/checkout/success', function () {

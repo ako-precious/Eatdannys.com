@@ -1,4 +1,33 @@
+<template>
+  <div v-if="success">
+    <h2>Payment Successful! 🎉</h2>
+    <div v-if="needsPassword">
+      <p>Check your email to set up your account password</p>
+      <button @click="resendEmail">Resend Email</button>
+    </div>
+  </div>
+</template>
 
+<script>
+export default {
+  data() {
+    return {
+      needsPassword: false,
+      success: false
+    };
+  },
+  async mounted() {
+    const response = await axios.get('/api/checkout/success', {
+      params: { session_id: this.$route.query.session_id }
+    });
+    
+    this.needsPassword = response.data.needs_password;
+    this.success = true;
+  }
+};
+</script>
+
+<!-- 
 
 <template>
   <div v-if="paymentResult">
@@ -11,7 +40,7 @@
         <button @click="redirectToSignup">Complete Signup</button>
       </div>
 
-      <!-- <order-details :customer="paymentResult.customer" /> -->
+      <order-details :customer="paymentResult.customer" />
     </div>
   </div>
 </template>
@@ -121,4 +150,4 @@ defineProps({
   inset: 5px;
   border-radius: 15px;
 }
-</style> -->
+</style> --> 
