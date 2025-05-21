@@ -133,7 +133,7 @@ public function success(Request $request)
 
         return response()->json([
             'order' => $order,
-            'requires_password_setup' => $user->wasRecentlyCreated
+            'requires_password_setup' => $user->wasRecentlyCreated = true,
         ]);
 
     } catch (\Exception $e) {
