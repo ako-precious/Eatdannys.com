@@ -2,7 +2,7 @@
 import { Link, usePage } from "@inertiajs/vue3";
 import axios from "axios";
 import { useCartStore } from "@/stores/cart";
-import Background from "../Layout/Background.vue";
+import Background from "@/Layouts/Background.vue";
 
 const page = usePage();
 const user = page.props.auth?.user || null;
