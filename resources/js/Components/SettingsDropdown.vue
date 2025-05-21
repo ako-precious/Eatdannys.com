@@ -46,7 +46,7 @@ const toggleDarkMode = useToggle(isDark);
                         type="button"
                         class="inline-flex items-center px-3 py-3 border border-transparent text-sm leading-4 font-medium rounded-full transition ease-in-out duration-150"
                     >
-                        {{ truncatedIng($page.props.auth.user.name) }}
+                        <!-- {{ truncatedIng($page.props.auth.user.name) }} -->
                         <font-awesome-icon
                             icon="caret-down"
                             class="h-3 lg:h-4 ml-2 svg-inline--fa fa-user fa-w-14 fa-9x"
@@ -70,44 +70,7 @@ const toggleDarkMode = useToggle(isDark);
                         ><font-awesome-icon icon="user" class="mr-2" />
                         Profile
                     </DropdownLink>
-                    <DropdownLink
-                        :href="route('meal-schedule')"
-                        class="flex w-full items-center rounded-md px-4 py-1 text-sm text-oynx hover:text-polynesian dark:text-snow dark:hover:text-lighred cursor-pointer transition-all duration-200 ease-in-out"
-                        ><font-awesome-icon icon="calendar" class="mr-2" />
-                        Meal Schedule
-                    </DropdownLink>
-                    <DropdownLink
-                        :href="route('notifications.index')"
-                        class="relative flex items-center rounded-md px-4 py-1 text-sm text-oynx hover:text-polynesian dark:text-snow dark:hover:text-lighred cursor-pointer transition-all duration-200 ease-in-out"
-                        >   <div
-                        v-if="notifications"
-                        class="absolute top-[20%] right-[10%]"
-                    >
-                        <div
-                            class="bg-persian  w-[22px] h-[22px] rounded-full flex items-center justify-center"
-                        >
-                            <p class="text-xs font-bold text-white">{{ notifications }}</p>
-                        </div>
-                    </div>
-                        <font-awesome-icon icon="bell" class="mr-2" />
-                        Notification
-                    </DropdownLink>
-                    <DropdownLink
-                        :href="route('wishlist.index')"
-                        class="relative flex items-center rounded-md px-4 py-1 text-sm text-oynx hover:text-polynesian dark:text-snow dark:hover:text-lighred cursor-pointer transition-all duration-200 ease-in-out"
-                    >   <div
-                        v-if="wishlist"
-                        class="absolute top-[20%] right-[10%]"
-                    >
-                        <div
-                            class="bg-persian w-[22px] h-[22px] rounded-full flex items-center justify-center"
-                        >
-                            <p class="text-xs font-bold text-white">{{ wishlist }}</p>
-                        </div>
-                    </div>
-                        <font-awesome-icon icon="heart" class="mr-2" />
-                        Wishlist
-                    </DropdownLink>
+                   
 
                     <DropdownLink
                         v-if="$page.props.jetstream.hasApiFeatures"
@@ -178,10 +141,6 @@ export default {
             wishlist: "",
         };
     },
-    created() {
-        this.checkNotification();
-        this.checkWishlist();
-    },
     methods: {
         getProfilePhotoUrl(profilePhotoPath) {
             if (
@@ -192,28 +151,7 @@ export default {
                 return `${profilePhotoPath}`;
             }
         },
-        checkNotification() {
-            axios
-                .get("/notifications-messages")
-                .then((response) => {
-                   ( this.notifications = response.data.count);
-                })
-                .catch((error) => {
-                    // Handle error
-                    console.error("Error saving data:", error);
-                });
-        },
-        checkWishlist() {
-            axios
-                .get("/wishlist/2")
-                .then((response) => {
-             this.wishlist = response.data.meals;
-                })
-                .catch((error) => {
-                    // Handle error
-                    console.error("Error saving data:", error);
-                });
-        },
+      
     },
 };
 </script>
