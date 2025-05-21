@@ -10,7 +10,8 @@ use Stripe\Checkout\Session;
 use App\Models\Order;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str; // Add this for password generation
 
 class PaymentController extends Controller
 {
@@ -85,72 +86,44 @@ class PaymentController extends Controller
     //         'payment_intent.charges.data.billing_details'
     //     ],
     // ]);
-    public function success(Request $request)
-    {
-        \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
+  public function success(Request $request)
+{
+    try {
+        // 1. Get Stripe session
+        $session = \Stripe\Checkout\Session::retrieve($request->session_id);
+        
+        // 2. Find the order
+        $order = Order::where('session_id', $session->id)->firstOrFail();
 
-        try {
-            $session = \Stripe\Checkout\Session::retrieve([
-                'id' => $request->get('session_id'),
-                'expand' => [
-                    'customer',
-                    'payment_intent',
-                    'payment_intent.charges.data.billing_details'
-                ],
-            ]);
+        // 3. Update order status and address
+        $order->update([
+            'status' => $session->payment_status,
+            'address' => $session->customer_details->address ?? null
+        ]);
 
-            // Retrieve the associated order
-            $order = Order::where('session_id', $session->id)->first();
+        // 4. Handle user creation
+        $email = $session->customer_details->email;
+        $user = User::firstOrCreate(
+            ['email' => $email],
+            [
+                'name' => $session->customer_details->name ?? 'Customer',
+                'password' => bcrypt(Str::random(40)) // Temporary unusable password
+            ]
+        );
 
-            if (!$order) {
-                return response()->json(['error' => 'Order not found'], 404);
-            }
-
-            $billingDetails = $session->customer_details;
-            $email = $billingDetails->email ?? null;
-
-            // Update order with payment status and address
-            $order->update([
-                'status' => $session->payment_status,
-                'address' => $billingDetails ? json_encode($billingDetails->address) : null
-            ]);
-
-            $user = null;
-            $requiresSignup = false;
-
-            if ($email) {
-                // Find or create user
-                $user = User::firstOrCreate(
-                    ['email' => $email],
-                    [
-                        'name' => $billingDetails->name ?? 'Customer',
-                        'password' => bcrypt(Str::random(16)), // Temporary password
-                    ]
-                );
-
-                // Check if the user was just created
-                if ($user->wasRecentlyCreated) {
-                    $requiresSignup = true;
-                    // Consider sending a password reset email here
-                }
-
-                // Associate order with user
-                $order->update(['user_id' => $user->id]);
-            }
-
-            return response()->json([
-                'paid' => $session->payment_status === 'paid',
-                'customer' => $billingDetails,
-                'requires_signup' => $requiresSignup,
-                'user_exists' => !$requiresSignup && $user !== null,
-                'order_updated' => true
-            ]);
-        } catch (\Stripe\Exception\ApiErrorException $e) {
-            // \Log::error('Stripe Error: ' . $e->getMessage());
-            return response()->json(['error' => 'Payment verification failed'], 400);
-        } catch (\Exception $e) {
-            // \Log::error('System Error: ' . $e->getMessage());
-            return response()->json(['error' => 'Internal server error'], 500);
+        // 5. If new user, send password setup email
+        if ($user->wasRecentlyCreated) {
+            Password::sendResetLink(['email' => $email]);
+            return response()->json(['needs_password_setup' => true]);
         }
+
+        // 6. Link order to user
+        $order->update(['user_id' => $user->id]);
+
+        return response()->json(['success' => true]);
+
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
     }
+}
 }
