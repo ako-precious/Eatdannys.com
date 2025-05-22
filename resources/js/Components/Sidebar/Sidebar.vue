@@ -14,12 +14,12 @@
         <i class="fas fa-bars"></i>
       </button>
       <!-- Brand -->
-      <router-link
+      <Link
         class="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
-        to="/"
+        href="/"
       >
         Vue Notus
-      </router-link>
+      </Link>
       <!-- User -->
       <ul class="md:hidden items-center flex flex-wrap list-none">
         <li class="inline-block relative">
@@ -40,12 +40,12 @@
         >
           <div class="flex flex-wrap">
             <div class="w-6/12">
-              <router-link
+              <Link
                 class="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
-                to="/"
+                href="/"
               >
                 Vue Notus
-              </router-link>
+              </Link>
             </div>
             <div class="w-6/12 flex justify-end">
               <button
@@ -64,7 +64,7 @@
             <input
               type="text"
               placeholder="Search"
-              class="border-0 px-3 py-2 h-12 border border-solid border-blueGray-500 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-base leading-snug shadow-none outline-none focus:outline-none w-full font-normal"
+              class="border-0 px-3 py-2 h-12  border-solid border-blueGray-500 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-base leading-snug shadow-none outline-none focus:outline-none w-full font-normal"
             />
           </div>
         </form>
@@ -81,8 +81,8 @@
 
         <ul class="md:flex-col md:min-w-full flex flex-col list-none">
           <li class="items-center">
-            <router-link
-              to="/admin/dashboard"
+            <Link
+              href="/admin/dashboard"
               v-slot="{ href, navigate, isActive }"
             >
               <a
@@ -101,12 +101,12 @@
                 ></i>
                 Dashboard
               </a>
-            </router-link>
+            </Link>
           </li>
 
           <li class="items-center">
-            <router-link
-              to="/admin/settings"
+            <Link
+              href="/admin/settings"
               v-slot="{ href, navigate, isActive }"
             >
               <a
@@ -125,12 +125,12 @@
                 ></i>
                 Settings
               </a>
-            </router-link>
+            </Link>
           </li>
 
           <li class="items-center">
-            <router-link
-              to="/admin/tables"
+            <Link
+              href="/admin/tables"
               v-slot="{ href, navigate, isActive }"
             >
               <a
@@ -149,11 +149,11 @@
                 ></i>
                 Tables
               </a>
-            </router-link>
+            </Link>
           </li>
 
           <li class="items-center">
-            <router-link to="/admin/maps" v-slot="{ href, navigate, isActive }">
+            <Link href="/admin/maps" v-slot="{ href, navigate, isActive }">
               <a
                 :href="href"
                 @click="navigate"
@@ -170,7 +170,7 @@
                 ></i>
                 Maps
               </a>
-            </router-link>
+            </Link>
           </li>
         </ul>
 
@@ -186,25 +186,25 @@
 
         <ul class="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
           <li class="items-center">
-            <router-link
+            <Link
               class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
-              to="/auth/login"
+              href="/auth/login"
             >
               <i class="fas fa-fingerprint text-blueGray-300 mr-2 text-sm"></i>
               Login
-            </router-link>
+            </Link>
           </li>
 
           <li class="items-center">
-            <router-link
+            <Link
               class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
-              to="/auth/register"
+              href="/auth/register"
             >
               <i
                 class="fas fa-clipboard-list text-blueGray-300 mr-2 text-sm"
               ></i>
               Register
-            </router-link>
+            </Link>
           </li>
         </ul>
 
@@ -220,23 +220,23 @@
 
         <ul class="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
           <li class="items-center">
-            <router-link
+            <Link
               class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
-              to="/landing"
+              href="/landing"
             >
               <i class="fas fa-newspaper text-blueGray-300 mr-2 text-sm"></i>
               Landing Page
-            </router-link>
+            </Link>
           </li>
 
           <li class="items-center">
-            <router-link
+            <Link
               class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
-              to="/profile"
+              href="/profile"
             >
               <i class="fas fa-user-circle text-blueGray-300 mr-2 text-sm"></i>
               Profile Page
-            </router-link>
+            </Link>
           </li>
         </ul>
 
@@ -345,6 +345,9 @@
   </nav>
 </template>
 
+<script setup>
+import { Link } from "@inertiajs/vue3";
+</script>
 
 <script>
 import NotificationDropdown from "@/Components/Dropdowns/NotificationDropdown.vue";
