@@ -10,6 +10,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
+use App\Notifications\WelcomeNotification;
 
 class User extends Authenticatable
 {
@@ -66,4 +67,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function sendWelcomeNotification($token)
+    {
+        $this->notify(new WelcomeNotification($token));
+    }
+    
 }

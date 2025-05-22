@@ -14,6 +14,10 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('session_id')->unique();
+            $table->unsignedBigInteger('user_id')->nullable(); // meal schedule id 
+            $table->foreign('user_id', 'user_oder')->references('id')->on('users');
+            $table->json('menu');            
+            $table->json('address')->nullable();            
             $table->decimal('total_price', 10, 2);
             $table->string('status')->default('unpaid');
             $table->timestamps();

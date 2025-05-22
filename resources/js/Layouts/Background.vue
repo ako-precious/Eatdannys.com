@@ -1,63 +1,17 @@
 <script setup>
-import { Head, Link } from "@inertiajs/vue3";
+import Header from "@/Pages/Header/Index.vue";
 
-import Meal from "./Meal.vue";
-import ScrollToTop from "@/Components/ScrollToTop.vue";
-import CartSlideOver from "./Header/CartSlideOver.vue";
-import Background from "@/Layouts/Background.vue";
-defineProps({
-    canLogin: {
-        type: Boolean,
-    },
-    canRegister: {
-        type: Boolean,
-    },
-    laravelVersion: {
-        type: String,
-        required: true,
-    },
-    phpVersion: {
-        type: String,
-        required: true,
-    },
-});
-
-function handleImageError() {
-    document.getElementById("screenshot-container")?.classList.add("hidden!");
-    document.getElementById("docs-card")?.classList.add("row-span-1!");
-    document.getElementById("docs-card-content")?.classList.add("flex-row!");
-    document.getElementById("background")?.classList.add("hidden!");
-}
 </script>
 
 <template>
-    <Head title="Welcome" />
-    <Background>
+   
+    <div class="bg-snow text-black/50 min-h-screen dark:bg-oynx dark:text-snow/50 relative pattern">
+        <Header>
+  
+        </Header>
 
-        <div
-            class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-snow"
-        >
-            <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
-                <main class="mt-6">
-                    <Meal></Meal>
-                </main>
-
-                <footer
-                    class="py-16 text-center text-sm text-black dark:text-snow/70"
-                >
-                    Laravel v{{ laravelVersion }} (PHP v{{ phpVersion }})
-                </footer>
-            </div>
-        </div>
-        <div
-            class="relative z-10"
-            aria-labelledby="slide-over-title"
-            role="dialog"
-            aria-modal="true"
-        ></div>
-        <CartSlideOver ></CartSlideOver>
-<ScrollToTop></ScrollToTop>
-   </Background>
+    <slot></slot>
+    </div>
 </template>
 <style scoped>
 .pattern {
