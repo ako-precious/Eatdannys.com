@@ -21,69 +21,73 @@
       >
         Admin Layout
       </span>
-      <router-link
-        to="/admin/dashboard"
+      <Link
+        href="/admin/dashboard"
         class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
       >
         Dashboard
-      </router-link>
-      <router-link
-        to="/admin/settings"
+      </Link>
+      <Link
+        href="/admin/settings"
         class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
       >
         Settings
-      </router-link>
-      <router-link
-        to="/admin/tables"
+      </Link>
+      <Link
+        href="/admin/tables"
         class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
       >
         Tables
-      </router-link>
-      <router-link
-        to="/admin/maps"
+      </Link>
+      <Link
+        href="/admin/maps"
         class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
       >
         Maps
-      </router-link>
+      </Link>
       <div class="h-0 mx-4 my-2 border border-solid border-blueGray-100" />
       <span
         class="text-sm pt-2 pb-0 px-4 font-bold block w-full whitespace-nowrap bg-transparent text-blueGray-400"
       >
         Auth Layout
       </span>
-      <router-link
-        to="/auth/login"
+      <Link
+        href="/auth/login"
         class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
       >
         Login
-      </router-link>
-      <router-link
-        to="/auth/register"
+      </Link>
+      <Link
+        href="/auth/register"
         class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
       >
         Register
-      </router-link>
+      </Link>
       <div class="h-0 mx-4 my-2 border border-solid border-blueGray-100" />
       <span
         class="text-sm pt-2 pb-0 px-4 font-bold block w-full whitespace-nowrap bg-transparent text-blueGray-400"
       >
         No Layout
       </span>
-      <router-link
-        to="/landing"
+      <Link
+        href="/landing"
         class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
       >
         Landing
-      </router-link>
-      <router-link
-        to="/profile"
+      </Link>
+      <Link
+        href="/profile"
         class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
       >
         Profile
-      </router-link>
+      </Link>
     </div>
   </div>
 </template>
+<script setup>
+import { Link } from "@inertiajs/vue3";
+</script>
+
 <script>
 import { createPopper } from "@popperjs/core";
 

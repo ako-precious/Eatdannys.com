@@ -44,7 +44,7 @@
       </div>
       <div class="text-center mt-12">
         <h3
-          class="text-xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2"
+          class="text-xl font-semibold leading-normal text-blueGray-700 mb-2"
         >
           Jenna Stones
         </h3>
@@ -82,7 +82,7 @@
   </div>
 </template>
 <script>
-import team2 from "@/assets/img/team-2-800x800.jpg";
+// import team2 from "@/assets/img/team-2-800x800.jpg";
 
 export default {
   data() {
