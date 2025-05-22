@@ -129,7 +129,7 @@
 		},
 	] ;
 
-	export default ({
+	export default {
 		props: {
 			// Header fixed status.
 			navbarFixed: {
@@ -184,6 +184,6 @@
 			// Removing window resize event listener.
 			window.removeEventListener("resize", this.resizeEventHandler);
 		},
-	})
+	}
 
 </script>

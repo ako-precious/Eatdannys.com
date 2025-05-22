@@ -138,7 +138,7 @@
 
 </template>
 
-<script>
+<!-- <script>
 
 	export default ({
 		props: {
@@ -167,4 +167,35 @@
 		},
 	})
 
+</script> -->
+<script>
+export default {
+  props: {
+    // Sidebar collapsed status.
+    sidebarCollapsed: {
+      type: Boolean,
+      default: false,
+    },
+
+    // Main sidebar color.
+    sidebarColor: {
+      type: String,
+      default: "primary",
+    },
+
+    // Main sidebar theme: light, white, dark.
+    sidebarTheme: {
+      type: String,
+      default: "light",
+    },
+  },
+
+  data() {
+    return {
+      // You can use this if needed
+      // sidebarCollapsedModel: this.sidebarCollapsed,
+    };
+  },
+};
 </script>
+
