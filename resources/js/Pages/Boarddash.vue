@@ -34,20 +34,20 @@ const updateSidebarColor = (value) => layoutStore.updateSidebarColor(value);
 <template>
     <div>
         <a-layout class="layout-dashboard" id="layout-dashboard" :class="[navbarFixed ? 'navbar-fixed' : '', ! sidebarCollapsed ? 'has-sidebar' : '', layoutClass]">
-            <!-- <DashboardSidebar
+            <DashboardSidebar
                 :sidebarCollapsed="sidebarCollapsed"
                 :sidebarColor="sidebarColor"
                 :sidebarTheme="sidebarTheme"
                 @toggleSidebar="toggleSidebar"
-            ></DashboardSidebar> -->
+            ></DashboardSidebar>
 
             <a-layout>
-                <!-- <DashboardHeader
+                <DashboardHeader
                     :sidebarCollapsed="sidebarCollapsed"
                     :navbarFixed="navbarFixed"
                     @toggleSettingsDrawer="toggleSettingsDrawer"
                     @toggleSidebar="toggleSidebar"
-                ></DashboardHeader> -->
+                ></DashboardHeader>
 
                 <a-layout-content>
                     <slot /> </a-layout-content>
@@ -64,7 +64,7 @@ const updateSidebarColor = (value) => layoutStore.updateSidebarColor(value);
 
             </a-layout>
 
-            <!-- <DashboardSettingsDrawer
+            <DashboardSettingsDrawer
                 :showSettingsDrawer="showSettingsDrawer"
                 :navbarFixed="navbarFixed"
                 :sidebarTheme="sidebarTheme"
@@ -72,7 +72,7 @@ const updateSidebarColor = (value) => layoutStore.updateSidebarColor(value);
                 @toggleNavbarPosition="toggleNavbarPosition"
                 @updateSidebarTheme="updateSidebarTheme"
                 @updateSidebarColor="updateSidebarColor"
-            ></DashboardSettingsDrawer> -->
+            ></DashboardSettingsDrawer>
 
         </a-layout>
     </div>
