@@ -36,7 +36,7 @@
 <script>
 
 	// Bar chart for "Active Users" card.
-	import ChartBar from '../Charts/ChartBar' ;
+	import ChartBar from '../Charts/ChartBar.vue' ;
 
 	export default ({
 		components: {

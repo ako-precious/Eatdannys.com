@@ -17,7 +17,7 @@
 <script>
 
 	// Bar chart for "Active Users" card.
-	import ChartLine from '../Charts/ChartLine' ;
+	import ChartLine from '../Charts/ChartLine.vue' ;
 
 	export default ({
 		components: {

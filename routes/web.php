@@ -26,6 +26,9 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
+    Route::get('/boarddash', function () {
+        return Inertia::render('Boarddash');
+    })->name('boarddash');
 });
 
 // routes/web.php
