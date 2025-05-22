@@ -7,6 +7,10 @@ import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 
+// Import Ant Design Vue and its CSS
+import Antd from 'ant-design-vue';
+import 'ant-design-vue/dist/reset.css'; // Use reset.css for Ant Design Vue v4 (recommended) or ant-design-vue/dist/antd.css for v3
+
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faUser,  faUserPlus, faRightToBracket, faBagShopping, faCartPlus, faMagnifyingGlass, faCartShopping, faXmark, faTrash,
@@ -14,7 +18,7 @@ import { faUser,  faUserPlus, faRightToBracket, faBagShopping, faCartPlus, faMag
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 
 /* Add icons to the library */
-library.add( 
+library.add(
     faUser, faUserPlus, faRightToBracket, faBagShopping, faCartPlus, faMagnifyingGlass, faCartShopping, faXmark, faTrash
 );
 
@@ -28,8 +32,9 @@ createInertiaApp({
             .use(plugin)
             .use(ZiggyVue)
             .use(createPinia())
+            .use(Antd) // <--- Add this line to use Ant Design Vue
             .component("font-awesome-icon", FontAwesomeIcon)
-            
+
             .mount(el);
     },
     progress: {
