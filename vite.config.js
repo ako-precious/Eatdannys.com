@@ -18,4 +18,10 @@ export default defineConfig({
             },
         }),
     ],
+     resolve: {
+        alias: {
+            // If you have any aliases, e.g., for '@/Components'
+            '@': '/resources/js',
+        },
+    },
 });

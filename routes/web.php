@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Stripe\Stripe;
 use Stripe\PaymentIntent;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -25,14 +26,18 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
+    Route::get('/boarddash', function () {
+        return Inertia::render('Boarddash');
+    })->name('boarddash');
 });
 
 // routes/web.php
-
+// Auth::routes(['reset' => true]); // This enables password reset routes
 
 Route::get('/payment-status',[PaymentController::class, 'createPaymentIntent'])->name('payment.status');
-Route::get('/checkout/success', [PaymentController::class, 'success'])->name('checkout.success');
-Route::get('/checkout/cancel', [PaymentController::class, 'cancel'])->name('checkout.cancel');
+Route::get('/checkout/success', function () {
+    return Inertia::render('Payment/Success',);})->name('checkout.success');
+
 
 // Create a simple Blade view for payment status (resources/views/payment-status.blade.php)
 // You could also use a Vue component for this page if you prefer SPA routing.
