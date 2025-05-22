@@ -86,7 +86,7 @@
 	import Vue from 'vue';
 	Vue.use(VueGitHubButtons, { useCache: true });
 
-	export default ({
+	export default {
 		props: {
 			// Settings drawer visiblility status.
 			showSettingsDrawer: {
@@ -137,6 +137,6 @@
 			// Set the wrapper to the proper element, layout wrapper.
 			this.wrapper = document.getElementById('layout-dashboard') ;
 		},
-	})
+	}
 
 </script>

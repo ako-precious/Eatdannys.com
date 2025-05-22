@@ -66,7 +66,7 @@
 
 </template>
 
-<script>
+<!-- <script>
 
 	export default ({
 		data() {
@@ -75,7 +75,7 @@
 		},
 	})
 
-</script>
+</script> -->
 
 <style lang="scss" scoped>
 

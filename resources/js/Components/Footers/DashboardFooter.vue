@@ -34,7 +34,7 @@
 
 </template>
 
-<script>
+<!-- <script>
 
 	export default ({
 		data() {
@@ -43,4 +43,4 @@
 		},
 	})
 
-</script>
+</script> -->
