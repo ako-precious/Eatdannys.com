@@ -8,6 +8,7 @@
           <h5 class="text-blueGray-400 uppercase font-bold text-xs">
             {{ statSubtitle }}
           </h5>
+          <!-- <br> -->
           <span class="font-semibold text-xl text-blueGray-700">
             {{ statTitle }}
           </span>
