@@ -2,6 +2,8 @@
   <nav
     class="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6"
   >
+
+  
     <div
       class="md:flex-col md:items-stretch md:min-h-full md:flex-nowrap px-0 flex flex-wrap items-center justify-between w-full mx-auto"
     >
@@ -14,12 +16,7 @@
         <i class="fas fa-bars"></i>
       </button>
       <!-- Brand -->
-      <Link
-        class="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
-        href="/"
-      >
-        Vue Notus
-      </Link>
+     
       <!-- User -->
       <ul class="md:hidden items-center flex flex-wrap list-none">
         <li class="inline-block relative">
@@ -246,98 +243,7 @@
         >
           Documentation
         </h6>
-        <!-- Navigation -->
-        <ul class="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
-          <li class="inline-flex">
-            <a
-              href="https://www.creative-tim.com/learning-lab/tailwind/vue/colors/notus"
-              target="_blank"
-              class="text-blueGray-700 hover:text-blueGray-500 text-sm block mb-4 no-underline font-semibold"
-            >
-              <i
-                class="fas fa-paint-brush mr-2 text-blueGray-300 text-base"
-              ></i>
-              Styles
-            </a>
-          </li>
-
-          <li class="inline-flex">
-            <a
-              href="https://www.creative-tim.com/learning-lab/tailwind/vue/alerts/notus"
-              target="_blank"
-              class="text-blueGray-700 hover:text-blueGray-500 text-sm block mb-4 no-underline font-semibold"
-            >
-              <i class="fab fa-css3-alt mr-2 text-blueGray-300 text-base"></i>
-              CSS Components
-            </a>
-          </li>
-
-          <li class="inline-flex">
-            <a
-              href="https://www.creative-tim.com/learning-lab/tailwind/angular/overview/notus"
-              target="_blank"
-              class="text-blueGray-700 hover:text-blueGray-500 text-sm block mb-4 no-underline font-semibold"
-            >
-              <i class="fab fa-angular mr-2 text-blueGray-300 text-base"></i>
-              Angular
-            </a>
-          </li>
-
-          <li class="inline-flex">
-            <a
-              href="https://www.creative-tim.com/learning-lab/tailwind/js/overview/notus"
-              target="_blank"
-              class="text-blueGray-700 hover:text-blueGray-500 text-sm block mb-4 no-underline font-semibold"
-            >
-              <i class="fab fa-js-square mr-2 text-blueGray-300 text-base"></i>
-              Javascript
-            </a>
-          </li>
-
-          <li class="inline-flex">
-            <a
-              href="https://www.creative-tim.com/learning-lab/tailwind/nextjs/overview/notus"
-              target="_blank"
-              class="text-blueGray-700 hover:text-blueGray-500 text-sm block mb-4 no-underline font-semibold"
-            >
-              <i class="fab fa-react mr-2 text-blueGray-300 text-base"></i>
-              NextJS
-            </a>
-          </li>
-
-          <li class="inline-flex">
-            <a
-              href="https://www.creative-tim.com/learning-lab/tailwind/react/overview/notus"
-              target="_blank"
-              class="text-blueGray-700 hover:text-blueGray-500 text-sm block mb-4 no-underline font-semibold"
-            >
-              <i class="fab fa-react mr-2 text-blueGray-300 text-base"></i>
-              React
-            </a>
-          </li>
-
-          <li class="inline-flex">
-            <a
-              href="https://www.creative-tim.com/learning-lab/tailwind/svelte/overview/notus"
-              target="_blank"
-              class="text-blueGray-700 hover:text-blueGray-500 text-sm block mb-4 no-underline font-semibold"
-            >
-              <i class="fas fa-link mr-2 text-blueGray-300 text-base"></i>
-              Svelte
-            </a>
-          </li>
-
-          <li class="inline-flex">
-            <a
-              href="https://www.creative-tim.com/learning-lab/tailwind/vue/overview/notus"
-              target="_blank"
-              class="text-blueGray-700 hover:text-blueGray-500 text-sm block mb-4 no-underline font-semibold"
-            >
-              <i class="fab fa-vuejs mr-2 text-blueGray-300 text-base"></i>
-              VueJS
-            </a>
-          </li>
-        </ul>
+        
       </div>
     </div>
   </nav>
