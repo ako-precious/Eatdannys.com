@@ -83,7 +83,7 @@
           <li class="items-center">
             <Link
               href="/admin/dashboard"
-              v-slot="{ href, navigate, isActive }"
+              
             >
               <a
                 :href="href"
@@ -107,7 +107,6 @@
           <li class="items-center">
             <Link
               href="/admin/settings"
-              v-slot="{ href, navigate, isActive }"
             >
               <a
                 :href="href"
@@ -131,7 +130,6 @@
           <li class="items-center">
             <Link
               href="/admin/tables"
-              v-slot="{ href, navigate, isActive }"
             >
               <a
                 :href="href"
@@ -153,7 +151,7 @@
           </li>
 
           <li class="items-center">
-            <Link href="/admin/maps" v-slot="{ href, navigate, isActive }">
+            <Link href="/admin/maps" >
               <a
                 :href="href"
                 @click="navigate"
