@@ -6,6 +6,7 @@
       <header-stats />
       <div class="px-4 md:px-10 mx-auto w-full -m-24">
         <!-- <router-view /> -->
+         <CardBarChart></CardBarChart>
         <footer-admin />
       </div>
     </div>
@@ -16,6 +17,7 @@ import AdminNavbar from "@/Components/Navbars/AdminNavbar.vue";
 import Sidebar from "@/Components/Sidebar/Sidebar.vue";
 import HeaderStats from "@/Components/Headers/HeaderStats.vue";
 import FooterAdmin from "@/Components/Footers/FooterAdmin.vue";
+import CardBarChart from "@/Components/Cards/CardBarChart.vue";
 export default {
   name: "admin-layout",
   components: {
@@ -23,6 +25,7 @@ export default {
     Sidebar,
     HeaderStats,
     FooterAdmin,
+    CardBarChart,
   },
 };
 </script>
