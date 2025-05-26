@@ -7,7 +7,7 @@
       <div class="px-4 md:px-10 mx-auto w-full -m-24">
         <!-- <router-view /> -->
          <!-- <CardBarChart></CardBarChart> -->
-          <slot />2
+          <slot />
         <footer-admin />
       </div>
     </div>
