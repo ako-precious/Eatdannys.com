@@ -13,7 +13,7 @@
             {{ statTitle }}
           </span>
         </div>
-        <div class="relative w-auto pl-4 flex-initial">
+        <div class="relative flex w-auto pl-4 flex-initial">
           <div
             class="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full"
             :class="[statIconColor]"
@@ -22,7 +22,7 @@
           </div>
         </div>
       </div>
-      <p class="text-sm text-blueGray-400 mt-4">
+      <p class="text-sm text-blueGray-400 mt-4 flex">
         <span class="mr-2" :class="[statPercentColor]">
           <i
             :class="[
