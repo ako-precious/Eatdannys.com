@@ -8,15 +8,15 @@ const logout = () => {
     router.post(route("logout"));
 };
 
-const isDark = useDark();
-const toggleDarkMode = useToggle(isDark);
+// const isDark = useDark();
+// const toggleDarkMode = useToggle(isDark);
 // const attrs = useAttrs();
 </script>
 
 <template>
     <!-- Settings Dropdown -->
     <div
-        class="ml-2 lg:mr-4 relative text-oynx active:text-persian hover:text-polynesian dark:text-snow dark:active:text-persian dark:hover:text-lighred rounded-full bg-gradient-to-br from-[#e3dedf] to-[#ffffff] shadow-snow-sm hover:-shadow-snow-sm focus:shadow-none active:shadow-none hover:border-polynesian dark:bg-gradient-to-br dark:from-[#2b312e] dark:to-[#333a37] dark:shadow-oynx-sm hover:dark:-shadow-oynx-sm active:dark:shadow-none z-20 transition-all duration-250 ease-in"
+        class="ml-2 lg:mr-4 relative text-oynx active:text-persian hover:text-polynesian dark:text-snow dark:active:text-persian dark:hover:text-lighred rounded-full bg-snow shadow-snow-sm hover:-shadow-snow-sm focus:shadow-none active:shadow-none hover:border-polynesian  hover:dark:-shadow-oynx-sm active:dark:shadow-none z-20 transition-all duration-250 ease-in"
     >
         <Dropdown align="right" width="48">
             <template #trigger>
@@ -93,39 +93,7 @@ const toggleDarkMode = useToggle(isDark);
                             Log Out
                         </DropdownLink>
                     </form>
-                    <div class="border-t border-gray-600" />
-                    <!-- Add the toggle bo ttuns later -->
-                    <input
-                        id="switch"
-                        type="checkbox"
-                        @click="toggleDarkMode()"
-                        dark-toggle
-                        :checked="isDark"
-                    />
-                    <div class="app">
-                        <div class="body">
-                            <div
-                                class="content flex flex-col m-auto text-center w-2/3 translate-y-[5%]"
-                            >
-                                <div
-                                    class="circle relative rounded-full w-[3rem] h-[3rem] m-auto"
-                                >
-                                    <div
-                                        class="crescent absolute rounded-full right-0 w-[2.2rem] h-[2.2rem]"
-                                    ></div>
-                                </div>
-                                <label for="switch">
-                                    <div class="toggle"></div>
-                                    <div
-                                        class="names items-center justify-between"
-                                    >
-                                        <p class="light">Light</p>
-                                        <p class="dark">Dark</p>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
+                   
                 </div>
             </template>
         </Dropdown>
