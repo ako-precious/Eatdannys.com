@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MealController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\WebhookController;
 use App\Http\Controllers\PaymentController;
 
@@ -18,3 +19,4 @@ Route::post('/stripe/webhook', [WebhookController::class, 'handleWebhook']);
 Route::post('/create-checkout-session', [PaymentController::class, 'createSession']);
 Route::get('/checkout/success', [PaymentController::class, 'success'])->name('api.checkout.success');
 Route::get('/checkout/cancel', [PaymentController::class, 'cancel'])->name('api.checkout.cancel');
+ROute::get('/get-order',[OrderController::class,'getOrder'])->name('getorder');
