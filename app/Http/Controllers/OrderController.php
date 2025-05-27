@@ -9,9 +9,19 @@ use Inertia\Inertia;
 
 class OrderController extends Controller
 {
-    public function index(){
-        $orders = Order::orderBy("id","desc")->paginate(10);
-         return  Inertia::render('Order/Index', ['orders'=> $orders]);
-        
+    public function index()
+    {
+        // $orders = Order::orderBy("id","desc")->paginate(10);
+        return  Inertia::render('Order/Index');
+    }
+
+    public function getOrder(Request $request)
+    {
+        $orders = Order::orderBy("id", "desc")->paginate(10);
+        return response()->json([
+            'orders' => $orders,
+            // 'requires_password_setup' => $user->wasRecentlyCreated = true ,
+        ]);
+       
     }
 }
