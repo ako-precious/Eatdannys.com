@@ -15,39 +15,7 @@ const pagination = ref({
 
 const perPage = ref(10)
 
-const changePerPage = (event) => {
-    perPage.value = event.target.value
-    getOrders(1) // reset to page 1 when per page changes
-}
-const getPageRange = computed(() => {
-    const current = pagination.value.current_page
-    const last = pagination.value.last_page
-    const delta = 2
-    const range = []
-    let left = Math.max(2, current - delta)
-    let right = Math.min(last - 1, current + delta)
 
-    if (current - 1 <= delta) {
-        right = Math.min(5, last - 1)
-    }
-    if (last - current <= delta) {
-        left = Math.max(2, last - 4)
-    }
-
-    range.push(1) // Always show first page
-
-    if (left > 2) range.push("...") // Ellipsis if gap
-
-    for (let i = left; i <= right; i++) {
-        range.push(i)
-    }
-
-    if (right < last - 1) range.push("...") // Ellipsis if gap
-
-    if (last > 1) range.push(last) // Always show last page
-
-    return range
-})
 
 const getOrders = async (page = 1) => {
     const response = await axios.get(`/api/get-orders?page=${page}&per_page=${perPage.value}`);
