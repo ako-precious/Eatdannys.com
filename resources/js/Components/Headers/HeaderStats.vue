@@ -47,11 +47,11 @@ onMounted(async () => {
                             :statPercentColor="
                                 growth >= 0
                                     ? 'text-emerald-500'
-                                    : 'text-red-500'
+                                    : 'text-lighred'
                             "
                             statDescripiron="Since last month"
-                            statIconName="fas fa-box"
-                            statIconColor="bg-yellow-500"
+                            :statIconName="['fas', 'cart-shopping']"
+                            statIconColor="bg-persian"
                         />
                     </div>
                     <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
@@ -64,10 +64,10 @@ onMounted(async () => {
                             :statPercentColor="
                                 salesGrowth >= 0
                                     ? 'text-emerald-500'
-                                    : 'text-red-500'
+                                    : 'text-lighred'
                             "
                             statDescripiron="Since last month"
-                            statIconName="fas fa-dollar-sign"
+                            :statIconName="['fas', 'dollar-sign']"
                             statIconColor="bg-green-500"
                         />
                     </div>
@@ -81,27 +81,28 @@ onMounted(async () => {
                             :statPercentColor="
                                 usersGrowth >= 0
                                     ? 'text-emerald-500'
-                                    : 'text-red-500'
+                                    : 'text-lighred'
                             "
                             statDescripiron="Since last month"
-                            statIconName="🎯"
+                            :statIconName="['fas', 'user']"
                             statIconColor="bg-blue-500"
-                        />
-                    </div>
-                    <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
+                            />
+                          </div>
+                          <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
                         <!-- Meals Card -->
                         <card-stats
-                            statSubtitle="MEALS"
+                        statSubtitle="MEALS"
                             :statTitle="totalMeals.toLocaleString()"
                             statArrow="up"
                             :statPercent="mealsGrowth "
                             :statPercentColor="
                                 mealsGrowth >= 0
-                                    ? 'text-emerald-500'
-                                    : 'text-red-500'
-                            "
+                                ? 'text-emerald-500'
+                                : 'text-lighred'
+                                "
                             statDescripiron="Since last month"
-                            statIconName="fas fa-utensils"
+                            :statIconName="['fas', 'utensils']"
+                            
                             statIconColor="bg-purple-500"
                         />
                     </div>
