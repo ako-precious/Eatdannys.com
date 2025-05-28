@@ -160,7 +160,7 @@ onMounted(() => {
     </div>
 </template>
 <script>
-import TableDropdown from "@/Components/Dropdowns/TableDropdown.vue";
+import TableDropdown from "./TableDropdown.vue";
 
 import { router } from "@inertiajs/vue3";
 
