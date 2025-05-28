@@ -5,8 +5,7 @@
       href="#pablo"
       ref="btnDropdownRef"
       v-on:click="toggleDropdown($event)"
-    >
-      <i class="fas fa-ellipsis-v"></i>
+    > <font-awesome-icon icon="fa-solid fa-ellipsis-vertical" class="text-lg" />
     </a>
     <div
       ref="popoverDropdownRef"
@@ -20,7 +19,7 @@
         href="javascript:void(0);"
         class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
       >
-        Action
+        Sho
       </a>
       <a
         href="javascript:void(0);"
