@@ -11,8 +11,8 @@
 </template>
 <script>
 import OrderTable from "./OrdersTable.vue";
-import AppLayout from "../Applayout.vue";
-// import AppLayout from "@/Layouts/AppLayout.vue";
+// import AppLayout from "../../Layouts/Applayout.vue";
+import AppLayout from "@/Layouts/AppLayout.vue";
 export default {
    
   components: {

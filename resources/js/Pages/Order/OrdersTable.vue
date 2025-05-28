@@ -1,18 +1,65 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import axios from "axios";
+import { computed } from 'vue'
+
 
 const orders = ref([]);
-const pagination = ref({});
+const pagination = ref({
+  current_page: 1,
+  per_page: 10,
+  total: 0,
+  from: 1,
+  to: 10,
+})
+
+const perPage = ref(10)
+
+const changePerPage = (event) => {
+    perPage.value = event.target.value
+    getOrders(1) // reset to page 1 when per page changes
+}
+const getPageRange = computed(() => {
+    const current = pagination.value.current_page
+    const last = pagination.value.last_page
+    const delta = 2
+    const range = []
+    let left = Math.max(2, current - delta)
+    let right = Math.min(last - 1, current + delta)
+
+    if (current - 1 <= delta) {
+        right = Math.min(5, last - 1)
+    }
+    if (last - current <= delta) {
+        left = Math.max(2, last - 4)
+    }
+
+    range.push(1) // Always show first page
+
+    if (left > 2) range.push("...") // Ellipsis if gap
+
+    for (let i = left; i <= right; i++) {
+        range.push(i)
+    }
+
+    if (right < last - 1) range.push("...") // Ellipsis if gap
+
+    if (last > 1) range.push(last) // Always show last page
+
+    return range
+})
 
 const getOrders = async (page = 1) => {
-    const response = await axios.get(`/api/get-orders?page=${page}`);
+    const response = await axios.get(`/api/get-orders?page=${page}&per_page=${perPage.value}`);
     orders.value = response.data.orders.data;
     pagination.value = {
         current_page: response.data.orders.current_page,
-        last_page: response.data.orders.last_page,
-        next_page_url: response.data.orders.next_page_url,
-        prev_page_url: response.data.orders.prev_page_url,
+    per_page: response.data.orders.per_page,
+    total: response.data.orders.total,
+    from: response.data.orders.from,
+    to: response.data.orders.to,
+    next_page_url: response.data.orders.next_page_url,
+    prev_page_url: response.data.orders.prev_page_url,
     };
 };
 
@@ -37,7 +84,7 @@ onMounted(() => {
         <div class="block w-full overflow-x-auto">
             <!-- Projects table -->
             <table class="items-center w-full bg-transparent border-collapse">
-                <thead class=" bg-snow/20">
+                <thead class=" bg-snow/50">
                     <tr>
                         <th
                             class="px-6 align-middle border border-solid py-3 text-sm uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-oynx/75"
@@ -131,7 +178,7 @@ onMounted(() => {
                     </div>
 
                     <div class="flex items-center gap-2 rtl:space-x-reverse">
-                        <select
+                        <select @change="changePerPage($event)"
                             class="h-8 text-sm px-2 leading-none transition duration-75 border-gray-300 rounded-lg shadow-sm outline-none focus:border-yellow-500 focus:ring-1 focus:ring-inset focus:ring-yellow-500 dark:text-white dark:bg-gray-700 dark:border-gray-600 dark:focus:border-yellow-500"
                         >
                             <option value="5">5</option>
@@ -165,7 +212,7 @@ onMounted(() => {
                 <div class="hidden flex-1 items-center lg:grid grid-cols-3">
                     <div class="flex items-center">
                         <div class="pl-2 text-sm font-medium dark:text-white">
-                            Showing 11 to 20 of 99 results
+                            Showing {{ pagination.from }} to {{ pagination.to }} of {{ pagination.total }} results
                         </div>
                     </div>
 
@@ -174,7 +221,7 @@ onMounted(() => {
                             class="flex items-center space-x-2 filament-tables-pagination-records-per-page-selector rtl:space-x-reverse"
                         >
                             <label>
-                                <select
+                                <select @change="changePerPage($event)" 
                                     class="h-8 text-sm pr-8 leading-none transition duration-75 border-gray-300 rounded-lg shadow-sm outline-none focus:border-yellow-500 focus:ring-1 focus:ring-inset focus:ring-yellow-500 dark:text-white dark:bg-gray-700 dark:border-gray-600 dark:focus:border-yellow-500"
                                 >
                                     <option value="5">5</option>
@@ -213,80 +260,29 @@ onMounted(() => {
                                     </button>
                                 </li>
 
-                                <li>
-                                    <button
-                                        type="button"
-                                        class="relative flex items-center justify-center font-medium min-w-[2rem] px-1.5 h-8 -my-3 rounded-md outline-none hover:bg-gray-500/5 focus:bg-yellow-500/10 focus:ring-2 focus:ring-yellow-500 dark:hover:bg-gray-400/5 focus:text-yellow-600 transition"
-                                    >
-                                        <span>1</span>
-                                    </button>
-                                </li>
-                                <li>
-                                    <button
-                                        type="button"
-                                        class="relative flex items-center justify-center font-medium min-w-[2rem] px-1.5 h-8 -my-3 rounded-md outline-none transition text-yellow-600 filament-tables-pagination-item-active focus:underline bg-yellow-500/10 ring-2 ring-yellow-500"
-                                    >
-                                        <span>2</span>
-                                    </button>
-                                </li>
-                                <li>
-                                    <button
-                                        type="button"
-                                        class="relative flex items-center justify-center font-medium min-w-[2rem] px-1.5 h-8 -my-3 rounded-md outline-none hover:bg-gray-500/5 focus:bg-yellow-500/10 focus:ring-2 focus:ring-yellow-500 dark:hover:bg-gray-400/5 focus:text-yellow-600 transition"
-                                    >
-                                        <span>3</span>
-                                    </button>
-                                </li>
-                                <li>
-                                    <button
-                                        type="button"
-                                        class="relative flex items-center justify-center font-medium min-w-[2rem] px-1.5 h-8 -my-3 rounded-md outline-none hover:bg-gray-500/5 focus:bg-yellow-500/10 focus:ring-2 focus:ring-yellow-500 dark:hover:bg-gray-400/5 focus:text-yellow-600 transition"
-                                    >
-                                        <span>4</span>
-                                    </button>
-                                </li>
-                                <li>
-                                    <button
-                                        type="button"
-                                        class="relative flex items-center justify-center font-medium min-w-[2rem] px-1.5 h-8 -my-3 rounded-md outline-none hover:bg-gray-500/5 focus:bg-yellow-500/10 focus:ring-2 focus:ring-yellow-500 dark:hover:bg-gray-400/5 focus:text-yellow-600 transition"
-                                    >
-                                        <span>5</span>
-                                    </button>
-                                </li>
-                                <li>
-                                    <button
-                                        type="button"
-                                        class="relative flex items-center justify-center font-medium min-w-[2rem] px-1.5 h-8 -my-3 rounded-md outline-none hover:bg-gray-500/5 focus:bg-yellow-500/10 focus:ring-2 focus:ring-yellow-500 dark:hover:bg-gray-400/5 focus:text-yellow-600 transition"
-                                    >
-                                        <span>6</span>
-                                    </button>
-                                </li>
-                                <li>
-                                    <button
-                                        disabled=""
-                                        type="button"
-                                        class="relative flex items-center justify-center font-medium min-w-[2rem] px-1.5 h-8 -my-3 rounded-md outline-none filament-tables-pagination-item-disabled cursor-not-allowed pointer-events-none opacity-70"
-                                    >
-                                        <span>...</span>
-                                    </button>
-                                </li>
+                               
+                        <li v-for="(page, index) in getPageRange" :key="index">
+        <button
+            v-if="page === '...'"
+            disabled
+            class="cursor-not-allowed pointer-events-none opacity-70"
+        >
+            <span>...</span>
+        </button>
 
-                                <li>
-                                    <button
-                                        type="button"
-                                        class="relative flex items-center justify-center font-medium min-w-[2rem] px-1.5 h-8 -my-3 rounded-md outline-none hover:bg-gray-500/5 focus:bg-yellow-500/10 focus:ring-2 focus:ring-yellow-500 dark:hover:bg-gray-400/5 focus:text-yellow-600 transition"
-                                    >
-                                        <span>9</span>
-                                    </button>
-                                </li>
-                                <li>
-                                    <button
-                                        type="button"
-                                        class="relative flex items-center justify-center font-medium min-w-[2rem] px-1.5 h-8 -my-3 rounded-md outline-none hover:bg-gray-500/5 focus:bg-yellow-500/10 focus:ring-2 focus:ring-yellow-500 dark:hover:bg-gray-400/5 focus:text-yellow-600 transition"
-                                    >
-                                        <span>10</span>
-                                    </button>
-                                </li>
+        <button
+            v-else
+            @click="getOrders(page)"
+            :class="[
+                'relative flex items-center justify-center font-medium min-w-[2rem] px-1.5 h-8 -my-3 rounded-md outline-none transition',
+                page === pagination.current_page
+                    ? 'text-yellow-600 bg-yellow-500/10 ring-2 ring-yellow-500 filament-tables-pagination-item-active'
+                    : 'hover:bg-gray-500/5 focus:bg-yellow-500/10 focus:ring-2 focus:ring-yellow-500 dark:hover:bg-gray-400/5 focus:text-yellow-600'
+            ]"
+        >
+            <span>{{ page }}</span>
+        </button>
+    </li>
 
                                 <li>
                                     <button @click="getOrders(pagination.current_page + 1)" :disabled="!pagination.next_page_url"
@@ -304,6 +300,7 @@ onMounted(() => {
                             </ol>
                         </div>
                     </div>
+                    <!-- {{ pagination }} -->
                 </div>
             </nav>
         </div>
