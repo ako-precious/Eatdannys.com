@@ -19,4 +19,4 @@ Route::post('/stripe/webhook', [WebhookController::class, 'handleWebhook']);
 Route::post('/create-checkout-session', [PaymentController::class, 'createSession']);
 Route::get('/checkout/success', [PaymentController::class, 'success'])->name('api.checkout.success');
 Route::get('/checkout/cancel', [PaymentController::class, 'cancel'])->name('api.checkout.cancel');
-Route::get('/get-orders',[OrderController::class,'getOrder'])->name('getorder')->middleware('auth:sanctum');
+Route::get('/get-orders',[OrderController::class,'getOrder'])->name('getorder');
