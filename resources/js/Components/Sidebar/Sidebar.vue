@@ -7,7 +7,7 @@
             class="cursor-pointer text-black opacity-50 md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
             type="button"
             v-on:click="toggleCollapseShow('bg-snow m-2 py-3 px-6')"
-        ></button>
+        > <font-awesome-icon icon="fa-solid fa-bars" /> </button>
         <!-- Brand -->
         <Link
             class="text-left md:pb-2 text-blueGray-600 mr-0 flex justify-center items-center whitespace-nowrap text-sm uppercase font-bold p-4 px-0 "
@@ -82,14 +82,14 @@
 
                 <ul class="md:flex-col md:min-w-full flex flex-col list-none">
                     <li class="items-center">
-                        <Link href="/admin/dashboard">
+                        <Link href="/dashboard">
                             <a
                                 :href="href"
                                 @click="navigate"
                                 class="text-xs uppercase py-3 font-bold block"
                                 :class="[
                                     isActive
-                                        ? 'text-emerald-500 hover:text-emerald-600'
+                                        ? 'text-polynesian hover:text-polynesian/60'
                                         : 'text-blueGray-700 hover:text-blueGray-500',
                                 ]"
                             >
@@ -107,14 +107,14 @@
                     </li>
 
                     <li class="items-center">
-                        <Link href="/admin/settings">
+                        <Link href="/orders">
                             <a
                                 :href="href"
                                 @click="navigate"
                                 class="text-xs uppercase py-3 font-bold block"
                                 :class="[
                                     isActive
-                                        ? 'text-emerald-500 hover:text-emerald-600'
+                                        ? 'text-polynesian hover:text-polynesian/60'
                                         : 'text-blueGray-700 hover:text-blueGray-500',
                                 ]"
                             >
@@ -126,20 +126,20 @@
                                             : 'text-blueGray-300',
                                     ]"
                                 ></i>
-                                Settings
+                                Orders
                             </a>
                         </Link>
                     </li>
 
                     <li class="items-center">
-                        <Link href="/admin/tables">
+                        <Link href="/Users">
                             <a
                                 :href="href"
                                 @click="navigate"
                                 class="text-xs uppercase py-3 font-bold block"
                                 :class="[
                                     isActive
-                                        ? 'text-emerald-500 hover:text-emerald-600'
+                                        ? 'text-polynesian hover:text-polynesian/60'
                                         : 'text-blueGray-700 hover:text-blueGray-500',
                                 ]"
                             >
@@ -151,20 +151,20 @@
                                             : 'text-blueGray-300',
                                     ]"
                                 ></i>
-                                Tables
+                                Users
                             </a>
                         </Link>
                     </li>
 
                     <li class="items-center">
-                        <Link href="/admin/maps">
+                        <Link href="/meals">
                             <a
                                 :href="href"
                                 @click="navigate"
                                 class="text-xs uppercase py-3 font-bold block"
                                 :class="[
                                     isActive
-                                        ? 'text-emerald-500 hover:text-emerald-600'
+                                        ? 'text-polynesian hover:text-polynesian/60'
                                         : 'text-blueGray-700 hover:text-blueGray-500',
                                 ]"
                             >
@@ -176,7 +176,7 @@
                                             : 'text-blueGray-300',
                                     ]"
                                 ></i>
-                                Maps
+                                Meals
                             </a>
                         </Link>
                     </li>
@@ -220,44 +220,7 @@
                     </li>
                 </ul>
 
-                <!-- Divider -->
-                <hr class="my-4 md:min-w-full" />
-                <!-- Heading -->
-                <h6
-                    class="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline"
-                >
-                    No Layout Pages
-                </h6>
-                <!-- Navigation -->
-
-                <ul
-                    class="md:flex-col md:min-w-full flex flex-col list-none md:mb-4"
-                >
-                    <li class="items-center">
-                        <Link
-                            class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
-                            href="/landing"
-                        >
-                            <i
-                                class="fas fa-newspaper text-blueGray-300 mr-2 text-sm"
-                            ></i>
-                            Landing Page
-                        </Link>
-                    </li>
-
-                    <li class="items-center">
-                        <Link
-                            class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
-                            href="/profile"
-                        >
-                            <i
-                                class="fas fa-user-circle text-blueGray-300 mr-2 text-sm"
-                            ></i>
-                            Profile Page
-                        </Link>
-                    </li>
-                </ul>
-
+                <
               
             </div>
         </div>
