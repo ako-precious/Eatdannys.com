@@ -6,6 +6,7 @@ import SectionBorder from '@/Components/SectionBorder.vue';
 import TwoFactorAuthenticationForm from '@/Pages/Profile/Partials/TwoFactorAuthenticationForm.vue';
 import UpdatePasswordForm from '@/Pages/Profile/Partials/UpdatePasswordForm.vue';
 import UpdateProfileInformationForm from '@/Pages/Profile/Partials/UpdateProfileInformationForm.vue';
+import { Head, Link } from "@inertiajs/vue3";
 
 defineProps({
     confirmsTwoFactorAuthentication: Boolean,
@@ -14,15 +15,13 @@ defineProps({
 </script>
 
 <template>
+     <Head title="Profile" />
     <AppLayout title="Profile">
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                Profile
-            </h2>
-        </template>
+      
 
-        <div>
-            <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+        <div class="flex flex-wrap mt-4">
+             <div class="w-full mb-12 px-4">
+            <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8 bg-snow shadow-2xl">
                 <div v-if="$page.props.jetstream.canUpdateProfileInformation">
                     <UpdateProfileInformationForm :user="$page.props.auth.user" />
 
@@ -52,6 +51,7 @@ defineProps({
                     <DeleteUserForm class="mt-10 sm:mt-0" />
                 </template>
             </div>
+        </div>
         </div>
     </AppLayout>
 </template>
