@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
@@ -28,7 +29,7 @@ class OrderController extends Controller
             $query->where('user_id', $user->id);
         }
 
-        $orders = $query->paginate($perPage);
+        $orders = $query->with('user')->paginate($perPage);
        
         return response()->json([
             'orders' => $orders,
