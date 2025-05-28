@@ -1,70 +1,122 @@
+<script setup>
+import { ref, onMounted } from "vue";
+import axios from "axios";
+
+const totalOrders = ref(0);
+const growth = ref(0);
+
+const totalSales = ref(0);
+const salesGrowth = ref(0);
+
+const totalUsers = ref(0);
+const usersGrowth = ref(0);
+
+const totalMeals = ref(0);
+const mealsGrowth = ref(0);
+
+onMounted(async () => {
+    const res = await axios.get("/api/order-stats");
+    totalOrders.value = res.data.totalOrders;
+    growth.value = res.data.percentGrowth;
+
+    totalSales.value = res.data.totalSales;
+    salesGrowth.value = res.data.salesGrowth;
+
+    totalUsers.value = res.data.totalUsers;
+    usersGrowth.value = res.data.usersGrowth;
+
+    totalMeals.value = res.data.totalMeals;
+    mealsGrowth.value = res.data.mealsGrowth;
+});
+</script>
+
 <template>
-  <!-- Header -->
-  <div class="relative bg-polynesian md:pt-32 pb-32 pt-12">
-    <div class="px-4 md:px-10 mx-auto w-full">
-      <div>
-        <!-- Card stats -->
-        <div class="flex flex-wrap">
-          <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
-            <card-stats
-              statSubtitle="TRAFFIC"
-              statTitle="350,897"
-              statArrow="up"
-              statPercent="3.48"
-              statPercentColor="text-emerald-500"
-              statDescripiron="Since last month"
-              statIconName="far fa-chart-bar"
-              statIconColor="bg-red-500"
-            />
-          </div>
-          <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
-            <card-stats
-              statSubtitle="NEW USERS"
-              statTitle="2,356"
-              statArrow="down"
-              statPercent="3.48"
-              statPercentColor="text-red-500"
-              statDescripiron="Since last week"
-              statIconName="fas fa-chart-pie"
-              statIconColor="bg-orange-500"
-            />
-          </div>
-          <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
-            <card-stats
-              statSubtitle="SALES"
-              statTitle="924"
-              statArrow="down"
-              statPercent="1.10"
-              statPercentColor="text-orange-500"
-              statDescripiron="Since yesterday"
-              statIconName="fas fa-users"
-              statIconColor="bg-pink-500"
-            />
-          </div>
-          <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
-            <card-stats
-              statSubtitle="PERFORMANCE"
-              statTitle="49,65%"
-              statArrow="up"
-              statPercent="12"
-              statPercentColor="text-emerald-500"
-              statDescripiron="Since last month"
-              statIconName="fas fa-percent"
-              statIconColor="bg-emerald-500"
-            />
-          </div>
+    <!-- Header -->
+    <div class="relative bg-polynesian md:pt-32 pb-32 pt-12">
+        <div class="px-4 md:px-10 mx-auto w-full">
+            <div>
+                <!-- Card stats -->
+                <div class="flex flex-wrap">
+                    <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
+                        <!-- Orders Card -->
+                        <card-stats
+                            statSubtitle="ORDERS"
+                            :statTitle="totalOrders.toLocaleString()"
+                            statArrow="up"
+                            :statPercent="growth"
+                            :statPercentColor="
+                                growth >= 0
+                                    ? 'text-emerald-500'
+                                    : 'text-red-500'
+                            "
+                            statDescripiron="Since last month"
+                            statIconName="fas fa-box"
+                            statIconColor="bg-yellow-500"
+                        />
+                    </div>
+                    <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
+                        <!-- Sales Card -->
+                        <card-stats
+                            statSubtitle="SALES"
+                            :statTitle="'$' + totalSales.toLocaleString()"
+                            statArrow="up"
+                            :statPercent="salesGrowth "
+                            :statPercentColor="
+                                salesGrowth >= 0
+                                    ? 'text-emerald-500'
+                                    : 'text-red-500'
+                            "
+                            statDescripiron="Since last month"
+                            statIconName="fas fa-dollar-sign"
+                            statIconColor="bg-green-500"
+                        />
+                    </div>
+                    <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
+                        <!-- Users Card -->
+                        <card-stats
+                            statSubtitle="USERS"
+                            :statTitle="totalUsers.toLocaleString()"
+                            statArrow="up"
+                            :statPercent="usersGrowth"
+                            :statPercentColor="
+                                usersGrowth >= 0
+                                    ? 'text-emerald-500'
+                                    : 'text-red-500'
+                            "
+                            statDescripiron="Since last month"
+                            statIconName="🎯"
+                            statIconColor="bg-blue-500"
+                        />
+                    </div>
+                    <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
+                        <!-- Meals Card -->
+                        <card-stats
+                            statSubtitle="MEALS"
+                            :statTitle="totalMeals.toLocaleString()"
+                            statArrow="up"
+                            :statPercent="mealsGrowth "
+                            :statPercentColor="
+                                mealsGrowth >= 0
+                                    ? 'text-emerald-500'
+                                    : 'text-red-500'
+                            "
+                            statDescripiron="Since last month"
+                            statIconName="fas fa-utensils"
+                            statIconColor="bg-purple-500"
+                        />
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </template>
 
 <script>
 import CardStats from "@/Components/Cards/CardStats.vue";
 
 export default {
-  components: {
-    CardStats,
-  },
+    components: {
+        CardStats,
+    },
 };
 </script>

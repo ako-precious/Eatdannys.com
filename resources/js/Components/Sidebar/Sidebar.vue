@@ -18,7 +18,7 @@
         <!-- User -->
     
         <div
-            class="md:flex-col md:overflow-y-auto md:items-stretch md:max-h-90/100 pb-10 md:flex-nowrap px-0 flex flex-wrap items-center justify-between w-full mx-auto border border-solid border-transparent"
+            class="md:flex-col md:overflow-y-auto md:items-stretch md:max-h-80/100 pb-10 md:flex-nowrap px-0 flex flex-wrap items-center justify-between w-full mx-auto border border-solid border-transparent"
         >
             <ul class="md:hidden items-center flex flex-wrap list-none">
                 <li class="inline-block relative">
