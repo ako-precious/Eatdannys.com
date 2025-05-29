@@ -95,16 +95,22 @@ onMounted(() => {
                                 {{ order.session_id }}
                             </span>
                         </th>
-                        <td
-                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                        <td v-if="order.user_id === null"
+                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
                         >
-                            {{ order.user.name}}
-                        </td>
-                        <td
-                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
-                        >
-                            {{ order.status }}
-                        </td>
+                        {{ order.user_id }}
+                    </td>
+                    <td v-else
+                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                    >
+                    {{ order.user.name }}
+                </td>
+                <td
+                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                >
+                    {{ order.status}}
+                </td>
+
                         <td
                             class="border-t-0 px-6 align-middle  border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
                         >
@@ -113,7 +119,7 @@ onMounted(() => {
                         <td
                             class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
                         >
-                            {{ order.total_price }}
+                            ${{ order.total_price }}
                         </td>
                         <td
                             class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right"
