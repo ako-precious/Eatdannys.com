@@ -30,6 +30,7 @@
 .input {
     font-size: 0.9rem;
     background-color: transparent;
+    --tw-ring-offset-shadow:0;
     width: 100%;
     height: 100%;
     padding-inline: 0.5em;
@@ -91,7 +92,7 @@ input:not(:placeholder-shown) ~ .reset {
             />
         </button>
         <input
-            class="input text-oynx ring-0 w-85/100 lg:w-65/100"
+            class="input text-oynx ring-0 w-85/100 lg:w-65/100 outline-none ring-offset-0 ring-shado "
             v-model="query"
             @input="onInput"
             placeholder="Search meals..."
