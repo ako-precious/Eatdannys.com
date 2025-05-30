@@ -28,10 +28,10 @@
                     </a>
                     <div class="px-4 py-3 w-[19rem]">
                         <div class="flex justify-between items-center">
-                            <span
+                            <!-- <span
                                 class="text-gray-600 mr-3 uppercase text-xs"
                                 >{{ item.category.name}}</span
-                            >
+                            > -->
                             <p class="text-gray-500 text-sm">
                                 Qty
                                 <input
@@ -65,7 +65,7 @@
                                     v-model="selectedOptions[item.id]"
                                 />
                                 <label
-                                    class="flex flex-col px-2 border-2"
+                                    class="flex flex-col p-2 border-2"
                                     :class="{
                                         'border-oynx bg-blue-100':
                                             selectedOptions[item.id] === price,
@@ -166,7 +166,7 @@ export default {
         },
     },
     mounted() {
-        axios.get("/api/meal");
+        
         axios
             .get("/api/meal")
             .then((response) => {
@@ -183,6 +183,8 @@ export default {
                         this.$set(this.quantities, item.id, 1); // default quantity
                     }
                 });
+                console.log(this.meals);
+                
             })
 
             .catch((error) => {
