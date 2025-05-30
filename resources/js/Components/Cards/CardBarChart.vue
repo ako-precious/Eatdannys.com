@@ -1,64 +1,126 @@
 <template>
-
-	<!-- Active Users Card -->
-	<a-card :bordered="false" class="dashboard-bar-chart">
-		<chart-bar :height="220" :data="barChartData"></chart-bar>
-		<div class="card-title">
-			<h6>Active Users</h6>
-			<p>than last week <span class="text-success">+23%</span></p>
-		</div>
-		<div class="card-content">
-			<p>We have created multiple options for you to put together and customise into pixel perfect pages.</p>
-		</div>
-		<a-row class="card-footer" type="flex" justify="center" align="top">
-			<a-col :span="6">
-				<h4>3,6K</h4>
-				<span>Users</span>
-			</a-col>
-			<a-col :span="6">
-				<h4>2m</h4>
-				<span>Clicks</span>
-			</a-col>
-			<a-col :span="6">
-				<h4>$772</h4>
-				<span>Sales</span>
-			</a-col>
-			<a-col :span="6">
-				<h4>82</h4>
-				<span>Items</span>
-			</a-col>
-		</a-row>
-	</a-card>
-	<!-- Active Users Card -->
-
+  <div
+    class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded"
+  >
+    <div class="rounded-t mb-0 px-4 py-3 bg-transparent">
+      <div class="flex flex-wrap items-center">
+        <div class="relative w-full max-w-full flex-grow flex-1">
+          <h6 class="uppercase text-blueGray-400 mb-1 text-xs font-semibold">
+            Performance
+          </h6>
+          <h2 class="text-blueGray-700 text-xl font-semibold">
+            Total orders
+          </h2>
+        </div>
+      </div>
+    </div>
+    <div class="p-4 flex-auto">
+      <div class="relative h-350-px">
+        <canvas id="bar-chart"></canvas>
+      </div>
+    </div>
+  </div>
 </template>
-
 <script>
-
-	// Bar chart for "Active Users" card.
-	import ChartBar from '../Charts/ChartBar.vue' ;
-
-	export default ({
-		components: {
-			ChartBar,
-		},
-		data() {
-			return {
-				// Data for bar chart.
-				barChartData: {
-					labels: ["01", "02", "03", "04", "05", "06", "07", "08", "09"],
-					datasets: [{
-						label: "Sales",
-						backgroundColor: '#fff',
-						borderWidth: 0,
-						borderSkipped: false,
-						borderRadius: 6,
-						data: [850, 600, 500, 620, 900, 500, 900, 630, 900],
-						maxBarThickness: 20,
-					}, ],
-				},
-			}
-		},
-	})
-
+import Chart from "chart.js/auto";
+export default {
+  mounted: function () {
+    this.$nextTick(function () {
+      let config = {
+        type: "bar",
+        data: {
+          labels: [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+          ],
+          datasets: [
+            {
+              label: new Date().getFullYear(),
+              backgroundColor: "#ed64a6",
+              borderColor: "#ed64a6",
+              data: [30, 78, 56, 34, 100, 45, 13],
+              fill: false,
+              barThickness: 8,
+            },
+            {
+              label: new Date().getFullYear() - 1,
+              fill: false,
+              backgroundColor: "#4c51bf",
+              borderColor: "#4c51bf",
+              data: [27, 68, 86, 74, 10, 4, 87],
+              barThickness: 8,
+            },
+          ],
+        },
+        options: {
+          maintainAspectRatio: false,
+          responsive: true,
+          title: {
+            display: false,
+            text: "Orders Chart",
+          },
+          tooltips: {
+            mode: "index",
+            intersect: false,
+          },
+          hover: {
+            mode: "nearest",
+            intersect: true,
+          },
+          legend: {
+            labels: {
+              fontColor: "rgba(0,0,0,.4)",
+            },
+            align: "end",
+            position: "bottom",
+          },
+          scales: {
+            xAxes: [
+              {
+                display: false,
+                scaleLabel: {
+                  display: true,
+                  labelString: "Month",
+                },
+                gridLines: {
+                  borderDash: [2],
+                  borderDashOffset: [2],
+                  color: "rgba(33, 37, 41, 0.3)",
+                  zeroLineColor: "rgba(33, 37, 41, 0.3)",
+                  zeroLineBorderDash: [2],
+                  zeroLineBorderDashOffset: [2],
+                },
+              },
+            ],
+            yAxes: [
+              {
+                display: true,
+                scaleLabel: {
+                  display: false,
+                  labelString: "Value",
+                },
+                gridLines: {
+                  borderDash: [2],
+                  drawBorder: false,
+                  borderDashOffset: [2],
+                  color: "rgba(33, 37, 41, 0.2)",
+                  zeroLineColor: "rgba(33, 37, 41, 0.15)",
+                  zeroLineBorderDash: [2],
+                  zeroLineBorderDashOffset: [2],
+                },
+              },
+            ],
+          },
+        },
+      };
+      let ctx = document.getElementById("bar-chart").getContext("2d");
+      window.myBar = new Chart(ctx, config);
+    });
+  },
+};
 </script>

@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
+use App\Models\Order;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -29,6 +32,9 @@ Route::middleware([
     Route::get('/boarddash', function () {
         return Inertia::render('Boarddash');
     })->name('boarddash');
+    Route::resource('/orders',  OrderController::class);
+    Route::get('/api/order-stats', [AdminController::class, 'getOrderStats']);
+    Route::get('api/get-orders',[OrderController::class,'getOrder'])->name('getorder');
 });
 
 // routes/web.php
