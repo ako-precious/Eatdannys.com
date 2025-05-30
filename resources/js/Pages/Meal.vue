@@ -2,19 +2,19 @@
     <!-- source: https://github.com/mfg888/Responsive-Tailwind-CSS-Grid/blob/main/index.html -->
     <div
         id="Projects"
-        class="flex flex-col items-center py-12 bg-snow! dark:bg-oynx! relative"
+        class="flex flex-col items-center py-12 bg-snow! dark:bg-oynx! relative bg-snow"
     >
         <Search
             @search="handleSearch"
-            class="flex my-6 sticky top-0 transition-all duration-300 delay-75 ease-in animate-fade-in w-80/100 "
+            class="flex my-6 sticky top-0 transition-all duration-300 delay-75 ease-in animate-fade-in w-[80%]"
         ></Search>
 
         <section
             id="Projects"
-            class="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-16 gap-x-10"
+            class="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-16 gap-x-10 bg-snow"
         >
             <div
-                class="w-[19rem] bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
+                class="w-[19rem] bg-snow shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
                 v-for="(item, index) in meals"
                 :key="index"
             >
@@ -28,10 +28,10 @@
                     </a>
                     <div class="px-4 py-3 w-[19rem]">
                         <div class="flex justify-between items-center">
-                            <span
+                            <!-- <span
                                 class="text-gray-600 mr-3 uppercase text-xs"
-                                >{{ item.category.name }}</span
-                            >
+                                >{{ item.category.name}}</span
+                            > -->
                             <p class="text-gray-500 text-sm">
                                 Qty
                                 <input
@@ -65,7 +65,7 @@
                                     v-model="selectedOptions[item.id]"
                                 />
                                 <label
-                                    class="flex flex-col px-2 border-2"
+                                    class="flex flex-col p-2 border-2"
                                     :class="{
                                         'border-oynx bg-blue-100':
                                             selectedOptions[item.id] === price,
@@ -93,7 +93,7 @@
                             :disabled="!selectedOptions[item.id]"
                         >
                             <p
-                                class="flex font-bold justify-between w-full items-center text-sm m-auto relative w-max three py-1 px-3"
+                                class="flex font-bold justify-between w-full items-center text-sm m-auto relative three py-1 px-3"
                             >
                                 <!-- <div>
                         
@@ -166,10 +166,12 @@ export default {
         },
     },
     mounted() {
+        
         axios
             .get("/api/meal")
             .then((response) => {
-                this.meals = response.data;
+                this.meals =
+                    response.data.meals.data ?? response.data.meals ?? [];
 
                 this.meals.forEach((item) => {
                     if (item.prices && item.prices.length > 0) {
@@ -179,11 +181,12 @@ export default {
                             item.prices[0]
                         );
                         this.$set(this.quantities, item.id, 1); // default quantity
-                        // this.$set(this.selectedOptions, item.id, item.prices[0])
-
                     }
                 });
+                console.log(this.meals);
+                
             })
+
             .catch((error) => {
                 console.error("Failed to load menu:", error);
             });

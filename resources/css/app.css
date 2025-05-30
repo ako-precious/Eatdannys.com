@@ -1,4 +1,7 @@
-@import 'tailwindcss';
+/* @import 'tailwindcss'; */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @config '../../tailwind.config.js';
 
@@ -7,6 +10,6 @@
 }
  @layer components{
     .navbar-link {
-        @apply ml-2 relative inline-block  text-snow active:text-polynesian hover:text-polynesian dark:text-snow dark:active:text-lighred dark:hover:text-lighred dark:bg-oynx rounded-full p-1  hover:bg-gradient-to-br hover:from-[#e3dedf] to-[#ffffff]  hover:border-gray-500 hover:dark:bg-gradient-to-br hover:dark:from-[#2b312e] hover:dark:to-[#333a37]   transition-all duration-250 delay-75 ease-in;
+        @apply ml-2 relative inline-block  text-snow active:text-polynesian hover:text-polynesian dark:text-snow dark:active:text-lighred dark:hover:text-lighred dark:bg-oynx rounded-full p-1  hover:border-gray-500 hover:dark:bg-gradient-to-br hover:dark:from-[#2b312e] hover:dark:to-[#333a37]   transition-all duration-250 delay-75 ease-in;
     }
  }
