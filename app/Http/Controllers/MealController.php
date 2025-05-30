@@ -11,7 +11,6 @@ class MealController extends Controller
 {
 public function getMeals(Request $request)
 {
-    $user = Auth::user(); // Get authenticated user
 
     $perPage = $request->get('per_page', 10); // Default pagination
     $search = $request->input('search');
