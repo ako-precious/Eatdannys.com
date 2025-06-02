@@ -2,7 +2,8 @@
 import { ref, onMounted } from "vue";
 import axios from "axios";
 import { computed } from 'vue';
-import Pagination from './Pagination.vue'
+import Pagination from "@/Components/Pagination.vue";
+import Search from "@/Components/Search.vue";
 
 const orders = ref([]);
 const pagination = ref({

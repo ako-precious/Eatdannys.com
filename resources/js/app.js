@@ -13,11 +13,11 @@ import 'ant-design-vue/dist/reset.css'; // Use reset.css for Ant Design Vue v4 (
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faUser,  faUserPlus, faRightToBracket, faBagShopping, faCartPlus, faMagnifyingGlass, faCartShopping, faXmark, faTrash, faChevronLeft, faChevronRight, faBars, faEllipsisVertical, faArrowUp, faArrowDown, faDollarSign, faUtensils, 
+import { faUser,  faUserPlus, faRightToBracket, faBagShopping, faCartPlus, faMagnifyingGlass, faCartShopping, faXmark, faTrash, faChevronLeft, faChevronRight, faBars, faEllipsisVertical, faArrowUp, faArrowDown, faDollarSign, faUtensils, faHouse, 
 } from "@fortawesome/free-solid-svg-icons";
 /* Add icons to the library */
 library.add(
-    faUser, faUserPlus, faRightToBracket, faBagShopping, faCartPlus, faMagnifyingGlass, faCartShopping, faXmark, faTrash, faChevronLeft, faChevronRight, faBars,faEllipsisVertical, faArrowUp, faArrowDown, faDollarSign, faUtensils
+    faUser, faUserPlus, faRightToBracket, faBagShopping, faCartPlus, faMagnifyingGlass, faCartShopping, faXmark, faTrash, faChevronLeft, faChevronRight, faBars,faEllipsisVertical, faArrowUp, faArrowDown, faDollarSign, faUtensils, faHouse
 );
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
