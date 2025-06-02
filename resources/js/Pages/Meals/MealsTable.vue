@@ -1,38 +1,84 @@
+
 <script setup>
-import { ref, onMounted } from "vue";
-import axios from "axios";
-import { computed } from "vue";
 import Pagination from "./Pagination.vue";
+import { ref, onMounted, computed } from "vue";
+import axios from "axios";
 
 const meals = ref([]);
+const perPage = ref(10);
 const pagination = ref({
-    current_page: 1,
-    per_page: 10,
-    total: 0,
-    from: 1,
-    to: 10,
+  current_page: 1,
+  per_page: 10,
+  total: 0,
+  from: 1,
+  to: 10,
+  last_page: 1,
+  next_page_url: null,
+  prev_page_url: null
 });
 
-const perPage = ref(10);
+const changePerPage = (event) => {
+  perPage.value = event.target.value;
+  getmeals(1);
+};
 
-const getMeals = async (page = 1) => {
-    const response = await axios.get(
-        `/api/meal?page=${page}&per_page=${perPage.value}`
-    );
-    meals.value = response.data.meals.data;
-    pagination.value = {
-        current_page: response.data.meals.current_page,
-        per_page: response.data.meals.per_page,
-        total: response.data.meals.total,
-        from: response.data.meals.from,
-        to: response.data.meals.to,
-        next_page_url: response.data.meals.next_page_url,
-        prev_page_url: response.data.meals.prev_page_url,
-    };
+const getPageRange = computed(() => {
+  const current = pagination.value.current_page;
+  const last = pagination.value.last_page;
+  const delta = 2;
+  const range = [];
+  
+  if (last <= 1) return [1];
+  
+  range.push(1);
+  
+  if (last <= 7) {
+    for (let i = 2; i <= last - 1; i++) {
+      range.push(i);
+    }
+  } else {
+    let left = Math.max(2, current - delta);
+    let right = Math.min(last - 1, current + delta);
+    
+    if (current - 1 <= delta) {
+      right = Math.min(5, last - 1);
+    }
+    if (last - current <= delta) {
+      left = Math.max(2, last - 4);
+    }
+    
+    if (left > 2) range.push("...");
+    
+    for (let i = left; i <= right; i++) {
+      range.push(i);
+    }
+    
+    if (right < last - 1) range.push("...");
+  }
+  
+  if (last > 1) range.push(last);
+  
+  return range;
+});
+
+const getmeals = async (page = 1) => {
+  const response = await axios.get(`/api/meal?page=${page}&per_page=${perPage.value}`);
+  meals.value = response.data.meals.data;
+  
+  pagination.value = {
+    current_page: response.data.meals.current_page,
+    per_page: response.data.meals.per_page,
+    total: response.data.meals.total,
+    from: response.data.meals.from,
+    to: response.data.meals.to,
+    last_page: response.data.meals.last_page,
+    next_page_url: response.data.meals.next_page_url,
+    prev_page_url: response.data.meals.prev_page_url,
+  };
 };
 
 onMounted(() => {
-    getMeals();
+  getmeals();
 });
 </script>
 <template>
@@ -44,7 +90,7 @@ onMounted(() => {
             <div class="flex flex-wrap items-center">
                 <div class="relative w-full px-4 max-w-full flex-grow flex-1">
                     <h3 class="font-bold text-lg md:text-2xl text-oynx_alt">
-                        meals Tables
+                        Meals Tables
                     </h3>
                 </div>
             </div>
