@@ -75,7 +75,7 @@
                 <hr class="my-4 md:min-w-full" />
                 <!-- Heading -->
                 <h6
-                    class="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline"
+                    class="md:min-w-full text-blueGray-500 text-sm uppercase font-bold block pt-1 pb-4 no-underline"
                 >
                     Admin Layout Pages
                 </h6>
@@ -87,11 +87,11 @@
                             <a
                                 :href="href"
                                 @click="navigate"
-                                class="text-xs uppercase py-3 font-bold block"
+                                class="text-sm uppercase py-3 font-bold block"
                                 :class="[
                                     isActive
                                         ? 'text-polynesian hover:text-polynesian/60'
-                                        : 'text-blueGray-700 hover:text-blueGray-500',
+                                        : 'text-oynx hover:text-blueGray-500',
                                 ]"
                             >
                                 <i
@@ -112,11 +112,11 @@
                             <a
                                 :href="href"
                                 @click="navigate"
-                                class="text-xs uppercase py-3 font-bold block"
+                                class="text-sm uppercase py-3 font-bold block"
                                 :class="[
                                     isActive
                                         ? 'text-polynesian hover:text-polynesian/60'
-                                        : 'text-blueGray-700 hover:text-blueGray-500',
+                                        : 'text-oynx hover:text-blueGray-500',
                                 ]"
                             >
                                 <i
@@ -137,11 +137,11 @@
                             <a
                                 :href="href"
                                 @click="navigate"
-                                class="text-xs uppercase py-3 font-bold block"
+                                class="text-sm uppercase py-3 font-bold block"
                                 :class="[
                                     isActive
                                         ? 'text-polynesian hover:text-polynesian/60'
-                                        : 'text-blueGray-700 hover:text-blueGray-500',
+                                        : 'text-oynx hover:text-blueGray-500',
                                 ]"
                             >
                                 <i
@@ -162,21 +162,20 @@
                             <a
                                 :href="href"
                                 @click="navigate"
-                                class="text-xs uppercase py-3 font-bold block"
+                                class="text-sm uppercase py-3 font-bold block"
                                 :class="[
                                     isActive
                                         ? 'text-polynesian hover:text-polynesian/60'
-                                        : 'text-blueGray-700 hover:text-blueGray-500',
+                                        : 'text-oynx hover:text-blueGray-500',
                                 ]"
                             >
-                                <i
-                                    class="fas fa-map-marked mr-2 text-sm"
+                                <font-awesome-icon icon="fa-solid fa-utensils"  class="fas fa-map-marked mr-2 text-sm "
                                     :class="[
                                         isActive
                                             ? 'opacity-75'
                                             : 'text-blueGray-300',
-                                    ]"
-                                ></i>
+                                    ]"/>
+                                
                                 Meals
                             </a>
                         </Link>
@@ -187,7 +186,7 @@
                 <hr class="my-4 md:min-w-full" />
                 <!-- Heading -->
                 <h6
-                    class="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline"
+                    class="md:min-w-full text-blueGray-500 text-sm uppercase font-bold block pt-1 pb-4 no-underline"
                 >
                     Auth Layout Pages
                 </h6>
@@ -198,7 +197,7 @@
                 >
                     <li class="items-center">
                         <Link
-                            class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
+                            class="text-oynx hover:text-blueGray-500 text-sm uppercase py-3 font-bold block"
                             href="/auth/login"
                         >
                             <i
@@ -210,7 +209,7 @@
 
                     <li class="items-center">
                         <Link
-                            class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
+                            class="text-oynx hover:text-blueGray-500 text-sm uppercase py-3 font-bold block"
                             href="/auth/register"
                         >
                             <i

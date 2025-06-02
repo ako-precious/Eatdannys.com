@@ -125,7 +125,7 @@
 </template>
 
 <script setup>
-import Search from "./Header/Search.vue";
+import Search from "@/Components/Search.vue";
 import Loader from "@/Components/Loader.vue";
 </script>
 <script>
