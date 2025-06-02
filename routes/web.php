@@ -34,7 +34,7 @@ Route::middleware([
     })->name('boarddash');
     Route::resource('/orders',  OrderController::class);
     Route::get('/api/order-stats', [AdminController::class, 'getOrderStats']);
-    Route::get('api/get-orders',[OrderController::class,'getOrder'])->name('getorder');
+    Route::get('/api/get-orders',[OrderController::class,'getOrder'])->name('getorder');
 });
 
 // routes/web.php
