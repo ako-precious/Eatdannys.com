@@ -90,9 +90,9 @@
       #fd1f1f
     );
   }
-  .example-2 .icon-content a[data-social="youtube"] .filled,
-  .example-2 .icon-content a[data-social="youtube"] ~ .tooltip {
-    background-color: #ff0000;
+  .example-2 .icon-content a[data-social="whatsapp"] .filled,
+  .example-2 .icon-content a[data-social="whatsapp"] ~ .tooltip {
+    background-color: #0CC143;
   }
 </style>
 
@@ -123,7 +123,7 @@
       <div class="tooltip">LinkedIn</div>
     </li>
     <li class="icon-content">
-      <a href="https://www.Facebook.com/" aria-label="Facebook" data-social="Facebook">
+      <a href="https://www.Facebook.com/dannys_african_restaurant/" aria-label="Facebook" data-social="Facebook">
         <div class="filled"></div>
         <font-awesome-icon icon="fa-brands fa-facebook" />
       </a>
@@ -131,7 +131,7 @@
     </li>
     <li class="icon-content">
       <a
-        href="https://www.instagram.com/"
+        href="https://www.instagram.com/dannys_african_restaurant/"
         aria-label="Instagram"
         data-social="instagram"
       >
@@ -154,11 +154,11 @@
       <div class="tooltip">Instagram</div>
     </li>
     <li class="icon-content">
-      <a href="https://youtube.com/" aria-label="Youtube" data-social="youtube">
+      <a href="https://wa.me/+17058886114" aria-label="whatsapp" data-social="whatsapp">
         <div class="filled"></div>
         <font-awesome-icon :icon="['fab', 'whatsapp']" />
       </a>
-      <div class="tooltip">Youtube</div>
+      <div class="tooltip">Whatsapp</div>
     </li>
   </ul>
 </template>

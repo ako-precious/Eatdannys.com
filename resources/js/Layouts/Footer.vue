@@ -10,22 +10,34 @@
                     title="Company"
                     class="inline-flex items-center"
                 >
-                   
+                    <ApplicationMark />
                     <span
                         class="ml-2 text-xl font-bold tracking-wide text-gray-800 uppercase"
-                        >Company</span
+                    >
+                        Dannys</span
                     >
                 </a>
                 <div class="mt-6 lg:max-w-sm">
                     <p class="text-sm text-gray-800">
-                        Sed ut perspiciatis unde omnis iste natus error sit
-                        voluptatem accusantium doloremque laudantium, totam rem
-                        aperiam.
+                        Your go-to for incredible food, effortless events, and
+                        delicious daily convenience! Specializing in Event
+                        Catering, Private Chef experiences, and ready-to-eat
+                        Food Boxes, Trays & Soups. Taste the expertise
                     </p>
-                    <p class="mt-4 text-sm text-gray-800">
-                        Eaque ipsa quae ab illo inventore veritatis et quasi
-                        architecto beatae vitae dicta sunt explicabo.
-                    </p>
+                </div>
+            </div>
+            <div class="space-y-2 text-sm">
+                <p class="text-base font-bold tracking-wide text-gray-900">
+                    Menu
+                </p>
+                <div class="flex">
+                    <p class="mr-1 text-gray-800">About Us</p>
+                </div>
+                <div class="flex">
+                    <p class="mr-1 text-gray-800">Team</p>
+                </div>
+                <div class="flex">
+                    <p class="mr-1 text-gray-800">Testimonials</p>
                 </div>
             </div>
             <div class="space-y-2 text-sm">
@@ -35,72 +47,34 @@
                 <div class="flex">
                     <p class="mr-1 text-gray-800">Phone:</p>
                     <a
-                        href="tel:850-123-5021"
+                        href="tel:+17058886114"
                         aria-label="Our phone"
                         title="Our phone"
                         class="transition-colors duration-300 text-deep-purple-accent-400 hover:text-deep-purple-800"
-                        >850-123-5021</a
+                        >+1 (705) 888-6114</a
                     >
                 </div>
                 <div class="flex">
                     <p class="mr-1 text-gray-800">Email:</p>
                     <a
-                        href="mailto:info@lorem.mail"
+                        href="mailto:dannys20edible@gmail.com"
                         aria-label="Our email"
                         title="Our email"
                         class="transition-colors duration-300 text-deep-purple-accent-400 hover:text-deep-purple-800"
-                        >info@lorem.mail</a
+                        >dannys20edible@gmail.com</a
                     >
                 </div>
                 <div class="flex">
                     <p class="mr-1 text-gray-800">Address:</p>
                     <a
-                        href="https://www.google.com/maps"
+                        href="https://www.google.com/maps/place/1179+Bayfield+St+N,+Midhurst,+ON+L9X+0N5/@44.4386183,-79.7351199,17z/data=!3m1!4b1!4m6!3m5!1s0x882aa2716c15c251:0x9937db4094649aa2!8m2!3d44.4386145!4d-79.732545!16s%2Fg%2F11smbsqv3s?entry=ttu&g_ep=EgoyMDI1MDUyOC4wIKXMDSoASAFQAw%3D%3D"
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="Our address"
                         title="Our address"
                         class="transition-colors duration-300 text-deep-purple-accent-400 hover:text-deep-purple-800"
                     >
-                        312 Lovely Street, NY
-                    </a>
-                </div>
-            </div>
-            <div class="space-y-2 text-sm">
-                <p class="text-base font-bold tracking-wide text-gray-900">
-                    Contacts
-                </p>
-                <div class="flex">
-                    <p class="mr-1 text-gray-800">Phone:</p>
-                    <a
-                        href="tel:850-123-5021"
-                        aria-label="Our phone"
-                        title="Our phone"
-                        class="transition-colors duration-300 text-deep-purple-accent-400 hover:text-deep-purple-800"
-                        >850-123-5021</a
-                    >
-                </div>
-                <div class="flex">
-                    <p class="mr-1 text-gray-800">Email:</p>
-                    <a
-                        href="mailto:info@lorem.mail"
-                        aria-label="Our email"
-                        title="Our email"
-                        class="transition-colors duration-300 text-deep-purple-accent-400 hover:text-deep-purple-800"
-                        >info@lorem.mail</a
-                    >
-                </div>
-                <div class="flex">
-                    <p class="mr-1 text-gray-800">Address:</p>
-                    <a
-                        href="https://www.google.com/maps"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="Our address"
-                        title="Our address"
-                        class="transition-colors duration-300 text-deep-purple-accent-400 hover:text-deep-purple-800"
-                    >
-                        312 Lovely Street, NY
+                        1179 Bayfield Street North, Barrie. L9X 0N5
                     </a>
                 </div>
             </div>
@@ -108,15 +82,15 @@
                 <span class="text-base font-bold tracking-wide text-gray-900"
                     >Social</span
                 >
-                
+
                 <div class="flex items-center mt-1 space-x-3">
                     <SocialMedia />
-                  
-                  
                 </div>
                 <p class="mt-4 text-sm text-gray-500">
-                    Bacon ipsum dolor amet short ribs pig sausage prosciutto
-                    chicken spare ribs salami.
+                    Make sure to follow us across all our
+                    social media channels! You'll get instant updates and
+                    perhaps even a sneak peek at behind-the-scenes moments from
+                    our restaurant. 
                 </p>
             </div>
         </div>
@@ -124,7 +98,7 @@
             class="flex flex-col-reverse justify-between pt-5 pb-10 border-t lg:flex-row"
         >
             <p class="text-sm text-gray-600">
-                © Copyright {{date}} Labi. All rights reserved.
+                © Copyright {{ date }} Labi. All rights reserved.
             </p>
             <ul
                 class="flex flex-col mb-3 space-y-2 lg:mb-0 sm:space-y-0 sm:space-x-5 sm:flex-row"
@@ -156,13 +130,14 @@
 </template>
 <script setup>
 import SocialMedia from "@/Components/SocialMedia.vue";
+import ApplicationMark from "@/Components/ApplicationMark.vue";
 </script>
 <script>
 export default {
-  data() {
-    return {
-      date: new Date().getFullYear(),
-    };
-  },
+    data() {
+        return {
+            date: new Date().getFullYear(),
+        };
+    },
 };
 </script>
