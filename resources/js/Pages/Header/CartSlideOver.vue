@@ -2,7 +2,7 @@
    <template>
     <div>
       <button @click="openCart">
-        <CartIcon />
+        <!-- <CartIcon /> -->
       </button>
       <div v-if="ui.isCartOpen">
         <div
