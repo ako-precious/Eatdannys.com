@@ -2,7 +2,7 @@
     <!-- source: https://github.com/mfg888/Responsive-Tailwind-CSS-Grid/blob/main/index.html -->
     <div
         id="Projects"
-        class="flex flex-col items-center py-12 bg-snow! dark:bg-oynx! relative bg-snow"
+        class="flex flex-col items-center py-12 bg-snow! dark:bg-oynx! relative bg-snow m"
     >
         <Search
             @search="handleSearch"
