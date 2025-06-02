@@ -9,13 +9,13 @@ use Illuminate\Support\Facades\Auth;
 
 class MealController extends Controller
 {
-public function getMeal(Request $request)
+public function getMeals(Request $request)
 {
     
-    $perPage = $request->get('per_page', 10);
+    $perPage = $request->get('per_page', 9);
     $search = $request->input('search');
 
-    $query = Meal::with(['user', 'prices', 'category'])->orderBy("id", "desc");
+    $query = Meal::with('category')->orderBy("id", "desc");
 
   
    

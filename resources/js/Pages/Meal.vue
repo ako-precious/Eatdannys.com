@@ -112,8 +112,8 @@
                     </div>
                 </div>
             </div>
-             <div v-if="loading" class="py-8 text-center">
-      Loading more meals...
+             <div v-if="loading" class="p-8 text-center m-auto">
+      <Loader></Loader>
     </div>
     
     <div v-else-if="meals.length === 0" class="py-12 text-center">
@@ -126,10 +126,12 @@
 
 <script setup>
 import Search from "./Header/Search.vue";
+import Loader from "@/Components/Loader.vue";
 </script>
 <script>
 import axios from "axios";
 import { useCartStore } from "@/stores/cart";
+
 export default {
     data() {
         return {
@@ -139,11 +141,10 @@ export default {
             loading: false,
             allLoaded: false,
             selectedOptions: {},
-            quantity: 1,
             quantities: {},
+            searchTerm: "", // Track search term for pagination
         };
     },
-
     computed: {
         cart() {
             return useCartStore();
@@ -151,82 +152,74 @@ export default {
     },
     methods: {
         handleSearch(term) {
-            axios
-                .get("/api/meal", {
-                    params: { search: term },
-                })
-                .then((response) => {
-                    this.meals = response.data;
-                })
-                .catch((error) => {
-                    console.error("Search failed:", error);
+            this.searchTerm = term;
+            this.page = 1;
+            this.meals = [];
+            this.allLoaded = false;
+            this.fetchMeals();
+        },
+        async fetchMeals() {
+            if (this.loading || this.allLoaded) return;
+
+            this.loading = true;
+            try {
+                const params = {
+                    page: this.page,
+                    per_page: this.perPage,
+                    search: this.searchTerm
+                };
+
+                const response = await axios.get("/api/meal", { params });
+                const fetchedMeals = response.data.meals.data; // Correct path
+
+                if (fetchedMeals.length === 0) {
+                    this.allLoaded = true;
+                    return;
+                }
+
+                this.meals = [...this.meals, ...fetchedMeals];
+                this.page++;
+
+                // Initialize selections
+                fetchedMeals.forEach(item => {
+                    this.$set(this.selectedOptions, item.id, item.prices?.[0] || null);
+                    this.$set(this.quantities, item.id, 1);
                 });
+
+            } catch (error) {
+                console.error("Failed to load meals:", error);
+            } finally {
+                this.loading = false;
+            }
         },
         addToCart(menuItem, selectedOption) {
             if (!selectedOption) return;
-
             const quantity = this.quantities[menuItem.id] || 1;
-
+            
             this.cart.addItem({
                 name: menuItem.name,
                 category: menuItem.category.name,
                 price: selectedOption.price * quantity,
                 unit_price: selectedOption.price,
                 quantity,
-                size_or_quantity:
-                    selectedOption.size || selectedOption.quantity,
+                size_or_quantity: selectedOption.size || selectedOption.quantity,
             });
         },
-         handleScroll() {
-        const scrollHeight = document.documentElement.scrollHeight;
-        const scrollTop = document.documentElement.scrollTop;
-        const clientHeight = document.documentElement.clientHeight;
-
-        if (scrollTop + clientHeight >= scrollHeight - 100) {
-            this.fetchMeals();
+        handleScroll() {
+            const bottomOfWindow = 
+                document.documentElement.scrollTop + window.innerHeight >= 
+                document.documentElement.scrollHeight - 100;
+            
+            if (bottomOfWindow) this.fetchMeals();
         }
     },
-        async fetchMeals() {
-        if (this.loading || this.allLoaded) return;
-
-        this.loading = true;
-        try {
-            const response = await axios.get("/api/meal", {
-                params: { page: this.page, per_page: this.perPage }
-            });
-
-            const fetchedMeals = response.data.data;
-
-            if (fetchedMeals.length === 0) {
-                this.allLoaded = true;
-            } else {
-                this.meals.push(...fetchedMeals);
-                this.page++;
-
-                // Default selections
-                fetchedMeals.forEach(item => {
-                    if (item.prices && item.prices.length > 0) {
-                        this.$set(this.selectedOptions, item.id, item.prices[0]);
-                        this.$set(this.quantities, item.id, 1);
-                    }
-                });
-            }
-        } catch (error) {
-            console.error("Failed to load meals:", error);
-        } finally {
-            this.loading = false;
-        }
-    }
+    beforeUnmount() {
+        window.removeEventListener('scroll', this.handleScroll);
     },
-    beforeDestroy() {
-    window.removeEventListener('scroll', this.handleScroll);
-},
     mounted() {
-            this.fetchMeals();
-    window.addEventListener('scroll', this.handleScroll);
-
-      
-    },
+        this.fetchMeals();
+        window.addEventListener('scroll', this.handleScroll);
+    }
 };
 </script>
 
