@@ -12,7 +12,7 @@ import Footer from "./Footer.vue"
 
     <slot></slot>
 
-<Footer><Footer/>
+<Footer />
     </div>
 </template>
 <style scoped>

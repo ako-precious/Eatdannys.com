@@ -15,9 +15,10 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faUser,  faUserPlus, faRightToBracket, faBagShopping, faCartPlus, faMagnifyingGlass, faCartShopping, faXmark, faTrash, faChevronLeft, faChevronRight, faBars, faEllipsisVertical, faArrowUp, faArrowDown, faDollarSign, faUtensils, faHouse, 
 } from "@fortawesome/free-solid-svg-icons";
+import { faFacebook, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 /* Add icons to the library */
 library.add(
-    faUser, faUserPlus, faRightToBracket, faBagShopping, faCartPlus, faMagnifyingGlass, faCartShopping, faXmark, faTrash, faChevronLeft, faChevronRight, faBars,faEllipsisVertical, faArrowUp, faArrowDown, faDollarSign, faUtensils, faHouse
+    faUser, faUserPlus, faRightToBracket, faBagShopping, faCartPlus, faMagnifyingGlass, faCartShopping, faXmark, faTrash, faChevronLeft, faChevronRight, faBars,faEllipsisVertical, faArrowUp, faArrowDown, faDollarSign, faUtensils, faHouse, faFacebook, faWhatsapp
 );
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
