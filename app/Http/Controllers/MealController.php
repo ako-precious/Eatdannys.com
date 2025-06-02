@@ -9,29 +9,32 @@ use Illuminate\Support\Facades\Auth;
 
 class MealController extends Controller
 {
-public function getMeals(Request $request)
+public function getMeal(Request $request)
 {
-
-    $perPage = $request->get('per_page', 10); // Default pagination
+    
+    $perPage = $request->get('per_page', 10);
     $search = $request->input('search');
 
-    $query = Meal::with(['category'])->orderBy('id', 'desc');
+    $query = Meal::with(['user', 'prices', 'category'])->orderBy("id", "desc");
 
-    // Apply search filter
+  
+   
+
+    // Apply search filter if provided
     if ($search) {
-        $query->where('name', 'like', "%{$search}%")
-              ->orWhereHas('category', fn($q) =>
-                  $q->where('name', 'like', "%{$search}%")
-              );
+        $query->where(function ($q) use ($search) {
+            $q->where('name', 'like', "%{$search}%")
+              ->orWhereHas('category', function ($catQuery) use ($search) {
+                  $catQuery->where('name', 'like', "%{$search}%");
+              });
+        });
     }
 
-    // Return paginated meals
-    $meals = $query->paginate($perPage);
-
     return response()->json([
-        'meals' => $meals,
+        'meals' => $query->paginate($perPage),
     ]);
 }
+
 
  public function index(Request $request)
     {

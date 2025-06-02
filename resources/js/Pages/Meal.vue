@@ -28,10 +28,10 @@
                     </a>
                     <div class="px-4 py-3 w-[19rem]">
                         <div class="flex justify-between items-center">
-                            <!-- <span
+                            <span
                                 class="text-gray-600 mr-3 uppercase text-xs"
                                 >{{ item.category.name}}</span
-                            > -->
+                            >
                             <p class="text-gray-500 text-sm">
                                 Qty
                                 <input
@@ -112,6 +112,14 @@
                     </div>
                 </div>
             </div>
+             <div v-if="loading" class="py-8 text-center">
+      Loading more meals...
+    </div>
+    
+    <div v-else-if="meals.length === 0" class="py-12 text-center">
+      <p v-if="searchTerm">No meals found for "{{ searchTerm }}"</p>
+      <p v-else>No meals available</p>
+    </div>
         </section>
     </div>
 </template>
@@ -126,11 +134,16 @@ export default {
     data() {
         return {
             meals: [],
+            page: 1,
+            perPage: 10,
+            loading: false,
+            allLoaded: false,
+            selectedOptions: {},
             quantity: 1,
-            selectedOptions: {}, // Stores selected size/quantity per item
             quantities: {},
         };
     },
+
     computed: {
         cart() {
             return useCartStore();
@@ -164,32 +177,55 @@ export default {
                     selectedOption.size || selectedOption.quantity,
             });
         },
-    },
-    mounted() {
-        
-        axios
-            .get("/api/meal")
-            .then((response) => {
-                this.meals =
-                    response.data.meals.data ?? response.data.meals ?? [];
+         handleScroll() {
+        const scrollHeight = document.documentElement.scrollHeight;
+        const scrollTop = document.documentElement.scrollTop;
+        const clientHeight = document.documentElement.clientHeight;
 
-                this.meals.forEach((item) => {
+        if (scrollTop + clientHeight >= scrollHeight - 100) {
+            this.fetchMeals();
+        }
+    },
+        async fetchMeals() {
+        if (this.loading || this.allLoaded) return;
+
+        this.loading = true;
+        try {
+            const response = await axios.get("/api/meal", {
+                params: { page: this.page, per_page: this.perPage }
+            });
+
+            const fetchedMeals = response.data.data;
+
+            if (fetchedMeals.length === 0) {
+                this.allLoaded = true;
+            } else {
+                this.meals.push(...fetchedMeals);
+                this.page++;
+
+                // Default selections
+                fetchedMeals.forEach(item => {
                     if (item.prices && item.prices.length > 0) {
-                        this.$set(
-                            this.selectedOptions,
-                            item.id,
-                            item.prices[0]
-                        );
-                        this.$set(this.quantities, item.id, 1); // default quantity
+                        this.$set(this.selectedOptions, item.id, item.prices[0]);
+                        this.$set(this.quantities, item.id, 1);
                     }
                 });
-                console.log(this.meals);
-                
-            })
+            }
+        } catch (error) {
+            console.error("Failed to load meals:", error);
+        } finally {
+            this.loading = false;
+        }
+    }
+    },
+    beforeDestroy() {
+    window.removeEventListener('scroll', this.handleScroll);
+},
+    mounted() {
+            this.fetchMeals();
+    window.addEventListener('scroll', this.handleScroll);
 
-            .catch((error) => {
-                console.error("Failed to load menu:", error);
-            });
+      
     },
 };
 </script>
