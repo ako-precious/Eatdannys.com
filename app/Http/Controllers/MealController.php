@@ -39,7 +39,7 @@ public function getMeals(Request $request)
  public function index(Request $request)
     {
     
-        return  Inertia::render('Meal/Index');
+        return  Inertia::render('Meals/Index');
     }
     
 }
