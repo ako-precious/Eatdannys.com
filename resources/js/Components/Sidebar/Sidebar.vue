@@ -89,14 +89,14 @@
                                 @click="navigate"
                                 class="text-sm uppercase py-3 font-bold block"
                                 :class="[
-                                    isActive
+                                    isActiveRoute('/dashboard').value
                                         ? 'text-polynesian hover:text-polynesian/60'
                                         : 'text-oynx hover:text-oynx/70',
                                 ]"
                             >
                                <font-awesome-icon icon="fa-solid fa-house" class="fas fa-tv mr-2 text-sm"
                                     :class="[
-                                        isActive
+                                        isActiveRoute('/dashboard').value
                                             ? 'opacity-75'
                                             : 'text-oynx_alt/70',
                                     ]"/>
@@ -114,14 +114,14 @@
                                 @click="navigate"
                                 class="text-sm uppercase py-3 font-bold block"
                                 :class="[
-                                    isActive
+                                    isActiveRoute('/orders').value
                                         ? 'text-polynesian hover:text-polynesian/60'
                                         : 'text-oynx hover:text-oynx/70',
                                 ]"
                             >
                                  <font-awesome-icon icon="fa-solid fa-cart-shopping"  class="fas fa-map-marked mr-2 text-sm "
                                     :class="[
-                                        isActive
+                                        isActiveRoute('/orders').value
                                             ? 'opacity-75'
                                             : 'text-oynx_alt/70',
                                     ]"/>
@@ -137,14 +137,14 @@
                                 @click="navigate"
                                 class="text-sm uppercase py-3 font-bold block"
                                 :class="[
-                                    isActive
+                                    isActiveRoute('/users').value
                                         ? 'text-polynesian hover:text-polynesian/60'
                                         : 'text-oynx hover:text-oynx/70',
                                 ]"
                             >
                                 <font-awesome-icon icon="fa-solid fa-user"  class="fas fa-map-marked mr-2 text-sm "
                                     :class="[
-                                        isActive
+                                        isActiveRoute('/users').value
                                             ? 'opacity-75'
                                             : 'text-oynx_alt/70',
                                     ]"/>
@@ -160,14 +160,14 @@
                                 @click="navigate"
                                 class="text-sm uppercase py-3 font-bold block"
                                 :class="[
-                                    isActive
+                                    isActiveRoute('/meals').value
                                         ? 'text-polynesian hover:text-polynesian/60'
                                         : 'text-oynx hover:text-oynx/70',
                                 ]"
                             >
                                 <font-awesome-icon icon="fa-solid fa-utensils"  class="fas fa-map-marked mr-2 text-sm "
                                     :class="[
-                                        isActive
+                                        isActiveRoute('/meals').value
                                             ? 'opacity-75'
                                             : 'text-oynx_alt/70',
                                     ]"/>
@@ -190,14 +190,18 @@
 </template>
 
 <script setup>
-import { Link } from "@inertiajs/vue3";
-import { ref, onMounted, computed } from "vue";
+import { Link, usePage } from "@inertiajs/vue3";
+import { computed } from "vue";
 
-const isActive = computed(() => route.path === '/meals');
+const page = usePage();
 
-console.log(route.path );
-
+// Function to determine if current route matches
+const isActiveRoute = (route) => {
+  return computed(() => page.url === route);
+};
 </script>
+
+
 
 <script>
 import NotificationDropdown from "@/Components/Dropdowns/NotificationDropdown.vue";

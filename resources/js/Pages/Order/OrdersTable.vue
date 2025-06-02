@@ -4,6 +4,7 @@ import axios from "axios";
 import { computed } from "vue";
 import Pagination from "@/Components/Pagination.vue";
 import Search from "@/Components/Search.vue";
+import { Head, Link } from "@inertiajs/vue3";
 
 const orders = ref([]);
 const perPage = ref(10);
@@ -64,6 +65,7 @@ onMounted(() => {
 });
 </script>
 <template>
+     <Head title="Orders" />
     <div
         class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded"
         :class="[color === 'light' ? 'bg-white' : 'bg-emerald-900 text-white']"
