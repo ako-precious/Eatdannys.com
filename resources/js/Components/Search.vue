@@ -95,7 +95,7 @@ input:not(:placeholder-shown) ~ .reset {
             class="input text-oynx ring-0 w-85/100 lg:w-65/100 outline-none ring-offset-0 ring-shado "
             v-model="query"
             @input="onInput"
-            placeholder="Search meals..."
+            placeholder="Search ..."
             required
             type="text"
         />

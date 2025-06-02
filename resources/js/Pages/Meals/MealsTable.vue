@@ -6,60 +6,60 @@ import axios from "axios";
 
 const meals = ref([]);
 const perPage = ref(10);
-const searchTerm = ref('');
+const searchTerm = ref("");
 const pagination = ref({
-  current_page: 1,
-  per_page: 10,
-  total: 0,
-  from: 1,
-  to: 10,
-  last_page: 1,
-  next_page_url: null,
-  prev_page_url: null
+    current_page: 1,
+    per_page: 10,
+    total: 0,
+    from: 1,
+    to: 10,
+    last_page: 1,
+    next_page_url: null,
+    prev_page_url: null,
 });
 
 // Handle search
 const handleSearch = (term) => {
-  searchTerm.value = term;
-  getmeals(1); // Reset to page 1 when searching
+    searchTerm.value = term;
+    getMeals(1); // Reset to page 1 when searching
 };
 
 // Handle per-page changes
 const changePerPage = (value) => {
-  perPage.value = value;
-  getmeals(1); // Reset to page 1
+    perPage.value = value;
+    getMeals(1); // Reset to page 1
 };
 
 // Fetch meals with search
-const getmeals = async (page = 1) => {
-  try {
-    const response = await axios.get(`/api/meal`, {
-      params: {
-        page: page,
-        per_page: perPage.value,
-        search: searchTerm.value
-      }
-    });
-    
-    meals.value = response.data.meals.data;
-    
-    pagination.value = {
-      current_page: response.data.meals.current_page,
-      per_page: response.data.meals.per_page,
-      total: response.data.meals.total,
-      from: response.data.meals.from,
-      to: response.data.meals.to,
-      last_page: response.data.meals.last_page,
-      next_page_url: response.data.meals.next_page_url,
-      prev_page_url: response.data.meals.prev_page_url,
-    };
-  } catch (error) {
-    console.error("Failed to load meals:", error);
-  }
+const getMeals = async (page = 1) => {
+    try {
+        const response = await axios.get(`/api/meal`, {
+            params: {
+                page: page,
+                per_page: perPage.value,
+                search: searchTerm.value,
+            },
+        });
+
+        meals.value = response.data.meals.data;
+
+        pagination.value = {
+            current_page: response.data.meals.current_page,
+            per_page: response.data.meals.per_page,
+            total: response.data.meals.total,
+            from: response.data.meals.from,
+            to: response.data.meals.to,
+            last_page: response.data.meals.last_page,
+            next_page_url: response.data.meals.next_page_url,
+            prev_page_url: response.data.meals.prev_page_url,
+        };
+    } catch (error) {
+        console.error("Failed to load meals:", error);
+    }
 };
 
 onMounted(() => {
-  getmeals();
+    getMeals();
 });
 </script>
 
@@ -76,7 +76,7 @@ onMounted(() => {
                     </h3>
                 </div>
                 <div class="w-full md:w-[50%]">
-                     <Search
+                    <Search
                         @search="handleSearch"
                         class="flex my-6 sticky top-0 transition-all duration-300 delay-75 ease-in animate-fade-in w-[80%]"
                     ></Search>
@@ -88,29 +88,48 @@ onMounted(() => {
             <table class="items-center w-full bg-transparent border-collapse">
                 <thead class="bg-snow/50">
                     <tr>
-                        <th class="px-6 align-middle border border-solid py-3 text-sm uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-oynx/75">
+                        <th
+                            class="px-6 align-middle border border-solid py-3 text-sm uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-oynx/75"
+                        >
                             Name
                         </th>
-                        <th class="px-6 align-middle border border-solid py-3 text-sm uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-oynx/75">
+                        <th
+                            class="px-6 align-middle border border-solid py-3 text-sm uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-oynx/75"
+                        >
                             Categories
                         </th>
-                        <th class="px-6 align-middle border border-solid py-3 text-sm uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-oynx/75">
+                        <th
+                            class="px-6 align-middle border border-solid py-3 text-sm uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-oynx/75"
+                        >
                             Price
                         </th>
-                        <th class="px-6 align-middle border border-solid py-3 text-sm uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-oynx/75"></th>
+                        <th
+                            class="px-6 align-middle border border-solid py-3 text-sm uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-oynx/75"
+                        ></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="meal in meals" :key="meal.id">
-                        <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 text-left items-center">
+                        <th
+                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 text-left items-center"
+                        >
                             <span>{{ meal.name }}</span>
                         </th>
-                        <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
+                        <td
+                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4"
+                        >
                             {{ meal.category.name }}
                         </td>
-                        <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                            <div class="grid grid-cols-4 gap-2 w-full cursor-pointer">
-                                <div v-for="(price, index) in meal.prices" :key="index">
+                        <td
+                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                        >
+                            <div
+                                class="grid grid-cols-4 gap-2 w-full cursor-pointer"
+                            >
+                                <div
+                                    v-for="(price, index) in meal.prices"
+                                    :key="index"
+                                >
                                     <input
                                         class="hidden"
                                         :id="`radio_${meal.id}_${index}`"
@@ -118,8 +137,12 @@ onMounted(() => {
                                         :name="`option_${meal.id}`"
                                         :value="price"
                                     />
-                                    <label class="flex flex-col p-1 border-1 border-oynx/30">
-                                        <span class="text-[0.68rem] font- uppercase">
+                                    <label
+                                        class="flex flex-col p-1 border-1 border-oynx/30"
+                                    >
+                                        <span
+                                            class="text-[0.68rem] font- uppercase"
+                                        >
                                             {{ price.size ?? price.quantity }}
                                         </span>
                                         <span class="text-[0.8rem] font-bold">
@@ -129,23 +152,27 @@ onMounted(() => {
                                 </div>
                             </div>
                         </td>
-                        <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 text-right">
+                        <td
+                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 text-right"
+                        >
                             <table-dropdown />
                         </td>
                     </tr>
                     <tr v-if="meals.length === 0">
                         <td colspan="4" class="text-center py-8">
                             No meals found
-                            <span v-if="searchTerm"> for "{{ searchTerm }}"</span>
+                            <span v-if="searchTerm">
+                                for "{{ searchTerm }}"</span
+                            >
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <Pagination 
+        <Pagination
             :pagination="pagination"
             :per-page="perPage"
-            @page-changed="getmeals"
+            @page-changed="getMeals"
             @per-page-changed="changePerPage"
         />
     </div>
