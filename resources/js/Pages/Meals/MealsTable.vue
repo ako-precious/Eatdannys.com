@@ -2,6 +2,7 @@
 import Pagination from "@/Components/Pagination.vue";
 import Search from "@/Components/Search.vue";
 import { ref, onMounted } from "vue";
+import { Head, Link } from "@inertiajs/vue3";
 import axios from "axios";
 
 const meals = ref([]);
@@ -64,6 +65,7 @@ onMounted(() => {
 </script>
 
 <template>
+    <Head title="Meals" />
     <div
         class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded"
         :class="[color === 'light' ? 'bg-white' : 'bg-emerald-900 text-white']"
