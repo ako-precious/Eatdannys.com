@@ -20,7 +20,7 @@
                         </button>
                     </div>
 
-                    <div class="flex items-center gap-2 rtl:space-x-reverse">
+                    <!-- <div class="flex items-center gap-2 rtl:space-x-reverse">
                         <select @change="changePerPage($event)"
                             class="h-8 text-sm px-2 leading-none transition duration-75 border-gray-300 rounded-lg shadow-sm outline-none focus:border-yellow-500 focus:ring-1 focus:ring-inset focus:ring-yellow-500 dark:text-white dark:bg-gray-700 dark:border-gray-600 dark:focus:border-yellow-500"
                         >
@@ -34,7 +34,7 @@
                         <span class="text-sm font-medium dark:text-white">
                             per page
                         </span>
-                    </div>
+                    </div> -->
 
                     <div class="w-10">
                         <button @click="getmeals(pagination.current_page + 1)" :disabled="!pagination.next_page_url"   
@@ -52,7 +52,7 @@
                     </div>
                 </div>
 
-                <div class="hidden flex-1 items-center lg:grid grid-cols-3">
+                <div class="hidden flex-1 items-center lg:grid grid-cols-3 px-8">
                     <div class="flex items-center">
                         <div class="pl-2 text-sm font-medium dark:text-white">
                             Showing {{ pagination.from }} to {{ pagination.to }} of {{ pagination.total }} results
@@ -63,10 +63,11 @@
                         <div
                             class="flex items-center space-x-2 filament-tables-pagination-records-per-page-selector rtl:space-x-reverse"
                         >
-                            <label>
+                            <!-- <label>
                                 <select @change="changePerPage($event)" 
                                     class="h-8 text-sm pr-8 leading-none transition duration-75 border-gray-300 rounded-lg shadow-sm outline-none focus:border-yellow-500 focus:ring-1 focus:ring-inset focus:ring-yellow-500 dark:text-white dark:bg-gray-700 dark:border-gray-600 dark:focus:border-yellow-500"
                                 >
+                                <option value="">P</option>
                                     <option value="5">5</option>
                                     <option value="10">10</option>
                                     <option value="25">25</option>
@@ -79,7 +80,7 @@
                                 >
                                     per page
                                 </span>
-                            </label>
+                            </label> -->
                         </div>
                     </div>
 
@@ -200,7 +201,7 @@ const getPageRange = computed(() => {
 })
 
 const getmeals = async (page = 1) => {
-    const response = await axios.get(`/api/get-meals?page=${page}&per_page=${perPage.value}`);
+    const response = await axios.get(`/api/meal?page=${page}&per_page=${perPage.value}`);
     meals.value = response.data.meals.data;
     pagination.value = {
         current_page: response.data.meals.current_page,

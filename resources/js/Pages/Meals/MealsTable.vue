@@ -1,33 +1,33 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import axios from "axios";
-import { computed } from 'vue';
-import Pagination from './Pagination.vue'
+import { computed } from "vue";
+import Pagination from "./Pagination.vue";
 
 const meals = ref([]);
 const pagination = ref({
-  current_page: 1,
-  per_page: 10,
-  total: 0,
-  from: 1,
-  to: 10,
-})
+    current_page: 1,
+    per_page: 10,
+    total: 0,
+    from: 1,
+    to: 10,
+});
 
-const perPage = ref(10)
-
-
+const perPage = ref(10);
 
 const getMeals = async (page = 1) => {
-    const response = await axios.get(`/api/get-meals?page=${page}&per_page=${perPage.value}`);
+    const response = await axios.get(
+        `/api/meal?page=${page}&per_page=${perPage.value}`
+    );
     meals.value = response.data.meals.data;
     pagination.value = {
         current_page: response.data.meals.current_page,
-    per_page: response.data.meals.per_page,
-    total: response.data.meals.total,
-    from: response.data.meals.from,
-    to: response.data.meals.to,
-    next_page_url: response.data.meals.next_page_url,
-    prev_page_url: response.data.meals.prev_page_url,
+        per_page: response.data.meals.per_page,
+        total: response.data.meals.total,
+        from: response.data.meals.from,
+        to: response.data.meals.to,
+        next_page_url: response.data.meals.next_page_url,
+        prev_page_url: response.data.meals.prev_page_url,
     };
 };
 
@@ -52,19 +52,19 @@ onMounted(() => {
         <div class="block w-full overflow-x-auto">
             <!-- Projects table -->
             <table class="items-center w-full bg-transparent border-collapse">
-                <thead class=" bg-snow/50">
+                <thead class="bg-snow/50">
                     <tr>
-                        <th
-                            class="px-6 align-middle border border-solid py-3 text-sm uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-oynx/75"
-                        >
-                            Categories
-                        </th>
                         <th
                             class="px-6 align-middle border border-solid py-3 text-sm uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-oynx/75"
                         >
                             Name
                         </th>
-                       
+                        <th
+                            class="px-6 align-middle border border-solid py-3 text-sm uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-oynx/75"
+                        >
+                            Categories
+                        </th>
+
                         <th
                             class="px-6 align-middle border border-solid py-3 text-sm uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-oynx/75"
                         >
@@ -82,19 +82,18 @@ onMounted(() => {
                     </tr>
                 </thead>
                 <tbody>
-                  
                     <tr v-for="meal in meals" :key="meal.id">
                         <th
                             class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center"
                         >
                             <span>
-                                {{ meal.category.name }}
+                                {{ meal.name }}
                             </span>
                         </th>
                         <td
                             class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
                         >
-                            {{ meal.name }}
+                            {{ meal.category.name }}
                         </td>
                         <td
                             class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
@@ -104,11 +103,11 @@ onMounted(() => {
                         <td
                             class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
                         >
-                            {{ meal.price }}
+                            {{ meal.prices }}
                         </td>
                         <td
                             class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right"
-                        > 
+                        >
                             <table-dropdown />
                         </td>
                     </tr>

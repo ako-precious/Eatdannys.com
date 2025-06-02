@@ -133,7 +133,7 @@
                     </li>
 
                     <li class="items-center">
-                        <Link href="/Users">
+                        <Link href="/users">
                             <a
                                 :href="href"
                                 @click="navigate"
