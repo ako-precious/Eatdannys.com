@@ -66,7 +66,7 @@
                         <input
                             type="text"
                             placeholder="Search"
-                            class="border-0 px-3 py-2 h-12 border-solid border-blueGray-500 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-base leading-snug shadow-none outline-none focus:outline-none w-full font-normal"
+                            class="border-0 px-3 py-2 h-12 border-solid border-oynx/70 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-base leading-snug shadow-none outline-none focus:outline-none w-full font-normal"
                         />
                     </div>
                 </form>
@@ -75,7 +75,7 @@
                 <hr class="my-4 md:min-w-full" />
                 <!-- Heading -->
                 <h6
-                    class="md:min-w-full text-blueGray-500 text-sm uppercase font-bold block pt-1 pb-4 no-underline"
+                    class="md:min-w-full text-oynx/70 text-sm uppercase font-bold block pt-1 pb-4 no-underline"
                 >
                     Admin Layout Pages
                 </h6>
@@ -85,23 +85,23 @@
                     <li class="items-center">
                         <Link href="/dashboard">
                             <a
-                                :href="href"
+                                
                                 @click="navigate"
                                 class="text-sm uppercase py-3 font-bold block"
                                 :class="[
                                     isActive
                                         ? 'text-polynesian hover:text-polynesian/60'
-                                        : 'text-oynx hover:text-blueGray-500',
+                                        : 'text-oynx hover:text-oynx/70',
                                 ]"
                             >
-                                <i
-                                    class="fas fa-tv mr-2 text-sm"
+                               <font-awesome-icon icon="fa-solid fa-house" class="fas fa-tv mr-2 text-sm"
                                     :class="[
                                         isActive
                                             ? 'opacity-75'
-                                            : 'text-blueGray-300',
-                                    ]"
-                                ></i>
+                                            : 'text-oynx_alt/70',
+                                    ]"/>
+                                    
+                                
                                 Dashboard
                             </a>
                         </Link>
@@ -110,23 +110,21 @@
                     <li class="items-center">
                         <Link href="/orders">
                             <a
-                                :href="href"
+                                
                                 @click="navigate"
                                 class="text-sm uppercase py-3 font-bold block"
                                 :class="[
                                     isActive
                                         ? 'text-polynesian hover:text-polynesian/60'
-                                        : 'text-oynx hover:text-blueGray-500',
+                                        : 'text-oynx hover:text-oynx/70',
                                 ]"
                             >
-                                <i
-                                    class="fas fa-tools mr-2 text-sm"
+                                 <font-awesome-icon icon="fa-solid fa-cart-shopping"  class="fas fa-map-marked mr-2 text-sm "
                                     :class="[
                                         isActive
                                             ? 'opacity-75'
-                                            : 'text-blueGray-300',
-                                    ]"
-                                ></i>
+                                            : 'text-oynx_alt/70',
+                                    ]"/>
                                 Orders
                             </a>
                         </Link>
@@ -135,23 +133,21 @@
                     <li class="items-center">
                         <Link href="/users">
                             <a
-                                :href="href"
+                                
                                 @click="navigate"
                                 class="text-sm uppercase py-3 font-bold block"
                                 :class="[
                                     isActive
                                         ? 'text-polynesian hover:text-polynesian/60'
-                                        : 'text-oynx hover:text-blueGray-500',
+                                        : 'text-oynx hover:text-oynx/70',
                                 ]"
                             >
-                                <i
-                                    class="fas fa-table mr-2 text-sm"
+                                <font-awesome-icon icon="fa-solid fa-user"  class="fas fa-map-marked mr-2 text-sm "
                                     :class="[
                                         isActive
                                             ? 'opacity-75'
-                                            : 'text-blueGray-300',
-                                    ]"
-                                ></i>
+                                            : 'text-oynx_alt/70',
+                                    ]"/>
                                 Users
                             </a>
                         </Link>
@@ -160,20 +156,20 @@
                     <li class="items-center">
                         <Link href="/meals">
                             <a
-                                :href="href"
+                                
                                 @click="navigate"
                                 class="text-sm uppercase py-3 font-bold block"
                                 :class="[
                                     isActive
                                         ? 'text-polynesian hover:text-polynesian/60'
-                                        : 'text-oynx hover:text-blueGray-500',
+                                        : 'text-oynx hover:text-oynx/70',
                                 ]"
                             >
                                 <font-awesome-icon icon="fa-solid fa-utensils"  class="fas fa-map-marked mr-2 text-sm "
                                     :class="[
                                         isActive
                                             ? 'opacity-75'
-                                            : 'text-blueGray-300',
+                                            : 'text-oynx_alt/70',
                                     ]"/>
                                 
                                 Meals
@@ -185,42 +181,7 @@
                 <!-- Divider -->
                 <hr class="my-4 md:min-w-full" />
                 <!-- Heading -->
-                <h6
-                    class="md:min-w-full text-blueGray-500 text-sm uppercase font-bold block pt-1 pb-4 no-underline"
-                >
-                    Auth Layout Pages
-                </h6>
-                <!-- Navigation -->
-
-                <ul
-                    class="md:flex-col md:min-w-full flex flex-col list-none md:mb-4"
-                >
-                    <li class="items-center">
-                        <Link
-                            class="text-oynx hover:text-blueGray-500 text-sm uppercase py-3 font-bold block"
-                            href="/auth/login"
-                        >
-                            <i
-                                class="fas fa-fingerprint text-blueGray-300 mr-2 text-sm"
-                            ></i>
-                            Login
-                        </Link>
-                    </li>
-
-                    <li class="items-center">
-                        <Link
-                            class="text-oynx hover:text-blueGray-500 text-sm uppercase py-3 font-bold block"
-                            href="/auth/register"
-                        >
-                            <i
-                                class="fas fa-clipboard-list text-blueGray-300 mr-2 text-sm"
-                            ></i>
-                            Register
-                        </Link>
-                    </li>
-                </ul>
-
-                <
+                
               
             </div>
         </div>
@@ -230,6 +191,12 @@
 
 <script setup>
 import { Link } from "@inertiajs/vue3";
+import { ref, onMounted, computed } from "vue";
+
+const isActive = computed(() => route.path === '/meals');
+
+console.log(route.path );
+
 </script>
 
 <script>
