@@ -89,34 +89,39 @@
                                     <label
                                         for="Meal-details"
                                         class="text-sm font-medium text-gray-900 block mb-2"
-                                        >Meal Details</label
+                                        >Meal Photos <font-awesome-icon
+                                                                        :icon="[
+                                                                            'far',
+                                                                            'folder-open',
+                                                                        ] " class='text-2xl'
+                                                                    />  </label
                                     >
                                     <div
-                                        class="max-w-md mx-auto rounded-lg overflow-hidden md:max-w-xl"
+                                        class="w-full mx-auto rounded-lg overflow-hidden md:max-w-xl"
                                     >
-                                        <div class="py-20 bg-white px-2">
+                                        <div class=" bg-white px-2">
                                             <div
-                                                class="max-w-md mx-auto rounded-lg overflow-hidden md:max-w-xl"
+                                                class="w-full mx-auto rounded-lg overflow-hidden md:max-w-xl"
                                             >
                                                 <div class="md:flex">
                                                     <div class="w-full p-3">
                                                         <div
-                                                            class="relative border-dotted h-48 rounded-lg border-2 border-blue-700 bg-gray-100 flex justify-center items-center"
+                                                            class="relative border-dotted h-48 w-full rounded-lg border-2 border-blue-700 bg-gray-100 flex justify-center items-center"
                                                         >
                                                             <div
                                                                 class="absolute"
                                                             >
                                                                 <div
-                                                                    class="flex flex-col items-center"
+                                                                    class="flex flex-col items-center text-oynx "
                                                                 >
                                                                     <font-awesome-icon
                                                                         :icon="[
                                                                             'far',
                                                                             'folder-open',
-                                                                        ]"
+                                                                        ] " class='text-2xl'
                                                                     />
                                                                     <span
-                                                                        class="block text-gray-400 font-normal"
+                                                                        class="block font-normal"
                                                                         >Attach
                                                                         you
                                                                         files
