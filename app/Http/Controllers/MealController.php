@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Meal;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Inertia\Inertia;
@@ -68,8 +69,12 @@ public function getMeals(Request $request)
      */
     public function edit(string $id)
     {
-        
-         return  Inertia::render('Meals/Edit');
+         $meal = User::findOrFail($id)->with('photos', 'category');
+    $categories = Category::all();
+    return inertia('Meals/Edit', [
+        'meal' => $meal,
+        'categories' => $categories,
+    ]);
     }
 
     /**
@@ -78,6 +83,25 @@ public function getMeals(Request $request)
     public function update(Request $request, string $id)
     {
         //
+          $data = $request->validate([
+        'name' => 'required|string|max:255',
+        'description' => 'nullable|string',
+        'category_id' => 'nullable|exists:categories,id',
+        'prices' => 'required|array',
+        'photos.*' => 'image|mimes:jpeg,png,jpg|max:2048',
+    ]);
+
+    $meal->update($data);
+
+    // Handle new photo uploads
+    if ($request->hasFile('photos')) {
+        foreach ($request->file('photos') as $photo) {
+            $path = $photo->store('meals', 'public');
+            $meal->photos()->create(['path' => $path]);
+        }
+    }
+
+    return redirect()->route('meals.index')->with('success', 'Meal updated successfully.');
     }
 
     /**
