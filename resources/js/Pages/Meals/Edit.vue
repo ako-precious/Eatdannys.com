@@ -22,6 +22,7 @@
                                         type="text"
                                         name="Meal-name"
                                         id="Meal-name"
+                                        :value="Meal.name"
                                         class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
                                         placeholder="Apple Imac 27”"
                                         required
@@ -33,45 +34,77 @@
                                         class="text-sm font-medium text-gray-900 block mb-2"
                                         >Category</label
                                     >
-                                    <input
-                                        type="text"
+                                    <select
                                         name="category"
                                         id="category"
                                         class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-                                        placeholder="Electronics"
                                         required
-                                    />
-                                </div>
-                                <div class="col-span-6 sm:col-span-3">
-                                    <label
-                                        for="brand"
-                                        class="text-sm font-medium text-gray-900 block mb-2"
-                                        >Brand</label
+                                        v-model="Meal.category_id"
                                     >
-                                    <input
-                                        type="text"
-                                        name="brand"
-                                        id="brand"
-                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-                                        placeholder="Apple"
-                                        required
-                                    />
+                                        <option
+                                            v-for="category in Categories"
+                                            :key="category.id"
+                                            :value="category.id"
+                                        >
+                                            {{ category.name }}
+                                        </option>
+                                    </select>
                                 </div>
-                                <div class="col-span-6 sm:col-span-3">
-                                    <label
-                                        for="price"
-                                        class="text-sm font-medium text-gray-900 block mb-2"
-                                        >Price</label
+                                <div class="col-span-6">
+                                    <div class="flex gap-4 mb-2">
+                                        <label
+                                            for="brand"
+                                            class="text-sm font-medium text-gray-900 block mb-2 w-1/2"
+                                            >Quality</label
+                                        >
+                                        <label
+                                            for="price"
+                                            class="text-sm font-medium text-gray-900 block mb-2 w-1/2"
+                                            >Price</label
+                                        >
+                                    </div>
+
+                                    <div
+                                        v-for="(price, index) in Meal.prices"
+                                        :key="index"
+                                        class="flex gap-4 mb-2"
                                     >
-                                    <input
-                                        type="number"
-                                        name="price"
-                                        id="price"
-                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-                                        placeholder="$2300"
-                                        required
-                                    />
+                                        <input
+                                            v-model="Meal.prices[index].size"
+                                            placeholder="Size"
+                                            required
+                                            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                                        />
+                                        <input
+                                            v-model="Meal.prices[index].price"
+                                            placeholder="Price"
+                                            required
+                                            type="number"
+                                            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                                        />
+                                        <button
+                                            @click="
+                                                Meal.prices.splice(index, 1)
+                                            "
+                                            type="button"  title="delete"
+                                        >
+                                           <font-awesome-icon :icon="['fas', 'trash']" class="text-lighred text-xl" />
+                                        </button>
+                                    </div>
+                                    <button
+                                        type="button"
+                                        @click="
+                                            Meal.prices.push({
+                                                size: '',
+                                                price: 0,
+                                            })
+                                        "
+                                    >
+                                        Add Price
+                                    </button>
+
                                 </div>
+                               
                                 <div class="col-span-6">
                                     <label
                                         for="Meal-details"
@@ -89,17 +122,16 @@
                                     <label
                                         for="Meal-details"
                                         class="text-sm font-medium text-gray-900 block mb-2"
-                                        >Meal Photos <font-awesome-icon
-                                                                        :icon="[
-                                                                            'far',
-                                                                            'folder-open',
-                                                                        ] " class='text-2xl'
-                                                                    />  </label
-                                    >
+                                        >Meal Photos
+                                        <font-awesome-icon
+                                            :icon="['far', 'folder-open']"
+                                            class="text-2xl"
+                                        />
+                                    </label>
                                     <div
                                         class="w-full mx-auto rounded-lg overflow-hidden md:max-w-xl"
                                     >
-                                        <div class=" bg-white px-2">
+                                        <div class="bg-white px-2">
                                             <div
                                                 class="w-full mx-auto rounded-lg overflow-hidden md:max-w-xl"
                                             >
@@ -112,14 +144,9 @@
                                                                 class="absolute"
                                                             >
                                                                 <div
-                                                                    class="flex flex-col items-center text-oynx "
+                                                                    class="flex flex-col items-center text-oynx"
                                                                 >
-                                                                    <font-awesome-icon
-                                                                        :icon="[
-                                                                            'far',
-                                                                            'folder-open',
-                                                                        ] " class='text-2xl'
-                                                                    />
+                                                                  <font-awesome-icon :icon="['fas', 'file-image']" class="text-5xl pb-4" />
                                                                     <span
                                                                         class="block font-normal"
                                                                         >Attach
@@ -157,6 +184,7 @@
                 </div>
             </div>
         </div>
+        {{ Meal }}
     </AppLayout>
 </template>
 <script>
@@ -164,6 +192,10 @@ import MealsTable from "./MealsTable.vue";
 // import AppLayout from "../../Layouts/Applayout.vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 export default {
+    props: {
+        Meal: Object,
+        Categories: Object,
+    },
     components: {
         MealsTable,
         AppLayout,

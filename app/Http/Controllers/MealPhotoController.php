@@ -59,6 +59,13 @@ class MealPhotoController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        //public function destroyPhoto(Photo $photo)
+
+    // Storage::disk('public')->delete($photo->path);
+    // $photo->delete();
+
+    // return back()->with('success', 'Photo removed successfully.');
+
+
     }
 }
