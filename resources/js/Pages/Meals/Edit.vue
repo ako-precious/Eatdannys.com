@@ -2,11 +2,11 @@
     <AppLayout title="Meals">
         <div class="flex flex-wrap mt-4">
             <div class="w-full mb-12 px-4">
-                <div class="bg-white border rounded-lg shadow relative p-10">
+                <div class="bg-white border rounded-lg shadow relative p-5">
                     <div
                         class="flex items-start justify-between py-5 border-b rounded-t"
                     >
-                        <h3 class="text-xl font-semibold px-10">Edit Meal</h3>
+                        <h3 class="text-xl font-semibold px-5">Edit Meal</h3>
                     </div>
 
                     <div class="p-6 space-y-6">
@@ -86,12 +86,16 @@
                                             @click="
                                                 Meal.prices.splice(index, 1)
                                             "
-                                            type="button"  title="delete"
+                                            type="button"
+                                            title="delete"
                                         >
-                                           <font-awesome-icon :icon="['fas', 'trash']" class="text-lighred text-xl" />
+                                            <font-awesome-icon
+                                                :icon="['fas', 'trash']"
+                                                class="text-lighred text-xl"
+                                            />
                                         </button>
                                     </div>
-                                    <button
+                                    <Button
                                         type="button"
                                         @click="
                                             Meal.prices.push({
@@ -100,11 +104,12 @@
                                             })
                                         "
                                     >
-                                        Add Price
-                                    </button>
-
+                                        Add
+                                        <!-- <template #first>Add</template> -->
+                                        <!-- <template #second>+</template> -->
+                                    </Button>
                                 </div>
-                               
+
                                 <div class="col-span-6">
                                     <label
                                         for="Meal-details"
@@ -123,10 +128,6 @@
                                         for="Meal-details"
                                         class="text-sm font-medium text-gray-900 block mb-2"
                                         >Meal Photos
-                                        <font-awesome-icon
-                                            :icon="['far', 'folder-open']"
-                                            class="text-2xl"
-                                        />
                                     </label>
                                     <div
                                         class="w-full mx-auto rounded-lg overflow-hidden md:max-w-xl"
@@ -146,7 +147,13 @@
                                                                 <div
                                                                     class="flex flex-col items-center text-oynx"
                                                                 >
-                                                                  <font-awesome-icon :icon="['fas', 'file-image']" class="text-5xl pb-4" />
+                                                                    <font-awesome-icon
+                                                                        :icon="[
+                                                                            'fas',
+                                                                            'file-image',
+                                                                        ]"
+                                                                        class="text-5xl pb-4"
+                                                                    />
                                                                     <span
                                                                         class="block font-normal"
                                                                         >Attach
@@ -160,7 +167,11 @@
                                                             <input
                                                                 type="file"
                                                                 class="h-full w-full opacity-0"
-                                                                name=""
+                                                                multiple
+                                                                accept="image/*"
+                                                                @change="
+                                                                    handleFileChange
+                                                                "
                                                             />
                                                         </div>
                                                     </div>
@@ -184,11 +195,11 @@
                 </div>
             </div>
         </div>
-        {{ Meal }}
     </AppLayout>
 </template>
 <script>
 import MealsTable from "./MealsTable.vue";
+import Button from "./Button.vue";
 // import AppLayout from "../../Layouts/Applayout.vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 export default {
@@ -199,6 +210,7 @@ export default {
     components: {
         MealsTable,
         AppLayout,
+        Button,
     },
 };
 </script>
