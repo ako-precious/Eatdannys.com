@@ -2,12 +2,12 @@
   button {
    position: relative;
    overflow: hidden;
-   border: 1px solid #18181a;
-   color: #18181a;
+   border: 1px solid #00A6ED;
+   color: #00A6ED;
    display: inline-block;
    font-size: 15px;
    line-height: 15px;
-   padding: 18px 18px 17px;
+   padding: 10px  17px;
    text-decoration: none;
    cursor: pointer;
    background: #fff;
@@ -44,7 +44,7 @@
    left: 0;
    width: 100%;
    height: 100%;
-   background-color: black;
+   background-color: #00A6ED;
    transform-origin: bottom center;
    transition: transform 600ms cubic-bezier(0.48, 0, 0.12, 1);
    transform: skewY(9.3deg) scaleY(0);
@@ -64,5 +64,5 @@
 </style>
 
 <template>
-  <button><span class="text">Hover me</span><span>Thanks!</span></button>
+  <button class=" rounded-5"><span class="text"><slot title="first" /></span><span><slot title="second"/></span></button>
 </template>
