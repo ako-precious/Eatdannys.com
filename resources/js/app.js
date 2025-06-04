@@ -13,12 +13,12 @@ import 'ant-design-vue/dist/reset.css'; // Use reset.css for Ant Design Vue v4 (
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faUser,  faUserPlus, faRightToBracket, faBagShopping, faCartPlus, faMagnifyingGlass, faCartShopping, faXmark, faTrash, faChevronLeft, faChevronRight, faBars, faEllipsisVertical, faArrowUp, faArrowDown, faDollarSign, faUtensils, faHouse, faFolderOpen, 
+import { faUser,  faUserPlus, faRightToBracket, faBagShopping, faCartPlus, faMagnifyingGlass, faCartShopping, faXmark, faTrash, faChevronLeft, faChevronRight, faBars, faEllipsisVertical, faArrowUp, faArrowDown, faDollarSign, faUtensils, faHouse, faFileImage, 
 } from "@fortawesome/free-solid-svg-icons";
 import { faFacebook, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 /* Add icons to the library */
 library.add(
-    faUser, faUserPlus, faRightToBracket, faBagShopping, faCartPlus, faMagnifyingGlass, faCartShopping, faXmark, faTrash, faChevronLeft, faChevronRight, faBars,faEllipsisVertical, faArrowUp, faArrowDown, faDollarSign, faUtensils, faHouse, faFacebook, faWhatsapp, faFolderOpen
+    faUser, faUserPlus, faRightToBracket, faBagShopping, faCartPlus, faMagnifyingGlass, faCartShopping, faXmark, faTrash, faChevronLeft, faChevronRight, faBars,faEllipsisVertical, faArrowUp, faArrowDown, faDollarSign, faUtensils, faHouse, faFacebook, faWhatsapp, faFileImage, faTrash
 );
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';

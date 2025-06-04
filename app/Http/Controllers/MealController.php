@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Meal;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -10,40 +11,40 @@ use Illuminate\Support\Facades\Auth;
 
 class MealController extends Controller
 {
-public function getMeals(Request $request)
-{
-    
-    $perPage = $request->get('per_page', 9);
-    $search = $request->input('search');
+    public function getMeals(Request $request)
+    {
 
-    $query = Meal::with('category')->orderBy("id", "desc");
+        $perPage = $request->get('per_page', 9);
+        $search = $request->input('search');
 
-  
-   
+        $query = Meal::with('category')->orderBy("id", "desc");
 
-    // Apply search filter if provided
-    if ($search) {
-        $query->where(function ($q) use ($search) {
-            $q->where('name', 'like', "%{$search}%")
-              ->orWhereHas('category', function ($catQuery) use ($search) {
-                  $catQuery->where('name', 'like', "%{$search}%");
-              });
-        });
+
+
+
+        // Apply search filter if provided
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhereHas('category', function ($catQuery) use ($search) {
+                        $catQuery->where('name', 'like', "%{$search}%");
+                    });
+            });
+        }
+
+        return response()->json([
+            'meals' => $query->paginate($perPage),
+        ]);
     }
 
-    return response()->json([
-        'meals' => $query->paginate($perPage),
-    ]);
-}
 
-
- public function index(Request $request)
+    public function index(Request $request)
     {
-    
+
         return  Inertia::render('Meals/Index');
     }
-    
-      public function create()
+
+    public function create()
     {
         //
     }
@@ -69,12 +70,14 @@ public function getMeals(Request $request)
      */
     public function edit(string $id)
     {
-         $meal = User::findOrFail($id)->with('photos', 'category');
-    $categories = Category::all();
-    return inertia('Meals/Edit', [
-        'meal' => $meal,
-        'categories' => $categories,
-    ]);
+        $meal = Meal::with( 'category')->find(1);
+        $categories = Category::all();
+
+        // dd($meal);
+        return inertia('Meals/Edit', [
+            'Meal' => $meal,
+            'Categories' => $categories,
+        ]);
     }
 
     /**
@@ -83,25 +86,25 @@ public function getMeals(Request $request)
     public function update(Request $request, string $id)
     {
         //
-          $data = $request->validate([
-        'name' => 'required|string|max:255',
-        'description' => 'nullable|string',
-        'category_id' => 'nullable|exists:categories,id',
-        'prices' => 'required|array',
-        'photos.*' => 'image|mimes:jpeg,png,jpg|max:2048',
-    ]);
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'category_id' => 'nullable|exists:categories,id',
+            'prices' => 'required|array',
+            'photos.*' => 'image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+        $meal = Meal::findOrFail($id)->with('photos', 'category');
+        $meal->update($data);
 
-    $meal->update($data);
-
-    // Handle new photo uploads
-    if ($request->hasFile('photos')) {
-        foreach ($request->file('photos') as $photo) {
-            $path = $photo->store('meals', 'public');
-            $meal->photos()->create(['path' => $path]);
+        // Handle new photo uploads
+        if ($request->hasFile('photos')) {
+            foreach ($request->file('photos') as $photo) {
+                $path = $photo->store('meals', 'public');
+                $meal->photos()->create(['path' => $path]);
+            }
         }
-    }
 
-    return redirect()->route('meals.index')->with('success', 'Meal updated successfully.');
+        return redirect()->route('meals.index')->with('success', 'Meal updated successfully.');
     }
 
     /**
