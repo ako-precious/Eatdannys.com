@@ -83,29 +83,34 @@ class MealController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
-        $data = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'category_id' => 'nullable|exists:categories,id',
-            'prices' => 'required|array',
-            'photos.*' => 'image|mimes:jpeg,png,jpg|max:2048',
-        ]);
-        $meal = Meal::findOrFail($id)->with('photos', 'category');
-        $meal->update($data);
+    public function update(Request $request, Meal $meal)
+{
+    $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'category_id' => 'nullable|exists:categories,id',
+        'description' => 'nullable|string',
+        'prices' => 'required|json',
+        'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:5120',
+    ]);
 
-        // Handle new photo uploads
-        if ($request->hasFile('photos')) {
-            foreach ($request->file('photos') as $photo) {
-                $path = $photo->store('meals', 'public');
-                $meal->photos()->create(['path' => $path]);
-            }
+    $meal->update([
+        'name' => $request->name,
+        'category_id' => $request->category_id,
+        'description' => $request->description,
+        'prices' => $request->prices,
+    ]);
+
+    // Save images
+    if ($request->hasFile('images')) {
+        foreach ($request->file('images') as $image) {
+            $path = $image->store('meal_images', 'public');
+            $meal->photos()->create(['path' => $path]);
         }
-
-        return redirect()->route('meals.index')->with('success', 'Meal updated successfully.');
     }
+
+    return back()->with('success', 'Meal updated successfully.');
+}
+
 
     /**
      * Remove the specified resource from storage.

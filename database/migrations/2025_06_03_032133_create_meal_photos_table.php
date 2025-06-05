@@ -12,19 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('meal_photos', function (Blueprint $table) {
-
             $table->id();
-            $table->unsignedBigInteger('meal_id');
-            $table->string('path'); // URL or path to the image
+            $table->unsignedBigInteger('meal_id'); // Make sure this line exists
+            $table->string('image_path');
             $table->timestamps();
 
+            // Foreign key constraint
             $table->foreign('meal_id')->references('id')->on('meals')->onDelete('cascade');
-
-            $table->timestamps();
         });
     }
 
-    /**
+
+    /*
      * Reverse the migrations.
      */
     public function down(): void

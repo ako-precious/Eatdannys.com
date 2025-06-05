@@ -1,3 +1,94 @@
+<script setup>
+import { ref } from "vue";
+
+const selectedFiles = ref([]);
+const imagePreviews = ref([]);
+const errors = ref([]);
+
+const MIN_IMAGE_SIZE = 20 * 1024; // 20KB
+const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5MB
+const MAX_IMAGES = 6;
+const MIN_IMAGES = 3;
+
+function handleFileChange(event) {
+    const files = Array.from(event.target.files);
+    errors.value = [];
+
+    for (let file of files) {
+        // Validate image type
+        if (!file.type.startsWith("image/")) {
+            errors.value.push(`${file.name} is not a valid image.`);
+            continue;
+        }
+
+        // Validate file size
+        if (file.size < MIN_IMAGE_SIZE) {
+            errors.value.push(`${file.name} is too small (min 20KB).`);
+            continue;
+        }
+
+        if (file.size > MAX_IMAGE_SIZE) {
+            errors.value.push(`${file.name} is too large (max 5MB).`);
+            continue;
+        }
+
+        // Validate total image count
+        if (selectedFiles.value.length >= MAX_IMAGES) {
+            errors.value.push(
+                `You can upload a maximum of ${MAX_IMAGES} images.`
+            );
+            break;
+        }
+
+        selectedFiles.value.push(file);
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            imagePreviews.value.push({ url: e.target.result, name: file.name });
+        };
+        reader.readAsDataURL(file);
+    }
+
+    event.target.value = null;
+}
+
+function submitForm() {
+    const formData = new FormData();
+    formData.append("name", Meal.name);
+    formData.append("category_id", Meal.category_id);
+    formData.append("description", Meal.description || "");
+    formData.append("prices", JSON.stringify(Meal.prices));
+
+    selectedFiles.value.forEach((file, i) => {
+        formData.append(`images[]`, file);
+    });
+
+    axios
+        .put(`/meals/${Meal.id}/update`, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        })
+        .then((res) => {
+            alert("Meal updated successfully.");
+            // You can redirect or show a toast here
+        })
+        .catch((err) => {
+            if (err.response && err.response.data.errors) {
+                errors.value = Object.values(err.response.data.errors).flat();
+            } else {
+                console.error(err);
+            }
+        });
+}
+
+
+function removeImage(index) {
+    selectedFiles.value.splice(index, 1);
+    imagePreviews.value.splice(index, 1);
+}
+</script>
+
 <template>
     <AppLayout title="Meals">
         <div class="flex flex-wrap mt-4">
@@ -15,7 +106,7 @@
                                 <div class="col-span-6 sm:col-span-3">
                                     <label
                                         for="Meal-name"
-                                        class="text-sm font-medium text-gray-900 block mb-2"
+                                        class="text-sm font-medium text-oynx/90 block mb-2"
                                         >Meal Name</label
                                     >
                                     <input
@@ -23,7 +114,7 @@
                                         name="Meal-name"
                                         id="Meal-name"
                                         :value="Meal.name"
-                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                                        class="shadow-sm bg-oynx/5 border border-oynx/30 text-oynx/90 sm:text-sm rounded-lg focus:ring-polynesian/60 focus:border-polynesian/60 block w-full p-2.5"
                                         placeholder="Apple Imac 27”"
                                         required
                                     />
@@ -31,13 +122,13 @@
                                 <div class="col-span-6 sm:col-span-3">
                                     <label
                                         for="category"
-                                        class="text-sm font-medium text-gray-900 block mb-2"
+                                        class="text-sm font-medium text-oynx/90 block mb-2"
                                         >Category</label
                                     >
                                     <select
                                         name="category"
                                         id="category"
-                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                                        class="shadow-sm bg-oynx/5 border border-oynx/30 text-oynx/90 sm:text-sm rounded-lg focus:ring-polynesian/60 focus:border-polynesian/60 block w-full p-2.5"
                                         required
                                         v-model="Meal.category_id"
                                     >
@@ -54,12 +145,12 @@
                                     <div class="flex gap-4 mb-2">
                                         <label
                                             for="brand"
-                                            class="text-sm font-medium text-gray-900 block mb-2 w-1/2"
+                                            class="text-sm font-medium text-oynx/90 block mb-2 w-1/2"
                                             >Quality</label
                                         >
                                         <label
                                             for="price"
-                                            class="text-sm font-medium text-gray-900 block mb-2 w-1/2"
+                                            class="text-sm font-medium text-oynx/90 block mb-2 w-1/2"
                                             >Price</label
                                         >
                                     </div>
@@ -73,14 +164,14 @@
                                             v-model="Meal.prices[index].size"
                                             placeholder="Size"
                                             required
-                                            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                                            class="shadow-sm bg-oynx/5 border border-oynx/30 text-oynx/90 sm:text-sm rounded-lg focus:ring-polynesian/60 focus:border-polynesian/60 block w-full p-2.5"
                                         />
                                         <input
                                             v-model="Meal.prices[index].price"
                                             placeholder="Price"
                                             required
                                             type="number"
-                                            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                                            class="shadow-sm bg-oynx/5 border border-oynx/30 text-oynx/90 sm:text-sm rounded-lg focus:ring-polynesian/60 focus:border-polynesian/60 block w-full p-2.5"
                                         />
                                         <button
                                             @click="
@@ -113,69 +204,96 @@
                                 <div class="col-span-6">
                                     <label
                                         for="Meal-details"
-                                        class="text-sm font-medium text-gray-900 block mb-2"
+                                        class="text-sm font-medium text-oynx/90 block mb-2"
                                         >Meal Details</label
                                     >
                                     <textarea
                                         id="Meal-details"
                                         rows="6"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-4"
+                                        class="bg-oynx/5 border border-oynx/30 text-oynx/90 sm:text-sm rounded-lg focus:ring-polynesian/60 focus:border-polynesian/60 block w-full p-4"
                                         placeholder="Details"
                                     ></textarea>
                                 </div>
                                 <div class="col-span-6">
                                     <label
                                         for="Meal-details"
-                                        class="text-sm font-medium text-gray-900 block mb-2"
+                                        class="text-sm font-medium text-oynx/90 block mb-2"
                                         >Meal Photos
                                     </label>
-                                    <div
-                                        class="w-full mx-auto rounded-lg overflow-hidden md:max-w-xl"
-                                    >
-                                        <div class="bg-white px-2">
-                                            <div
-                                                class="w-full mx-auto rounded-lg overflow-hidden md:max-w-xl"
-                                            >
-                                                <div class="md:flex">
-                                                    <div class="w-full p-3">
-                                                        <div
-                                                            class="relative border-dotted h-48 w-full rounded-lg border-2 border-blue-700 bg-gray-100 flex justify-center items-center"
-                                                        >
-                                                            <div
-                                                                class="absolute"
-                                                            >
-                                                                <div
-                                                                    class="flex flex-col items-center text-oynx"
-                                                                >
-                                                                    <font-awesome-icon
-                                                                        :icon="[
-                                                                            'fas',
-                                                                            'file-image',
-                                                                        ]"
-                                                                        class="text-5xl pb-4"
-                                                                    />
-                                                                    <span
-                                                                        class="block font-normal"
-                                                                        >Attach
-                                                                        you
-                                                                        files
-                                                                        here</span
-                                                                    >
-                                                                </div>
-                                                            </div>
-
-                                                            <input
-                                                                type="file"
-                                                                class="h-full w-full opacity-0"
-                                                                multiple
-                                                                accept="image/*"
-                                                                @change="
-                                                                    handleFileChange
-                                                                "
-                                                            />
-                                                        </div>
-                                                    </div>
+                                    <div>
+                                        <div
+                                            v-if="errors.length"
+                                            class="mt-4 text-sm text-red-600"
+                                        >
+                                            <ul>
+                                                <li
+                                                    v-for="(
+                                                        error, index
+                                                    ) in errors"
+                                                    :key="index"
+                                                >
+                                                    • {{ error }}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div
+                                            class="relative border-dotted h-48 w-full rounded-lg border-2 border-blue-700 bg-oynx/10 flex justify-center items-center"
+                                        >
+                                            <div class="absolute">
+                                                <div
+                                                    class="flex flex-col items-center text-oynx"
+                                                >
+                                                    <font-awesome-icon
+                                                        :icon="[
+                                                            'fas',
+                                                            'file-image',
+                                                        ]"
+                                                        class="text-5xl pb-4"
+                                                    />
+                                                    <span
+                                                        class="block font-normal"
+                                                        >Attach your files
+                                                        here</span
+                                                    >
                                                 </div>
+                                            </div>
+
+                                            <input
+                                                type="file"
+                                                class="h-full w-full opacity-0"
+                                                multiple
+                                                accept="image/*"
+                                                @change="handleFileChange"
+                                            />
+                                        </div>
+
+                                        <!-- Preview Thumbnails -->
+                                        <div
+                                            class="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4"
+                                        >
+                                            <div
+                                                v-for="(
+                                                    image, index
+                                                ) in imagePreviews"
+                                                :key="index"
+                                                class="relative group"
+                                            >
+                                                <img
+                                                    :src="image.url"
+                                                    class="rounded-lg w-full h-32 object-cover"
+                                                />
+
+                                                <!-- Remove Button -->
+                                                <button
+                                                    @click="removeImage(index)"
+                                                    type="button"
+                                                    class="absolute top-1 right-1 bg-red-600 text-white text-xs px-1.5 py-0.5 rounded opacity-80 hover:opacity-100"
+                                                >
+                                                    <font-awesome-icon
+                                                        :icon="['fas', 'trash']"
+                                                        class=" "
+                                                    />
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -184,9 +302,9 @@
                         </form>
                     </div>
 
-                    <div class="p-6 border-t border-gray-200 rounded-b">
-                        <button
-                            class="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                    <div class="p-6 border-t border-oynx/20 rounded-b">
+                        <button @click="submitForm"
+                            class="text-white bg-polynesian/60 hover:bg-polynesian/70 focus:ring-4 focus:ring-polynesian/20 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                             type="submit"
                         >
                             Save All
