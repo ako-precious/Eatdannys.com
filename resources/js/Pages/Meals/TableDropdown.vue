@@ -1,3 +1,6 @@
+<script setup>
+import { Head, Link } from "@inertiajs/vue3";
+</script>
 <template>
   <div>
     <a
@@ -6,7 +9,7 @@
       ref="btnDropdownRef"
       v-on:click="toggleDropdown($event)"
     > <font-awesome-icon icon="fa-solid fa-ellipsis-vertical" class="text-lg" />
-    </a>
+  </a>
     <div
       ref="popoverDropdownRef"
       class="bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48 font-black"
@@ -15,24 +18,24 @@
         block: dropdownPopoverShow,
       }"
     >
-      <a
-        href="javascript:void(0);"
+      <Link
+        href=""
         class="text-sm py-2 px-4 font-bold block w-full whitespace-nowrap bg-transparent text-polynesian "
       >
         Show
-      </a>
-      <a
+    </Link>
+      <Link
         href="javascript:void(0);"
         class="text-sm py-2 px-4 font-bold block w-full whitespace-nowrap bg-transparent text-persian"
       >
         Edit
-      </a>
-      <a
+    </Link>
+      <Link
         href="javascript:void(0);"
         class="text-sm py-2 px-4 font-bold block w-full whitespace-nowrap bg-transparent text-lighred"
       >
         Delete
-      </a>
+    </Link>
     </div>
   </div>
 </template>

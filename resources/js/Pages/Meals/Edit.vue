@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, reactive } from 'vue';
 
 const selectedFiles = ref([]);
 const imagePreviews = ref([]);
@@ -9,6 +9,14 @@ const MIN_IMAGE_SIZE = 20 * 1024; // 20KB
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5MB
 const MAX_IMAGES = 6;
 const MIN_IMAGES = 3;
+
+
+const props = defineProps({
+    Meal: Object,
+    Categories: Object,
+});
+
+const meal = reactive({ ...props.Meal }); // 🔄 reactive copy
 
 function handleFileChange(event) {
     const files = Array.from(event.target.files);
@@ -54,33 +62,35 @@ function handleFileChange(event) {
 
 function submitForm() {
     const formData = new FormData();
-    formData.append("name", Meal.name);
-    formData.append("category_id", Meal.category_id);
-    formData.append("description", Meal.description || "");
-    formData.append("prices", JSON.stringify(Meal.prices));
+    formData.append("name", meal.name);
+    formData.append("category_id", meal.category_id);
+    formData.append("description", meal.description || "");
+    formData.append("prices", JSON.stringify(meal.prices));
 
-    selectedFiles.value.forEach((file, i) => {
-        formData.append(`images[]`, file);
+    selectedFiles.value.forEach((file) => {
+        formData.append("images[]", file);
     });
 
     axios
-        .put(`/meals/${Meal.id}/update`, formData, {
+        .post(`/meals/${meal.id}?_method=PUT`, formData, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
         })
         .then((res) => {
             alert("Meal updated successfully.");
-            // You can redirect or show a toast here
+            window.location.href = "/meals"; // or use inertia if needed
         })
         .catch((err) => {
-            if (err.response && err.response.data.errors) {
+            if (err.response?.data?.errors) {
+                console.log('Validation Errors:', err.response.data.errors);
                 errors.value = Object.values(err.response.data.errors).flat();
             } else {
                 console.error(err);
             }
         });
 }
+
 
 
 function removeImage(index) {
@@ -113,9 +123,9 @@ function removeImage(index) {
                                         type="text"
                                         name="Meal-name"
                                         id="Meal-name"
-                                        :value="Meal.name"
+                                         v-model="Meal.name"
                                         class="shadow-sm bg-oynx/5 border border-oynx/30 text-oynx/90 sm:text-sm rounded-lg focus:ring-polynesian/60 focus:border-polynesian/60 block w-full p-2.5"
-                                        placeholder="Apple Imac 27”"
+                                        placeholder=" "
                                         required
                                     />
                                 </div>
@@ -164,15 +174,19 @@ function removeImage(index) {
                                             v-model="Meal.prices[index].size"
                                             placeholder="Size"
                                             required
-                                            class="shadow-sm bg-oynx/5 border border-oynx/30 text-oynx/90 sm:text-sm rounded-lg focus:ring-polynesian/60 focus:border-polynesian/60 block w-full p-2.5"
+                                            class="shadow-sm bg-oynx/5 border border-oynx/30 text-oynx/90 sm:text-sm rounded-lg focus:ring-polynesian/60 focus:border-polynesian/60 block w-full p-2"
                                         />
-                                        <input
-                                            v-model="Meal.prices[index].price"
-                                            placeholder="Price"
-                                            required
-                                            type="number"
-                                            class="shadow-sm bg-oynx/5 border border-oynx/30 text-oynx/90 sm:text-sm rounded-lg focus:ring-polynesian/60 focus:border-polynesian/60 block w-full p-2.5"
-                                        />
+                                        <div class="relative w-full">
+
+                                            <input
+                                                v-model="Meal.prices[index].price"
+                                                placeholder="Price"
+                                                required
+                                                type="number"
+                                                class=" shadow-sm bg-oynx/5 border border-oynx/30 text-oynx/90 sm:text-sm rounded-lg focus:ring-polynesian/60 focus:border-polynesian/60 block pl-6 p-2 w-full"
+                                            /> 
+                                            <span class="absolute  py-2 top-1 left-2 ">$</span>
+                                        </div>
                                         <button
                                             @click="
                                                 Meal.prices.splice(index, 1)
@@ -208,7 +222,7 @@ function removeImage(index) {
                                         >Meal Details</label
                                     >
                                     <textarea
-                                        id="Meal-details"
+                                        id="Meal-details"  v-model="Meal.description"
                                         rows="6"
                                         class="bg-oynx/5 border border-oynx/30 text-oynx/90 sm:text-sm rounded-lg focus:ring-polynesian/60 focus:border-polynesian/60 block w-full p-4"
                                         placeholder="Details"
@@ -221,23 +235,9 @@ function removeImage(index) {
                                         >Meal Photos
                                     </label>
                                     <div>
+                                       
                                         <div
-                                            v-if="errors.length"
-                                            class="mt-4 text-sm text-red-600"
-                                        >
-                                            <ul>
-                                                <li
-                                                    v-for="(
-                                                        error, index
-                                                    ) in errors"
-                                                    :key="index"
-                                                >
-                                                    • {{ error }}
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div
-                                            class="relative border-dotted h-48 w-full rounded-lg border-2 border-blue-700 bg-oynx/10 flex justify-center items-center"
+                                            class="relative border-dotted h-48 w-full rounded-lg border-2 border-polynesian/70 bg-oynx/10 flex justify-center items-center "
                                         >
                                             <div class="absolute">
                                                 <div
@@ -297,6 +297,21 @@ function removeImage(index) {
                                             </div>
                                         </div>
                                     </div>
+                                     <div
+                                            v-if="errors.length"
+                                            class="mt-4 text-sm text-red-600"
+                                        >
+                                            <ul>
+                                                <li
+                                                    v-for="(
+                                                        error, index
+                                                    ) in errors"
+                                                    :key="index"
+                                                >
+                                                    • {{ error }}
+                                                </li>
+                                            </ul>
+                                        </div>
                                 </div>
                             </div>
                         </form>

@@ -104,9 +104,11 @@ class MealController extends Controller
     if ($request->hasFile('images')) {
         foreach ($request->file('images') as $image) {
             $path = $image->store('meal_images', 'public');
-            $meal->photos()->create(['path' => $path]);
+            $meal->photos()->create(['image_path' => $path]);
         }
     }
+    
+
 
     return back()->with('success', 'Meal updated successfully.');
 }
