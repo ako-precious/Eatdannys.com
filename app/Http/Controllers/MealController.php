@@ -110,9 +110,15 @@ class MealController extends Controller
         }
     }
     
+  return response()->json([
+            'request' => $request,
+            'meal' => $meal,
+             'raw_input' => file_get_contents('php://input'),
+    'form_data' => $request->all(),
+    'files' => $request->file(),
+        ]);
 
-
-    return back()->with('success', 'Meal updated successfully.');
+    // return back()->with('success', 'Meal updated successfully.');
 }
 
 
