@@ -76,21 +76,21 @@ function submitForm() {
     formData.append("category_id", meal.category_id);
     formData.append("description", meal.description || "");
     formData.append("prices", JSON.stringify(meal.prices));
-
+formData.append("_method", "PUT"); // ← Spoofing PUT method
     selectedFiles.value.forEach((file) => {
         formData.append("images[]", file);
     });
 
-    axios
-        .put(`/meals/${meal.id}`, formData, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-        })
-        .then((res) => {
-            alert("Meal updated successfully.");
-            window.location.href = "/meals"; // or use inertia if needed
-        })
+  axios
+  .post(`/meals/${meal.id}`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  })
+  .then((res) => {
+    alert("Meal updated successfully.");
+    console.log(res);
+  })
         .catch((err) => {
             if (err.response?.data?.errors) {
                 console.log('Validation Errors:', err.response.data.errors);
@@ -133,7 +133,7 @@ function removeImage(index) {
                                         type="text"
                                         name="Meal-name"
                                         id="Meal-name"
-                                         v-model="Meal.name"
+                                         v-model="meal.name"
                                         class="shadow-sm bg-oynx/5 border border-oynx/30 text-oynx/90 sm:text-sm rounded-lg focus:ring-polynesian/60 focus:border-polynesian/60 block w-full p-2.5"
                                         placeholder=" "
                                         required
@@ -150,7 +150,7 @@ function removeImage(index) {
                                         id="category"
                                         class="shadow-sm bg-oynx/5 border border-oynx/30 text-oynx/90 sm:text-sm rounded-lg focus:ring-polynesian/60 focus:border-polynesian/60 block w-full p-2.5"
                                         required
-                                        v-model="Meal.category_id"
+                                        v-model="meal.category_id"
                                     >
                                         <option
                                             v-for="category in Categories"
@@ -176,12 +176,12 @@ function removeImage(index) {
                                     </div>
 
                                     <div
-                                        v-for="(price, index) in Meal.prices"
+                                        v-for="(price, index) in meal.prices"
                                         :key="index"
                                         class="flex gap-4 mb-2"
                                     >
                                         <input  
-                                            v-model="Meal.prices[index].size "
+                                            v-model="meal.prices[index].size "
                                             placeholder="Size"
                                             required
                                             class="shadow-sm bg-oynx/5 border border-oynx/30 text-oynx/90 sm:text-sm rounded-lg focus:ring-polynesian/60 focus:border-polynesian/60 block w-full p-2"
@@ -190,7 +190,7 @@ function removeImage(index) {
                                         <div class="relative w-full">
 
                                             <input
-                                                v-model="Meal.prices[index].price"
+                                                v-model="meal.prices[index].price"
                                                 placeholder="Price"
                                                 required
                                                 type="number"
@@ -200,7 +200,7 @@ function removeImage(index) {
                                         </div>
                                         <button
                                             @click="
-                                                Meal.prices.splice(index, 1)
+                                                meal.prices.splice(index, 1)
                                             "
                                             type="button"
                                             title="delete"
@@ -213,7 +213,7 @@ function removeImage(index) {
                                     </div>
                                     <Button
                                         type="button"
-                                        @click=" Meal.prices.push({size: '1', price: 1,}) "
+                                        @click=" meal.prices.push({size: '1', price: 1,}) "
                                     >
                                         Add
                                     </Button>
@@ -227,7 +227,7 @@ function removeImage(index) {
                                         >Meal Details</label
                                     >
                                     <textarea
-                                        id="Meal-details"  v-model="Meal.description"
+                                        id="Meal-details"  v-model="meal.description"
                                         rows="6"
                                         class="bg-oynx/5 border border-oynx/30 text-oynx/90 sm:text-sm rounded-lg focus:ring-polynesian/60 focus:border-polynesian/60 block w-full p-4"
                                         placeholder="Details"
