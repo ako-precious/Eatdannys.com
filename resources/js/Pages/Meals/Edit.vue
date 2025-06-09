@@ -156,7 +156,7 @@ function removeImage(index) {
                                         <label
                                             for="brand"
                                             class="text-sm font-medium text-oynx/90 block mb-2 w-1/2"
-                                            >Quality</label
+                                            >Size/Quality</label
                                         >
                                         <label
                                             for="price"
@@ -170,8 +170,14 @@ function removeImage(index) {
                                         :key="index"
                                         class="flex gap-4 mb-2"
                                     >
-                                        <input
-                                            v-model="Meal.prices[index].size"
+                                        <input  v-if="Meal.prices[index].size "
+                                            v-model="Meal.prices[index].size "
+                                            placeholder="Size"
+                                            required
+                                            class="shadow-sm bg-oynx/5 border border-oynx/30 text-oynx/90 sm:text-sm rounded-lg focus:ring-polynesian/60 focus:border-polynesian/60 block w-full p-2"
+                                        />
+                                        <input v-if="Meal.prices[index].quantity"
+                                            v-model="Meal.prices[index].quantity"
                                             placeholder="Size"
                                             required
                                             class="shadow-sm bg-oynx/5 border border-oynx/30 text-oynx/90 sm:text-sm rounded-lg focus:ring-polynesian/60 focus:border-polynesian/60 block w-full p-2"
@@ -200,7 +206,13 @@ function removeImage(index) {
                                             />
                                         </button>
                                     </div>
-                                    <Button
+                                    <Button v-if="Meal.prices[index].size "
+                                        type="button"
+                                        @click=" Meal.prices.push({size: '', price: 0,}) "
+                                    >
+                                        Add
+                                    </Button>
+                                    <Button v-if="Meal.prices[index].quantity "
                                         type="button"
                                         @click="
                                             Meal.prices.push({

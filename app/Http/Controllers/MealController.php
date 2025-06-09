@@ -68,9 +68,10 @@ class MealController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Meal $meal)
     {
-        $meal = Meal::with( 'category')->find(1);
+        // $meal = Meal::with( 'category')->find(1);
+        $meal;
         $categories = Category::all();
 
         // dd($meal);

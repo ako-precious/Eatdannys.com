@@ -4,60 +4,71 @@ import { Head, Link } from "@inertiajs/vue3";
 <template>
   <div>
     <a
-      class="text-blueGray-500 py-1 px-3"
-      href="#pablo"
+      href="#"
       ref="btnDropdownRef"
-      v-on:click="toggleDropdown($event)"
-    > <font-awesome-icon icon="fa-solid fa-ellipsis-vertical" class="text-lg" />
-  </a>
+      @click="toggleDropdown"
+      class="text-blueGray-500 py-1 px-3"
+    >
+      <font-awesome-icon icon="fa-solid fa-ellipsis-vertical" class="text-lg" />
+    </a>
+
     <div
       ref="popoverDropdownRef"
       class="bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48 font-black"
-      v-bind:class="{
-        hidden: !dropdownPopoverShow,
-        block: dropdownPopoverShow,
-      }"
+      :class="{ hidden: !dropdownPopoverShow, block: dropdownPopoverShow }"
     >
       <Link
-        href=""
-        class="text-sm py-2 px-4 font-bold block w-full whitespace-nowrap bg-transparent text-polynesian "
+        :href="`/meals/${meal.id}`"
+        class="text-sm py-2 px-4 font-bold block w-full whitespace-nowrap bg-transparent cursor-pointer text-polynesian"
       >
         Show
-    </Link>
+      </Link>
       <Link
-        href="javascript:void(0);"
-        class="text-sm py-2 px-4 font-bold block w-full whitespace-nowrap bg-transparent text-persian"
+        :href="`/meals/${meal.id}/edit`"
+        class="text-sm py-2 px-4 font-bold block w-full whitespace-nowrap bg-transparent cursor-pointer text-persian"
       >
         Edit
-    </Link>
-      <Link
-        href="javascript:void(0);"
-        class="text-sm py-2 px-4 font-bold block w-full whitespace-nowrap bg-transparent text-lighred"
+      </Link>
+      <a
+        href="#"
+        @click.prevent="deleteMeal"
+        class="text-sm py-2 px-4 font-bold block w-full whitespace-nowrap bg-transparent cursor-pointer text-lighred"
       >
         Delete
-    </Link>
+      </a>
     </div>
   </div>
 </template>
+
 <script>
 import { createPopper } from "@popperjs/core";
 
 export default {
+  props: {
+    meal: Object,
+  },
   data() {
     return {
       dropdownPopoverShow: false,
     };
   },
   methods: {
-    toggleDropdown: function (event) {
+    toggleDropdown(event) {
       event.preventDefault();
+      this.dropdownPopoverShow = !this.dropdownPopoverShow;
       if (this.dropdownPopoverShow) {
-        this.dropdownPopoverShow = false;
-      } else {
-        this.dropdownPopoverShow = true;
-        createPopper(this.$refs.btnDropdownRef, this.$refs.popoverDropdownRef, {
-          placement: "bottom-start",
-        });
+        createPopper(
+          this.$refs.btnDropdownRef,
+          this.$refs.popoverDropdownRef,
+          {
+            placement: "bottom-start",
+          }
+        );
+      }
+    },
+    deleteMeal() {
+      if (confirm("Are you sure you want to delete this meal?")) {
+        this.$inertia.delete(`/meals/${this.meal.id}`);
       }
     },
   },
