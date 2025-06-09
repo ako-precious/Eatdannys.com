@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
+use App\Models\MealPhoto;
+
 use Illuminate\Http\Request;
 
 class MealPhotoController extends Controller
@@ -57,15 +60,13 @@ class MealPhotoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(MealPhoto $photo)
     {
-        //public function destroyPhoto(Photo $photo)
+        // Optionally delete file from storage
+        Storage::disk('public')->delete($photo->path);
 
-    // Storage::disk('public')->delete($photo->path);
-    // $photo->delete();
+        $photo->delete();
 
-    // return back()->with('success', 'Photo removed successfully.');
-
-
+        return response()->json(['message' => 'Photo deleted']);
     }
 }
