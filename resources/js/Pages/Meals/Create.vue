@@ -1,6 +1,5 @@
 <script setup>
 import { ref, reactive } from 'vue';
-
 import MealsTable from "./MealsTable.vue";
 import Button from "./Button.vue";
 // import AppLayout from "../../Layouts/Applayout.vue";
@@ -67,10 +66,6 @@ function handleFileChange(event) {
 }
 
 function submitForm() {
-
-    console.log(meal);
-    
-
     const formData = new FormData();
     formData.append("name", meal.name);
     formData.append("category_id", meal.category_id);
@@ -81,24 +76,24 @@ function submitForm() {
         formData.append("images[]", file);
     });
 
-    // axios
-    //     .post(`/meals/${meal.id}?_method=PUT`, formData, {
-    //         headers: {
-    //             "Content-Type": "multipart/form-data",
-    //         },
-    //     })
-    //     .then((res) => {
-    //         alert("Meal updated successfully.");
-    //         window.location.href = "/meals"; // or use inertia if needed
-    //     })
-    //     .catch((err) => {
-    //         if (err.response?.data?.errors) {
-    //             console.log('Validation Errors:', err.response.data.errors);
-    //             errors.value = Object.values(err.response.data.errors).flat();
-    //         } else {
-    //             console.error(err);
-    //         }
-    //     });
+    axios
+        .post(`/meals/${meal.id}?_method=PUT`, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        })
+        .then((res) => {
+            alert("Meal updated successfully.");
+            window.location.href = "/meals"; // or use inertia if needed
+        })
+        .catch((err) => {
+            if (err.response?.data?.errors) {
+                console.log('Validation Errors:', err.response.data.errors);
+                errors.value = Object.values(err.response.data.errors).flat();
+            } else {
+                console.error(err);
+            }
+        });
 }
 
 
@@ -335,3 +330,4 @@ function removeImage(index) {
         </div>
     </AppLayout>
 </template>
+

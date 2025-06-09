@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Meal;
+use App\Models\MealPhoto;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -71,9 +72,9 @@ class MealController extends Controller
     public function edit(Meal $meal)
     {
         // $meal = Meal::with( 'category')->find(1);
-        $meal;
+        $meal::with( 'category', 'photo');
         $categories = Category::all();
-
+        $photos =  MealPhoto::where('meal_id',  $meal->id);
         // dd($meal);
         return inertia('Meals/Edit', [
             'Meal' => $meal,
