@@ -101,6 +101,18 @@ formData.append("_method", "PUT"); // ← Spoofing PUT method
         });
 }
 
+function deletePhoto(photoId) {
+  if (!confirm("Are you sure you want to delete this photo?")) return;
+
+  axios
+    .delete(`/meal-photos/${photoId}`)
+    .then(() => {
+      Meal.photos = Meal.photos.filter((p) => p.id !== photoId);
+    })
+    .catch((err) => {
+      console.error("Failed to delete photo", err);
+    });
+}
 
 
 function removeImage(index) {
@@ -301,6 +313,27 @@ function removeImage(index) {
                                                 </button>
                                             </div>
                                         </div>
+
+                                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 my-4">
+  <div
+    v-for="photo in Meal.photos"
+    :key="photo.id"
+    class="relative border rounded overflow-hidden"
+  >
+    <img
+      :src="`/storage/${photo.path}`"
+      class="w-full h-32 object-cover"
+      alt="Meal Photo"
+    />
+    <button
+      @click="deletePhoto(photo.id)"
+      class="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full text-xs"
+    >
+      ✕
+    </button>
+  </div>
+</div>
+
                                     </div>
                                      <div
                                             v-if="errors.length"
