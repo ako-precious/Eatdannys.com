@@ -316,12 +316,12 @@ function removeImage(index) {
 
                                         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 my-4">
   <div
-    v-for="photo in Meal.photos"
+    v-for="photo in Photos"
     :key="photo.id"
     class="relative border rounded overflow-hidden"
   >
     <img
-      :src="`/storage/${photo.path}`"
+      :src="`/storage/${photo.image_path}`"
       class="w-full h-32 object-cover"
       alt="Meal Photo"
     />
