@@ -72,13 +72,14 @@ class MealController extends Controller
     public function edit(Meal $meal)
     {
         // $meal = Meal::with( 'category')->find(1);
-        $meal::with( 'category')->load('photos');
+        $meal::with( 'category', 'photo');
         $categories = Category::all();
-        
-        // dd($meal);
+        $photos =  MealPhoto::where('meal_id',  $meal->id)->get();
+        // dd($meal, $meal->id, MealPhoto::where('meal_id',  $meal->id)->get());
         return inertia('Meals/Edit', [
             'Meal' => $meal,
             'Categories' => $categories,
+            'Photos'=> $photos
         ]);
     }
 
