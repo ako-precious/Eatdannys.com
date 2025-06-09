@@ -43,7 +43,7 @@ onMounted(async () => {
                             statSubtitle="ORDERS"
                             :statTitle="totalOrders.toLocaleString()"
                             statArrow="up"
-                            :statPercent="growth"
+                            :statPercent="String(growth)"
                             :statPercentColor="
                                 growth >= 0
                                     ? 'text-emerald-500'
@@ -60,7 +60,7 @@ onMounted(async () => {
                             statSubtitle="SALES"
                             :statTitle="'$' + totalSales.toLocaleString()"
                             statArrow="up"
-                            :statPercent="salesGrowth "
+                            :statPercent="String(salesGrowth) "
                             :statPercentColor="
                                 salesGrowth >= 0
                                     ? 'text-emerald-500'
@@ -77,7 +77,7 @@ onMounted(async () => {
                             statSubtitle="USERS"
                             :statTitle="totalUsers.toLocaleString()"
                             statArrow="up"
-                            :statPercent="usersGrowth"
+                            :statPercent="String(usersGrowth)"
                             :statPercentColor="
                                 usersGrowth >= 0
                                     ? 'text-emerald-500'
@@ -94,7 +94,7 @@ onMounted(async () => {
                         statSubtitle="MEALS"
                             :statTitle="totalMeals.toLocaleString()"
                             statArrow="up"
-                            :statPercent="mealsGrowth "
+                            :statPercent="String(mealsGrowth) "
                             :statPercentColor="
                                 mealsGrowth >= 0
                                 ? 'text-emerald-500'

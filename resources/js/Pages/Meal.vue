@@ -2,7 +2,7 @@
     <!-- source: https://github.com/mfg888/Responsive-Tailwind-CSS-Grid/blob/main/index.html -->
     <div
         id="Projects"
-        class="flex flex-col items-center py-12 bg-snow! dark:bg-oynx! relative bg-snow"
+        class="flex flex-col items-center py-12 bg-snow! dark:bg-oynx! relative bg-snow m"
     >
         <Search
             @search="handleSearch"
@@ -28,10 +28,10 @@
                     </a>
                     <div class="px-4 py-3 w-[19rem]">
                         <div class="flex justify-between items-center">
-                            <!-- <span
+                            <span
                                 class="text-gray-600 mr-3 uppercase text-xs"
                                 >{{ item.category.name}}</span
-                            > -->
+                            >
                             <p class="text-gray-500 text-sm">
                                 Qty
                                 <input
@@ -112,23 +112,37 @@
                     </div>
                 </div>
             </div>
+             <div v-if="loading" class="p-8 text-center m-auto">
+      <Loader></Loader>
+    </div>
+    
+    <div v-else-if="meals.length === 0" class="py-12 text-center">
+      <p v-if="searchTerm">No meals found for "{{ searchTerm }}"</p>
+      <p v-else>No meals available</p>
+    </div>
         </section>
     </div>
 </template>
 
 <script setup>
-import Search from "./Header/Search.vue";
+import Search from "@/Components/Search.vue";
+import Loader from "@/Components/Loader.vue";
 </script>
 <script>
 import axios from "axios";
 import { useCartStore } from "@/stores/cart";
+
 export default {
     data() {
         return {
             meals: [],
-            quantity: 1,
-            selectedOptions: {}, // Stores selected size/quantity per item
+            page: 1,
+            perPage: 10,
+            loading: false,
+            allLoaded: false,
+            selectedOptions: {},
             quantities: {},
+            searchTerm: "", // Track search term for pagination
         };
     },
     computed: {
@@ -138,59 +152,74 @@ export default {
     },
     methods: {
         handleSearch(term) {
-            axios
-                .get("/api/meal", {
-                    params: { search: term },
-                })
-                .then((response) => {
-                    this.meals = response.data;
-                })
-                .catch((error) => {
-                    console.error("Search failed:", error);
+            this.searchTerm = term;
+            this.page = 1;
+            this.meals = [];
+            this.allLoaded = false;
+            this.fetchMeals();
+        },
+        async fetchMeals() {
+            if (this.loading || this.allLoaded) return;
+
+            this.loading = true;
+            try {
+                const params = {
+                    page: this.page,
+                    per_page: this.perPage,
+                    search: this.searchTerm
+                };
+
+                const response = await axios.get("/api/meal", { params });
+                const fetchedMeals = response.data.meals.data; // Correct path
+
+                if (fetchedMeals.length === 0) {
+                    this.allLoaded = true;
+                    return;
+                }
+
+                this.meals = [...this.meals, ...fetchedMeals];
+                this.page++;
+
+                // Initialize selections
+                fetchedMeals.forEach(item => {
+                    this.$set(this.selectedOptions, item.id, item.prices?.[0] || null);
+                    this.$set(this.quantities, item.id, 1);
                 });
+
+            } catch (error) {
+                console.error("Failed to load meals:", error);
+            } finally {
+                this.loading = false;
+            }
         },
         addToCart(menuItem, selectedOption) {
             if (!selectedOption) return;
-
             const quantity = this.quantities[menuItem.id] || 1;
-
+            
             this.cart.addItem({
                 name: menuItem.name,
                 category: menuItem.category.name,
                 price: selectedOption.price * quantity,
                 unit_price: selectedOption.price,
                 quantity,
-                size_or_quantity:
-                    selectedOption.size || selectedOption.quantity,
+                size_or_quantity: selectedOption.size || selectedOption.quantity,
             });
         },
+        handleScroll() {
+            const bottomOfWindow = 
+                document.documentElement.scrollTop + window.innerHeight >= 
+                document.documentElement.scrollHeight - 100;
+            
+            if (bottomOfWindow) this.fetchMeals();
+        }
+    },
+    beforeUnmount() {
+        window.removeEventListener('scroll', this.handleScroll);
     },
     mounted() {
-        
-        axios
-            .get("/api/meal")
-            .then((response) => {
-                this.meals =
-                    response.data.meals.data ?? response.data.meals ?? [];
-
-                this.meals.forEach((item) => {
-                    if (item.prices && item.prices.length > 0) {
-                        this.$set(
-                            this.selectedOptions,
-                            item.id,
-                            item.prices[0]
-                        );
-                        this.$set(this.quantities, item.id, 1); // default quantity
-                    }
-                });
-                console.log(this.meals);
-                
-            })
-
-            .catch((error) => {
-                console.error("Failed to load menu:", error);
-            });
-    },
+        this.fetchMeals();
+        window.addEventListener('scroll', this.handleScroll);
+    }
 };
 </script>
 

@@ -1,6 +1,6 @@
 <script setup>
 import Header from "@/Pages/Header/Index.vue";
-
+import Footer from "./Footer.vue"
 </script>
 
 <template>
@@ -11,6 +11,8 @@ import Header from "@/Pages/Header/Index.vue";
         </Header>
 
     <slot></slot>
+
+<Footer />
     </div>
 </template>
 <style scoped>
