@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref } from "vue";
-import Button from "@/Components/Button.vue"; // Adjust path if needed
+
 
 const Meal = ref({
     prices: [],

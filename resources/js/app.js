@@ -1,31 +1,75 @@
-import './bootstrap';
-import '../css/app.css';
+import "./bootstrap";
+import "../css/app.css";
+import "tailwindcss";
 
-import { createApp, h } from 'vue';
-import { createPinia } from 'pinia'
-import { createInertiaApp } from '@inertiajs/vue3';
-import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
-import { ZiggyVue } from '../../vendor/tightenco/ziggy';
-
+import { createApp, h } from "vue";
+import { createPinia } from "pinia";
+import { createInertiaApp } from "@inertiajs/vue3";
+import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
+import { ZiggyVue } from "../../vendor/tightenco/ziggy";
 // Import Ant Design Vue and its CSS
-import Antd from 'ant-design-vue';
-import 'ant-design-vue/dist/reset.css'; // Use reset.css for Ant Design Vue v4 (recommended) or ant-design-vue/dist/antd.css for v3
+import Antd from "ant-design-vue";
+import "ant-design-vue/dist/reset.css"; // Use reset.css for Ant Design Vue v4 (recommended) or ant-design-vue/dist/antd.css for v3
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faUser,  faUserPlus, faRightToBracket, faBagShopping, faCartPlus, faMagnifyingGlass, faCartShopping, faXmark, faTrash, faChevronLeft, faChevronRight, faBars, faEllipsisVertical, faArrowUp, faArrowDown, faDollarSign, faUtensils, faHouse, faFileImage, 
+import {
+    faUser,
+    faUserPlus,
+    faRightToBracket,
+    faBagShopping,
+    faCartPlus,
+    faMagnifyingGlass,
+    faCartShopping,
+    faXmark,
+    faTrash,
+    faChevronLeft,
+    faChevronRight,
+    faBars,
+    faEllipsisVertical,
+    faArrowUp,
+    faArrowDown,
+    faDollarSign,
+    faUtensils,
+    faHouse,
+    faFileImage,
 } from "@fortawesome/free-solid-svg-icons";
-import { faFacebook, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
+import { faFacebook, faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 /* Add icons to the library */
 library.add(
-    faUser, faUserPlus, faRightToBracket, faBagShopping, faCartPlus, faMagnifyingGlass, faCartShopping, faXmark, faTrash, faChevronLeft, faChevronRight, faBars,faEllipsisVertical, faArrowUp, faArrowDown, faDollarSign, faUtensils, faHouse, faFacebook, faWhatsapp, faFileImage, faTrash
+    faUser,
+    faUserPlus,
+    faRightToBracket,
+    faBagShopping,
+    faCartPlus,
+    faMagnifyingGlass,
+    faCartShopping,
+    faXmark,
+    faTrash,
+    faChevronLeft,
+    faChevronRight,
+    faBars,
+    faEllipsisVertical,
+    faArrowUp,
+    faArrowDown,
+    faDollarSign,
+    faUtensils,
+    faHouse,
+    faFacebook,
+    faWhatsapp,
+    faFileImage,
+    faTrash
 );
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = import.meta.env.VITE_APP_NAME || "Laravel";
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
-    resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
+    resolve: (name) =>
+        resolvePageComponent(
+            `./Pages/${name}.vue`,
+            import.meta.glob("./Pages/**/*.vue")
+        ),
     setup({ el, App, props, plugin }) {
         return createApp({ render: () => h(App, props) })
             .use(plugin)
@@ -37,6 +81,6 @@ createInertiaApp({
             .mount(el);
     },
     progress: {
-        color: '#4B5563',
+        color: "#4B5563",
     },
 });
