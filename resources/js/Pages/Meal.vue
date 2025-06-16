@@ -2,7 +2,7 @@
     <!-- source: https://github.com/mfg888/Responsive-Tailwind-CSS-Grid/blob/main/index.html -->
     <div
         id="Projects"
-        class="flex flex-col items-center py-12 bg-snow! dark:bg-oynx! relative bg-snow m"
+        class="flex flex-col items-center py-12 bg-snow! dark:bg-oynx! relative "
     >
         <Search
             @search="handleSearch"
@@ -158,6 +158,26 @@ export default {
             this.allLoaded = false;
             this.fetchMeals();
         },
+         async getPhoto() {
+            await axios
+                .get("/meal_photos/" + this.meal.id)
+                .then((response) => {
+                    this.src =
+                        `/storage/${response.data.firstPhoto.meal_photo_path}`.replace(
+                            "/public",
+                            ""
+                        );
+                    // console.log(this.src);
+                })
+                .catch((error) => {
+                    // console.error("Error fetching data:", error);
+                })
+                .finally(() => {
+                    // Set loading state to false when fetching completes
+                    this.isLoading = false;
+                });
+        },
+        
         async fetchMeals() {
             if (this.loading || this.allLoaded) return;
 

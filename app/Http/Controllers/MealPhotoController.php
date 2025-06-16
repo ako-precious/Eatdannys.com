@@ -30,16 +30,19 @@ class MealPhotoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
+     public function show( string $id){
+       
+          $firstPhoto = MealPhoto::where('meal_id', $id)->orderBy('order', 'asc')->first();   
+          $otherPhotos = MealPhoto::where('meal_id', $id)->orderBy('order', 'asc')->get();
+          return response()->json(['firstPhoto' => $firstPhoto, 'otherPhotos' =>$otherPhotos]);
+      }
+
 
     /**
      * Show the form for editing the specified resource.
