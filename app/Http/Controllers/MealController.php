@@ -18,8 +18,8 @@ class MealController extends Controller
         $perPage = $request->get('per_page', 9);
         $search = $request->input('search');
 
-        $query = Meal::with('category')->orderBy("id", "desc");
-
+        $query = Meal::with('category','photos')->orderBy("id", "desc");
+        
 
 
 
