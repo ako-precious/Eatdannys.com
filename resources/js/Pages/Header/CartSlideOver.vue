@@ -64,11 +64,11 @@
                             <div
                               class="size-24 shrink-0 overflow-hidden rounded-md border border-gray-200"
                             >
-                              <img
-                                src="https://tailwindcss.com/plus-assets/img/ecommerce-images/shopping-cart-page-04-product-01.jpg"
-                                alt="Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt."
-                                class="size-full object-cover"
-                              />
+                         <img
+    :src="item.image || fallbackImage"
+    alt="Cart item image"
+    class="w-24 h-24 object-cover rounded-md"
+  />
                             </div>
   
                             <div class="ml-4 flex flex-1 flex-col">
@@ -167,7 +167,7 @@
      ui.closeCart();
    };
    
-  
+   const fallbackImage =                "https://img.icons8.com/ios/50/image--v1.png";
    const stripePromise = loadStripe('pk_test_51IvR8jAFJD6o0rICZ3MCmT7M8K0RNwvscS75G6T5cvT7mK2hnDXG7RSiqs2JK6nGskhEFo9QMNvP5VvGTmpyksEn00uGLkrESc')
    
    async function checkout() {
