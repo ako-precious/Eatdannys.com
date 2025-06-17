@@ -21,7 +21,7 @@
                 <div href="#" class="text-oynx/70">
                     <a href="">
                         <img
-                            :src="item.imageSrc || placeholderImage"
+                            :src="item.imageSrc || fallbackImage"
                             class="h-72 w-[19rem] object-cover rounded-t-xl"
                             alt="Meal"
                         />
@@ -50,7 +50,7 @@
 
                         <!-- Component Start -->
                         <div
-                            class="grid grid-cols-3 gap-2 w-full max-w-screen-sm cursor-pointer"
+                            class="grid grid-cols-3 gap-2 w-full max-w-screen-xs cursor-pointer"
                         >
                             <div
                                 v-for="(price, index) in item.prices"
@@ -65,7 +65,7 @@
                                     v-model="selectedOptions[item.id]"
                                 />
                                 <label
-                                    class="flex flex-col p-2 border-2"
+                                    class="flex flex-col p-1 border-1"
                                     :class="{
                                         'border-oynx bg-blue-100':
                                             selectedOptions[item.id] === price,
@@ -87,7 +87,7 @@
                         </div>
 
                         <button
-                            class="mt-3 px-4 text-bold w-full rounded cursor-pointer"
+                            class="mt-4 px-4 text-bold w-full rounded cursor-pointer"
                             @click="addToCart(item, selectedOptions[item.id])"
                             title="Select an option before clicking"
                             :disabled="!selectedOptions[item.id]"
@@ -143,6 +143,9 @@ export default {
             selectedOptions: {},
             quantities: {},
             src: "",
+            fallbackImage:
+                "https://img.icons8.com/ios/100/image--v1.png",
+   
             searchTerm: "", // Track search term for pagination
         };
     },
@@ -161,7 +164,7 @@ export default {
         },
         async getPhoto(mealId) {
             const fallbackImage =
-                "https://images.unsplash.com/photo-1646753522408-077ef9839300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NjZ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60";
+                "https://img.icons8.com/ios/50/image--v1.png";
             try {
                 const response = await axios.get(`/meal-photos/${mealId}`);
                 const photoPath = response.data.firstPhoto?.image_path;
@@ -172,44 +175,83 @@ export default {
             }
         },
 
-        async fetchMeals() {
-            if (this.loading || this.allLoaded) return;
+        // async fetchMeals() {
+        //     if (this.loading || this.allLoaded) return;
 
-            this.loading = true;
-            try {
-                const params = {
-                    page: this.page,
-                    per_page: this.perPage,
-                    search: this.searchTerm,
-                };
+        //     this.loading = true;
+        //     try {
+        //         const params = {
+        //             page: this.page,
+        //             per_page: this.perPage,
+        //             search: this.searchTerm,
+        //         };
 
-                const response = await axios.get("/api/meal", { params });
-                const fetchedMeals = response.data.meals.data; // Correct path
+        //         const response = await axios.get("/api/meal", { params });
+        //         const fetchedMeals = response.data.meals.data; // Correct path
 
-                if (fetchedMeals.length === 0) {
-                    this.allLoaded = true;
-                    return;
-                }
+        //         if (fetchedMeals.length === 0) {
+        //             this.allLoaded = true;
+        //             return;
+        //         }
 
-                this.meals = [...this.meals, ...fetchedMeals];
-                this.page++;
+        //         this.meals = [...this.meals, ...fetchedMeals];
+        //         this.page++;
 
-                // Initialize selections
-                fetchedMeals.forEach((item) => {
-                    this.$set(
-                        this.selectedOptions,
-                        item.id,
-                        item.prices?.[0] || null
-                    );
-                    this.$set(this.quantities, item.id, 1);
-                });
-            } catch (error) {
-                console.error("Failed to load meals:", error);
-            } finally {
-                this.loading = false;
-            }
-        },
-        addToCart(menuItem, selectedOption) {
+        //         // Initialize selections
+        //         fetchedMeals.forEach((item) => {
+        //             this.$set(
+        //                 this.selectedOptions,
+        //                 item.id,
+        //                 item.prices?.[0] || null
+        //             );
+        //             this.$set(this.quantities, item.id, 1);
+        //         });
+        //     } catch (error) {
+        //         console.error("Failed to load meals:", error);
+        //     } finally {
+        //         this.loading = false;
+        //     }
+        // },
+      
+      async fetchMeals() {
+    if (this.loading || this.allLoaded) return;
+
+    this.loading = true;
+    try {
+        const params = {
+            page: this.page,
+            per_page: this.perPage,
+            search: this.searchTerm,
+        };
+
+        const response = await axios.get("/api/meal", { params });
+        const fetchedMeals = response.data.meals.data;
+
+        if (fetchedMeals.length === 0) {
+            this.allLoaded = true;
+            return;
+        }
+
+        // 👇 Fetch image for each meal
+        for (const meal of fetchedMeals) {
+            meal.imageSrc = await this.getPhoto(meal.id);
+        }
+
+        this.meals = [...this.meals, ...fetchedMeals];
+        this.page++;
+
+        fetchedMeals.forEach((item) => {
+            this.$set(this.selectedOptions, item.id, item.prices?.[0] || null);
+            this.$set(this.quantities, item.id, 1);
+        });
+
+    } catch (error) {
+        console.error("Failed to load meals:", error);
+    } finally {
+        this.loading = false;
+    }
+},
+  addToCart(menuItem, selectedOption) {
             if (!selectedOption) return;
             const quantity = this.quantities[menuItem.id] || 1;
 
@@ -221,6 +263,7 @@ export default {
                 quantity,
                 size_or_quantity:
                     selectedOption.size || selectedOption.quantity,
+                    image: menuItem.imageSrc || null, // ✅ Add image to cart item
             });
         },
         handleScroll() {
@@ -236,7 +279,6 @@ export default {
     },
     mounted() {
         this.fetchMeals();
-        this.getPhoto();
         window.addEventListener("scroll", this.handleScroll);
     },
 };

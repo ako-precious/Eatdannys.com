@@ -84,7 +84,7 @@ input:not(:placeholder-shown) ~ .reset {
 </style>
 
 <template>
-    <form class="form">
+    <form class="form bg-gray-500">
         <button>
             <font-awesome-icon
                 class="text-oynx font-black text-xl"
