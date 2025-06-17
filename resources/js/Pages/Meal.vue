@@ -2,7 +2,7 @@
     <!-- source: https://github.com/mfg888/Responsive-Tailwind-CSS-Grid/blob/main/index.html -->
     <div
         id="Projects"
-        class="flex flex-col items-center py-12 bg-snow! dark:bg-oynx! relative "
+        class="flex flex-col items-center py-12 bg-snow! dark:bg-oynx! relative"
     >
         <Search
             @search="handleSearch"
@@ -21,7 +21,11 @@
                 <div href="#" class="text-oynx/70">
                     <a href="">
                         <img
-                            src="https://images.unsplash.com/photo-1646753522408-077ef9839300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NjZ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
+                            :src="
+                                src
+                                    ? src
+                                    : 'https://images.unsplash.com/photo-1646753522408-077ef9839300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NjZ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60'
+                            "
                             alt="Product"
                             class="h-72 w-[19rem] object-cover rounded-t-xl"
                         />
@@ -30,7 +34,7 @@
                         <div class="flex justify-between items-center">
                             <span
                                 class="text-gray-600 mr-3 uppercase text-xs"
-                                >{{ item.category.name}}</span
+                                >{{ item.category.name }}</span
                             >
                             <p class="text-gray-500 text-sm">
                                 Qty
@@ -112,14 +116,14 @@
                     </div>
                 </div>
             </div>
-             <div v-if="loading" class="p-8 text-center m-auto">
-      <Loader></Loader>
-    </div>
-    
-    <div v-else-if="meals.length === 0" class="py-12 text-center">
-      <p v-if="searchTerm">No meals found for "{{ searchTerm }}"</p>
-      <p v-else>No meals available</p>
-    </div>
+            <div v-if="loading" class="p-8 text-center m-auto">
+                <Loader></Loader>
+            </div>
+
+            <div v-else-if="meals.length === 0" class="py-12 text-center">
+                <p v-if="searchTerm">No meals found for "{{ searchTerm }}"</p>
+                <p v-else>No meals available</p>
+            </div>
         </section>
     </div>
 </template>
@@ -159,25 +163,22 @@ export default {
             this.fetchMeals();
         },
          async getPhoto() {
-            await axios
-                .get("/meal_photos/" + this.meal.id)
-                .then((response) => {
-                    this.src =
-                        `/storage/${response.data.firstPhoto.meal_photo_path}`.replace(
-                            "/public",
-                            ""
-                        );
-                    // console.log(this.src);
-                })
-                .catch((error) => {
-                    // console.error("Error fetching data:", error);
-                })
-                .finally(() => {
-                    // Set loading state to false when fetching completes
-                    this.isLoading = false;
-                });
-        },
-        
+    try {
+        const response = await axios.get("/meal_photos/" + this.meal.id);
+        if (response.data.firstPhoto && response.data.firstPhoto.meal_photo_path) {
+            this.src = `/storage/${response.data.firstPhoto.meal_photo_path}`;
+        } else {
+            this.src = null; // No photo found
+        }
+    } catch (error) {
+        this.src = null;
+        // console.error("Error fetching data:", error);
+    } finally {
+        this.isLoading = false;
+    }
+}
+
+
         async fetchMeals() {
             if (this.loading || this.allLoaded) return;
 
@@ -215,7 +216,7 @@ export default {
         addToCart(menuItem, selectedOption) {
             if (!selectedOption) return;
             const quantity = this.quantities[menuItem.id] || 1;
-            
+
             this.cart.addItem({
                 name: menuItem.name,
                 category: menuItem.category.name,
@@ -226,10 +227,10 @@ export default {
             });
         },
         handleScroll() {
-            const bottomOfWindow = 
-                document.documentElement.scrollTop + window.innerHeight >= 
+            const bottomOfWindow =
+                document.documentElement.scrollTop + window.innerHeight >=
                 document.documentElement.scrollHeight - 100;
-            
+
             if (bottomOfWindow) this.fetchMeals();
         }
     },
