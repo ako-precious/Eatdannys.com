@@ -21,13 +21,9 @@
                 <div href="#" class="text-oynx/70">
                     <a href="">
                         <img
-                            :src="
-                                src
-                                    ? src
-                                    : 'https://images.unsplash.com/photo-1646753522408-077ef9839300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NjZ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60'
-                            "
-                            alt="Product"
+                            :src="item.imageSrc || placeholderImage"
                             class="h-72 w-[19rem] object-cover rounded-t-xl"
+                            alt="Meal"
                         />
                     </a>
                     <div class="px-4 py-3 w-[19rem]">
@@ -146,6 +142,7 @@ export default {
             allLoaded: false,
             selectedOptions: {},
             quantities: {},
+            src: "",
             searchTerm: "", // Track search term for pagination
         };
     },
@@ -162,22 +159,18 @@ export default {
             this.allLoaded = false;
             this.fetchMeals();
         },
-         async getPhoto() {
-    try {
-        const response = await axios.get("/meal_photos/" + this.meal.id);
-        if (response.data.firstPhoto && response.data.firstPhoto.meal_photo_path) {
-            this.src = `/storage/${response.data.firstPhoto.meal_photo_path}`;
-        } else {
-            this.src = null; // No photo found
-        }
-    } catch (error) {
-        this.src = null;
-        // console.error("Error fetching data:", error);
-    } finally {
-        this.isLoading = false;
-    }
-}
-
+        async getPhoto(mealId) {
+            const fallbackImage =
+                "https://images.unsplash.com/photo-1646753522408-077ef9839300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NjZ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60";
+            try {
+                const response = await axios.get(`/meal-photos/${mealId}`);
+                const photoPath = response.data.firstPhoto?.image_path;
+                return photoPath ? `/storage/${photoPath}` : fallbackImage;
+            } catch (error) {
+                console.error("Error fetching photo:", error);
+                return fallbackImage;
+            }
+        },
 
         async fetchMeals() {
             if (this.loading || this.allLoaded) return;
@@ -187,7 +180,7 @@ export default {
                 const params = {
                     page: this.page,
                     per_page: this.perPage,
-                    search: this.searchTerm
+                    search: this.searchTerm,
                 };
 
                 const response = await axios.get("/api/meal", { params });
@@ -202,11 +195,14 @@ export default {
                 this.page++;
 
                 // Initialize selections
-                fetchedMeals.forEach(item => {
-                    this.$set(this.selectedOptions, item.id, item.prices?.[0] || null);
+                fetchedMeals.forEach((item) => {
+                    this.$set(
+                        this.selectedOptions,
+                        item.id,
+                        item.prices?.[0] || null
+                    );
                     this.$set(this.quantities, item.id, 1);
                 });
-
             } catch (error) {
                 console.error("Failed to load meals:", error);
             } finally {
@@ -223,7 +219,8 @@ export default {
                 price: selectedOption.price * quantity,
                 unit_price: selectedOption.price,
                 quantity,
-                size_or_quantity: selectedOption.size || selectedOption.quantity,
+                size_or_quantity:
+                    selectedOption.size || selectedOption.quantity,
             });
         },
         handleScroll() {
@@ -232,15 +229,16 @@ export default {
                 document.documentElement.scrollHeight - 100;
 
             if (bottomOfWindow) this.fetchMeals();
-        }
+        },
     },
     beforeUnmount() {
-        window.removeEventListener('scroll', this.handleScroll);
+        window.removeEventListener("scroll", this.handleScroll);
     },
     mounted() {
         this.fetchMeals();
-        window.addEventListener('scroll', this.handleScroll);
-    }
+        this.getPhoto();
+        window.addEventListener("scroll", this.handleScroll);
+    },
 };
 </script>
 

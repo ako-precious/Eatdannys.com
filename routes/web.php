@@ -36,7 +36,6 @@ Route::middleware([
     })->name('boarddash');
     Route::resource('/orders',  OrderController::class);
     Route::resource('/meals',  MealController::class);
-    Route::resource('/meal-photos',  MealPhotoController::class);
     Route::get('/api/order-stats', [AdminController::class, 'getOrderStats']);
     Route::get('/api/get-orders',[OrderController::class,'getOrder'])->name('getorder');
 });
@@ -44,6 +43,7 @@ Route::middleware([
 // routes/web.php
 // Auth::routes(['reset' => true]); // This enables password reset routes
 
+Route::resource('/meal-photos',  MealPhotoController::class);
 Route::get('/payment-status',[PaymentController::class, 'createPaymentIntent'])->name('payment.status');
 Route::get('/checkout/success', function () {
     return Inertia::render('Payment/Success',);})->name('checkout.success');
