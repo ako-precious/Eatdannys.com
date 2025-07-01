@@ -3,6 +3,7 @@ import { Head, Link } from "@inertiajs/vue3";
 
 import Meal from "./Meal.vue";
 import Header from "@/Pages/Header/Index.vue";
+import Gridtemplate from "@/Layouts/Gridtemplate.vue";
 import Background from "@/Layouts/Background.vue";
 defineProps({
     canLogin: {
@@ -23,7 +24,7 @@ defineProps({
 </script>
 
 <template>
-    <div class="w-full h-screen">
+    <div class="w-full min-h-screen">
         <section
             class="relative w-full min-h-[95vh] flex flex-col items-center justify-center text-center px-6 lg:px-16 py-16 md:py-32"
         >
@@ -31,10 +32,10 @@ defineProps({
         <div
         class="absolute inset-0 bg-cover bg-center"
         style="
-                    background-image: url('https://plus.unsplash.com/premium_photo-1695762436987-1cf827e5f1dd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTl8fGJ1cmdlcmFpfGVufDB8MHwwfHx8MA%3D%3D');
+                    background-image: url('images/keesha-s-kitchen-PqG32DYCTM8-unsplash.jpg');
                     "
             ></div>
-            <div class="absolute inset-0 bg-oynx opacity-50"></div>
+            <div class="absolute inset-0 bg-oynx opacity-70"></div>
             
             <div  class=" absolute top-0 w-screen  ">  <Header class="w-full "  /></div>
           
@@ -216,5 +217,8 @@ defineProps({
                 </div>
             </div>
         </section>
+        <div class="py-10" >
+            <Gridtemplate></Gridtemplate>
+        </div>
     </div>
 </template>
