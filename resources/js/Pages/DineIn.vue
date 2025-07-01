@@ -70,9 +70,9 @@ defineProps({
             </div>
         </section>
 
-        <section class="px-8 mt-8">
+        <section class="px-8 my-16">
             <div class="w-full flex justify-between items-center">
-                <h1 class="text-start font-semibold text-xl md:text-3xl">
+                <h1 class="text-start font-semibold text-2xl md:text-4xl">
                     Popular Dishes
                 </h1>
                 <a
@@ -217,7 +217,7 @@ defineProps({
                 </div>
             </div>
         </section>
-        <div class="py-10" >
+        <div class="py-10 min-h" >
             <Gridtemplate></Gridtemplate>
         </div>
     </div>
