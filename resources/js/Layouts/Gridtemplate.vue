@@ -68,44 +68,40 @@
     
     <figure>
         <img src="images/Screenshot (78).png" alt="Lorem ipsum dolor sit amet">
-        <!-- <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21" alt="Lorem ipsum dolor sit amet"> -->
         
     </figure>
     
     <figure>
         <img src="images/Screenshot (65).png" alt="Lorem ipsum dolor sit amet">
-        <!-- <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb" alt="Lorem ipsum dolor sit amet"> -->
         
     </figure>
 
     <figure>
-      <!-- <img src="https://images.unsplash.com/photo-1487017159836-4e23ece2e4cf" alt="Lorem ipsum dolor sit amet"> -->
     <img src="images/Screenshot (80).png" alt="Lorem ipsum dolor sit amet">
-      
-    </figure>
+    
+</figure>
 
-    <figure>
-      <img src="https://images.unsplash.com/photo-1532103054090-3491f1a05d0d" alt="Lorem ipsum dolor sit amet">
-      
-    </figure>
+<figure>
+    <img src="images/Screenshot (47).png" alt="Lorem ipsum dolor sit amet">
+    
+</figure>
 
-    <figure>
-      <img src="https://images.unsplash.com/photo-1599033153041-e88627ca70bb" alt="Lorem ipsum dolor sit amet">
-      
+<figure>
+        <img src="images/Screenshot (41).png" alt="Lorem ipsum dolor sit amet">
+        
     </figure>
-
+    
     <figure>
-      <img src="https://images.unsplash.com/photo-1494475673543-6a6a27143fc8" alt="Lorem ipsum dolor sit amet">
-      
+        <img src="images/Screenshot (81).png" alt="Lorem ipsum dolor sit amet">
     </figure>
-
+    
     <figure>
-      <img src="https://images.unsplash.com/photo-1528988719300-046ff7faf8cb" alt="Lorem ipsum dolor sit amet">
-      
+        <img src="images/Screenshot (75).png" alt="Lorem ipsum dolor sit amet">
+        
     </figure>
-
+    
     <figure>
-      <img src="https://images.unsplash.com/photo-1466970601638-4e5fb6556584" alt="Lorem ipsum dolor sit amet">
+        <img src="images/Screenshot (75).png" alt="Lorem ipsum dolor sit amet">
       
     </figure>
   </div>
