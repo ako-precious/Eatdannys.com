@@ -72,7 +72,7 @@ defineProps({
 
         <section class="px-8 mt-8">
             <div class="w-full flex justify-between items-center">
-                <h1 class="text-start font-semibold text-xl md:text-2xl">
+                <h1 class="text-start font-semibold text-xl md:text-3xl">
                     Popular Dishes
                 </h1>
                 <a
