@@ -48,17 +48,16 @@
     
     <figure>
         <img src="images/Screenshot (37).png" alt="Lorem ipsum dolor sit amet">
-      <!-- <img src="https://images.unsplash.com/photo-1507097634215-e82e6b518529" alt="Lorem ipsum dolor sit amet"> -->
-      
+        
     </figure>
-
+    
     <figure>
-      <img src="https://images.unsplash.com/photo-1458668383970-8ddd3927deed" alt="Lorem ipsum dolor sit amet">
-      
+        <img src="images/Screenshot (42).png" alt="Lorem ipsum dolor sit amet">
+        
     </figure>
-
+    
     <figure>
-      <img src="https://images.unsplash.com/photo-1528988719300-046ff7faf8cb" alt="Lorem ipsum dolor sit amet">
+        <img src="images/Screenshot (51).png" alt="Lorem ipsum dolor sit amet">
       
     </figure>
 
