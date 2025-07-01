@@ -6,13 +6,12 @@
 
   <div class="gallery">
     <figure>
-        <!-- <img src="https://images.unsplash.com/photo-1466970601638-4e5fb6556584" alt="Lorem ipsum dolor sit amet"> -->
-        <img src="images/Screenshot (81).png" alt="Lorem ipsum dolor sit amet">
+        <img src="images/Screenshot (73).png" alt="Lorem ipsum dolor sit amet">
         
     </figure>
     
     <figure>
-        <img src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8" alt="Lorem ipsum dolor sit amet">
+        <img src="images/Screenshot (55).png" alt="Lorem ipsum dolor sit amet">
         
     </figure>
     
@@ -22,33 +21,34 @@
     </figure>
     
     <figure>
-        <img src="https://images.unsplash.com/photo-1472396961693-142e6e269027" alt="Lorem ipsum dolor sit amet">
-        
+        <img src="images/Screenshot (38).png" alt="Lorem ipsum dolor sit amet">
     </figure>
     
     <figure>
         <img src="images/Screenshot (39).png" alt="Lorem ipsum dolor sit amet">
-     
-      
+        
+        
     </figure>
-
+    
     <figure>
-      <img src="https://images.unsplash.com/photo-1487017159836-4e23ece2e4cf" alt="Lorem ipsum dolor sit amet">
-      
+        <img src="images/Screenshot (50).png" alt="Lorem ipsum dolor sit amet">
+        <!-- <img src="https://images.unsplash.com/photo-1487017159836-4e23ece2e4cf" alt="Lorem ipsum dolor sit amet"> -->
+        
     </figure>
-
+    
     <figure>
-      <img src="https://images.unsplash.com/photo-1532103054090-3491f1a05d0d" alt="Lorem ipsum dolor sit amet">
-      
+        <img src="images/Screenshot (64).png" alt="Lorem ipsum dolor sit amet">
+        
     </figure>
-
+    
     <figure>
-      <img src="https://images.unsplash.com/photo-1599033153041-e88627ca70bb" alt="Lorem ipsum dolor sit amet">
-      
+        <img src="images/Screenshot (40).png" alt="Lorem ipsum dolor sit amet">
+        
     </figure>
-
+    
     <figure>
-      <img src="https://images.unsplash.com/photo-1507097634215-e82e6b518529" alt="Lorem ipsum dolor sit amet">
+        <img src="images/Screenshot (37).png" alt="Lorem ipsum dolor sit amet">
+      <!-- <img src="https://images.unsplash.com/photo-1507097634215-e82e6b518529" alt="Lorem ipsum dolor sit amet"> -->
       
     </figure>
 
