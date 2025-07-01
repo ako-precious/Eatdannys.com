@@ -72,7 +72,7 @@ defineProps({
 
         <section class="px-8 my-16">
             <div class="w-full flex justify-between items-center">
-                <h1 class="text-start font-semibold text-2xl md:text-4xl">
+                <h1 class="text-start font-semibold text-2xl md:text-4xl text-polynesian">
                     Popular Dishes
                 </h1>
                 <a
@@ -217,8 +217,56 @@ defineProps({
                 </div>
             </div>
         </section>
-        <div class="py-10 min-h" >
+        <div class="py-10 " >
             <Gridtemplate></Gridtemplate>
         </div>
+        
+        <div class="py-10 " >
+           <!-- https://gist.github.com/goodreds/3d044027175954984fb96c7407a955ab -->
+
+<!-- Container -->
+<div class="relative flex flex-col items-center mx-auto lg:flex-row-reverse lg:max-w-5xl lg:mt-12 xl:max-w-6xl">
+
+    <!-- Image Column -->
+    <div class="w-full h-64 lg:w-1/2 lg:h-auto">
+        <img class="h-full w-full object-cover" src="images/keesha-s-kitchen-3gbiqiGJYUc-unsplash.jpg" alt="Winding mountain road">
+    </div>
+    <!-- Close Image Column -->
+
+    <!-- Text Column -->
+    <div
+        class="max-w-lg bg-white md:max-w-2xl md:z-10 md:shadow-lg md:absolute md:top-0 md:mt-48 lg:w-3/5 lg:left-0 lg:mt-20 lg:ml-20 xl:mt-24 xl:ml-12">
+        <!-- Text Wrapper -->
+        <div class="flex flex-col p-12 md:px-16">
+            <h2 class="text-2xl font-medium uppercase text-polynesian lg:text-4xl">Testimonials</h2>
+          <figure class="relative rounded-2xl bg-white p-6 shadow-xl shadow-slate-900/10">
+    <svg aria-hidden="true" width="105" height="78" class="absolute top-6 left-6 fill-slate-100">
+        <path
+            d="M25.086 77.292c-4.821 0-9.115-1.205-12.882-3.616-3.767-2.561-6.78-6.102-9.04-10.622C1.054 58.534 0 53.411 0 47.686c0-5.273.904-10.396 2.712-15.368 1.959-4.972 4.746-9.567 8.362-13.786a59.042 59.042 0 0 1 12.43-11.3C28.325 3.917 33.599 1.507 39.324 0l11.074 13.786c-6.479 2.561-11.677 5.951-15.594 10.17-3.767 4.219-5.65 7.835-5.65 10.848 0 1.356.377 2.863 1.13 4.52.904 1.507 2.637 3.089 5.198 4.746 3.767 2.41 6.328 4.972 7.684 7.684 1.507 2.561 2.26 5.5 2.26 8.814 0 5.123-1.959 9.19-5.876 12.204-3.767 3.013-8.588 4.52-14.464 4.52Zm54.24 0c-4.821 0-9.115-1.205-12.882-3.616-3.767-2.561-6.78-6.102-9.04-10.622-2.11-4.52-3.164-9.643-3.164-15.368 0-5.273.904-10.396 2.712-15.368 1.959-4.972 4.746-9.567 8.362-13.786a59.042 59.042 0 0 1 12.43-11.3C82.565 3.917 87.839 1.507 93.564 0l11.074 13.786c-6.479 2.561-11.677 5.951-15.594 10.17-3.767 4.219-5.65 7.835-5.65 10.848 0 1.356.377 2.863 1.13 4.52.904 1.507 2.637 3.089 5.198 4.746 3.767 2.41 6.328 4.972 7.684 7.684 1.507 2.561 2.26 5.5 2.26 8.814 0 5.123-1.959 9.19-5.876 12.204-3.767 3.013-8.588 4.52-14.464 4.52Z">
+        </path>
+    </svg>
+    <blockquote class="relative">
+        <p class="text-lg tracking-tight text-slate-900">
+            Awesome idea. Can't wait to see how this turns out!
+        </p>
+    </blockquote>
+    <figcaption class="relative mt-6 flex items-center justify-between border-t border-slate-100 pt-6">
+        <div>
+            <div class="font-display text-base text-slate-900">Exmaple name</div>
+            <div class="mt-1 text-sm text-slate-500">Job designation</div>
+        </div>
+        <div class="overflow-hidden rounded-full bg-slate-50">
+            <img alt="" src="https://i.pravatar.cc/300" class="h-14 w-14 object-cover" loading="lazy" width="56" height="56">
+        </div>
+    </figcaption>
+</figure>
+        </div>
+        <!-- Close Text Wrapper -->
+    </div>
+    <!-- Close Text Column -->
+
+</div>
+        </div>
+
     </div>
 </template>
