@@ -1,168 +1,110 @@
 <template>
 
 
-<main class="main container py-8">
-  <h1>CSS Grid - Photo Gallery</h1>
+<main class="main container py-8 bg-snow">
+  <h1 class='text-right text-xl md:text-3xl '>CSS Grid - Photo Gallery</h1>
 
   <div class="gallery">
     <figure>
-      <img src="https://images.unsplash.com/photo-1458668383970-8ddd3927deed" alt="Lorem ipsum dolor sit amet">
-      <figcaption>
-        <h3>Mountains</h3>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-      </figcaption>
+        <!-- <img src="https://images.unsplash.com/photo-1466970601638-4e5fb6556584" alt="Lorem ipsum dolor sit amet"> -->
+        <img src="images/Screenshot (81).png" alt="Lorem ipsum dolor sit amet">
+        
     </figure>
-
+    
     <figure>
-      <img src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8" alt="Lorem ipsum dolor sit amet">
-      <figcaption>
-        <h3>Automobile</h3>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-      </figcaption>
+        <img src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8" alt="Lorem ipsum dolor sit amet">
+        
     </figure>
-
+    
     <figure>
-      <img src="https://images.unsplash.com/photo-1466970601638-4e5fb6556584" alt="Lorem ipsum dolor sit amet">
-      <figcaption>
-        <h3>Mountains</h3>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-      </figcaption>
+        <img src="images/Screenshot (74).png" alt="Lorem ipsum dolor sit amet">
+        
     </figure>
-
+    
     <figure>
-      <img src="https://images.unsplash.com/photo-1472396961693-142e6e269027" alt="Lorem ipsum dolor sit amet">
-      <figcaption>
-        <h3>Mountains</h3>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-      </figcaption>
+        <img src="https://images.unsplash.com/photo-1472396961693-142e6e269027" alt="Lorem ipsum dolor sit amet">
+        
     </figure>
-
+    
     <figure>
-      <img src="https://images.unsplash.com/photo-1485965120184-e220f721d03e" alt="Lorem ipsum dolor sit amet">
-      <figcaption>
-        <h3>Bicycle</h3>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-      </figcaption>
+        <img src="images/Screenshot (39).png" alt="Lorem ipsum dolor sit amet">
+     
+      
     </figure>
 
     <figure>
       <img src="https://images.unsplash.com/photo-1487017159836-4e23ece2e4cf" alt="Lorem ipsum dolor sit amet">
-      <figcaption>
-        <h3>Office</h3>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-      </figcaption>
+      
     </figure>
 
     <figure>
       <img src="https://images.unsplash.com/photo-1532103054090-3491f1a05d0d" alt="Lorem ipsum dolor sit amet">
-      <figcaption>
-        <h3>Office</h3>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-      </figcaption>
+      
     </figure>
 
     <figure>
       <img src="https://images.unsplash.com/photo-1599033153041-e88627ca70bb" alt="Lorem ipsum dolor sit amet">
-      <figcaption>
-        <h3>Cityscape</h3>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-      </figcaption>
+      
     </figure>
 
     <figure>
       <img src="https://images.unsplash.com/photo-1507097634215-e82e6b518529" alt="Lorem ipsum dolor sit amet">
-      <figcaption>
-        <h3>Cityscape</h3>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-      </figcaption>
+      
     </figure>
 
     <figure>
       <img src="https://images.unsplash.com/photo-1458668383970-8ddd3927deed" alt="Lorem ipsum dolor sit amet">
-      <figcaption>
-        <h3>Mountains</h3>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-      </figcaption>
+      
     </figure>
 
     <figure>
       <img src="https://images.unsplash.com/photo-1528988719300-046ff7faf8cb" alt="Lorem ipsum dolor sit amet">
-      <figcaption>
-        <h3>Mountains</h3>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-      </figcaption>
+      
     </figure>
 
     <figure>
       <img src="https://images.unsplash.com/photo-1472396961693-142e6e269027" alt="Lorem ipsum dolor sit amet">
-      <figcaption>
-        <h3>Mountains</h3>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-      </figcaption>
+      
     </figure>
 
     <figure>
       <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21" alt="Lorem ipsum dolor sit amet">
-      <figcaption>
-        <h3>Mountains</h3>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-      </figcaption>
+      
     </figure>
 
     <figure>
       <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb" alt="Lorem ipsum dolor sit amet">
-      <figcaption>
-        <h3>Mountains</h3>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-      </figcaption>
+      
     </figure>
 
     <figure>
       <img src="https://images.unsplash.com/photo-1487017159836-4e23ece2e4cf" alt="Lorem ipsum dolor sit amet">
-      <figcaption>
-        <h3>Office</h3>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-      </figcaption>
+      
     </figure>
 
     <figure>
       <img src="https://images.unsplash.com/photo-1532103054090-3491f1a05d0d" alt="Lorem ipsum dolor sit amet">
-      <figcaption>
-        <h3>Office</h3>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-      </figcaption>
+      
     </figure>
 
     <figure>
       <img src="https://images.unsplash.com/photo-1599033153041-e88627ca70bb" alt="Lorem ipsum dolor sit amet">
-      <figcaption>
-        <h3>Cityscape</h3>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-      </figcaption>
+      
     </figure>
 
     <figure>
       <img src="https://images.unsplash.com/photo-1494475673543-6a6a27143fc8" alt="Lorem ipsum dolor sit amet">
-      <figcaption>
-        <h3>Cityscape</h3>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-      </figcaption>
+      
     </figure>
 
     <figure>
       <img src="https://images.unsplash.com/photo-1528988719300-046ff7faf8cb" alt="Lorem ipsum dolor sit amet">
-      <figcaption>
-        <h3>Mountains</h3>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-      </figcaption>
+      
     </figure>
 
     <figure>
       <img src="https://images.unsplash.com/photo-1466970601638-4e5fb6556584" alt="Lorem ipsum dolor sit amet">
-      <figcaption>
-        <h3>Mountains</h3>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-      </figcaption>
+      
     </figure>
   </div>
 </main>
@@ -173,14 +115,6 @@
 
 img {
   max-inline-size: 100%;
-}
-
-
-
-h1 {
-  font-size: 1.75rem;
-  line-height: 1.5;
-  margin-block-end: 1rem;
 }
 
 .sidebar {
