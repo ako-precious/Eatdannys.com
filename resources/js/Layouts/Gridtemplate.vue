@@ -2,7 +2,7 @@
 
 
 <main class="main container py-8 bg-snow">
-  <h1 class='text-right text-xl md:text-3xl '>CSS Grid - Photo Gallery</h1>
+  <h1 class='text-right text-2xl md:text-4xl pb-6 '>CSS Grid - Photo Gallery</h1>
 
   <div class="gallery">
     <figure>
@@ -101,7 +101,7 @@
     </figure>
     
     <figure>
-        <img src="images/Screenshot (75).png" alt="Lorem ipsum dolor sit amet">
+        <img src="images/Screenshot (43).png" alt="Lorem ipsum dolor sit amet">
       
     </figure>
   </div>
@@ -130,7 +130,7 @@ img {
 
 .main {
   grid-column: main;
-  padding: 1.25rem;
+  padding: 1.20rem;
 }
 
 /* Photo Gallery */
