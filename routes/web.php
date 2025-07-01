@@ -23,6 +23,15 @@ Route::get('/', function () {
     ]);
 })->name('welcome');
 
+Route::get('/dine-in', function () {
+    return Inertia::render('DineIn', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
+})->name('dining');
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -47,7 +56,7 @@ Route::resource('/meal-photos',  MealPhotoController::class);
 Route::get('/payment-status',[PaymentController::class, 'createPaymentIntent'])->name('payment.status');
 Route::get('/checkout/success', function () {
     return Inertia::render('Payment/Success',);})->name('checkout.success');
-
+ 
 
 // Create a simple Blade view for payment status (resources/views/payment-status.blade.php)
 // You could also use a Vue component for this page if you prefer SPA routing.

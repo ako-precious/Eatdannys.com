@@ -1,6 +1,6 @@
 <script setup>
 import { ref, reactive } from 'vue';
-
+import { router } from '@inertiajs/vue3'
 import MealsTable from "./MealsTable.vue";
 import Button from "./Button.vue";
 // import AppLayout from "../../Layouts/Applayout.vue";
@@ -68,8 +68,6 @@ function handleFileChange(event) {
 
 function submitForm() {
 
-    console.log(meal);
-    
 
     const formData = new FormData();
     formData.append("name", meal.name);
@@ -89,7 +87,8 @@ formData.append("_method", "PUT"); // ← Spoofing PUT method
   })
   .then((res) => {
     alert("Meal updated successfully.");
-    console.log(res);
+    router.visit('/meals');
+    // console.log(res);
   })
         .catch((err) => {
             if (err.response?.data?.errors) {
@@ -208,7 +207,7 @@ function removeImage(index) {
                                                 type="number"
                                                 class=" shadow-sm bg-oynx/5 border border-oynx/30 text-oynx/90 sm:text-sm rounded-lg focus:ring-polynesian/60 focus:border-polynesian/60 block pl-6 p-2 w-full"
                                             /> 
-                                            <span class="absolute  py-2 top-1 left-2 ">$</span>
+                                            <span class="absolute  py-1.5 top-0.5 left-2 ">$</span>
                                         </div>
                                         <button
                                             @click="

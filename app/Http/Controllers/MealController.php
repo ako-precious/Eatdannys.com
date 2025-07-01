@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Log;
 class MealController extends Controller
 {
     public function getMeals(Request $request)
@@ -95,12 +95,14 @@ class MealController extends Controller
         'prices' => 'required|json',
         'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:5120',
     ]);
+    Log::info('Decoded Prices:', json_decode($request->prices, true));
+
 
     $meal->update([
         'name' => $request->name,
         'category_id' => $request->category_id,
         'description' => $request->description,
-        'prices' => $request->prices,
+        'prices' => json_decode($request->prices, true),
     ]);
 
     // Save images
