@@ -28,8 +28,8 @@
                             ></path>
                         </svg>
 
-                        <div class="testimonial-content">
-                            <p class="quote text-sm">{{ testimonial.quote }}</p>
+                        <div class="testimonial-content p-3">
+                            <p class="quote text-base">{{ testimonial.quote }}</p>
 
                             <div class="testimonial-footer">
                                 <div class="author-info">
@@ -79,7 +79,7 @@ import { ref, onMounted } from "vue";
 const currentIndex = ref(0);
 const testimonials = ref([
     {
-        quote: "I had an amazing experience at Danny’s Restaurant! The warm and welcoming atmosphere set the tone for a fantastic meal, and the Jollof Rice and Moi Moi were absolutely perfect. The Jollof had that rich, smoky flavor with just the right amount of spice, while the Moi Moi was soft, flavorful, and well-seasoned. Beyond the food, the service was outstanding.",
+        quote: "I had an amazing experience at Danny’s Restaurant! The warm and welcoming atmosphere set the tone for a fantastic meal, and the Jollof Rice and Moi Moi were absolutely perfect. The Jollof had that rich, smoky flavor with just the right amount of spice, while the Moi Moi was soft, flavorful, and well-seasoned.",
         name: "Adekola Victor",
         image: "https://lh3.googleusercontent.com/a-/ALV-UjVt1rEOj-ZsGx6WGIIoa6SRMvY6z6gBEOUP25zoGeoDAYgTgvA=w54-h54-p-rp-mo-br100",
     },
@@ -115,7 +115,7 @@ const testimonials = ref([
         image: "https://lh3.googleusercontent.com/a-/ALV-UjVK6KnW6C1_BaFi0TYgoKy4Ts03UHs0Z3HGGnmMAcT2kDDdxKjISQ=w54-h54-p-rp-mo-br100",
     },
     {
-        quote: "LOVE the food and the lady running it when we went was so lovely! When we came they were having plumbing issues so we couldn't stay in to eat but it was DELICIOUS. We got dinner for 2 and paid extra for the goat. Everything was super flavourful! Nothing was too spicy for me but had a kick and was very full of flavour. There wasn't loads of goat meat but lots of rice and puffs and plantains:) highly recommend for some Nigerian cuisine:)",
+        quote: "LOVE the food and the lady running it when we went was so lovely! When we came they were having plumbing issues so we couldn't stay in to eat but it was DELICIOUS. We got dinner for 2 and paid extra for the goat. Everything was super flavourful! Nothing was too spicy for me but had a kick and was very full of flavour.",
         name: "Ann Goerz",
         image: "https://lh3.googleusercontent.com/a-/ALV-UjUoKD3qnrUlSgG-6mF4YncmsGOy5cVjqhzGlpwqFmaYcmJIqnFB4g=w54-h54-p-rp-mo-br100",
     },
@@ -196,7 +196,7 @@ body {
 
 .slide {
     min-width: 100%;
-    padding: 20px;
+    padding: 10px;
 }
 
 .testimonial-card {
@@ -310,10 +310,7 @@ body {
         padding: 30px 20px;
     }
 
-    .quote {
-        font-size: 1.1rem;
-    }
-
+    
     .author-image {
         width: 60px;
         height: 60px;
