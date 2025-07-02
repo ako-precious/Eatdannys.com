@@ -2,7 +2,7 @@
 
 
 <main class="main container py-8 text-polynesian">
-  <h1 class='text-right text-2xl md:text-4xl pb-6 '>CSS Grid - Photo Gallery</h1>
+  <h1 class='text-right text-2xl md:text-4xl pb-6 upper'>Photo Gallery</h1>
 
   <div class="gallery">
     <figure>
