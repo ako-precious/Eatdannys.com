@@ -4,7 +4,8 @@ import { Head, Link } from "@inertiajs/vue3";
 import Meal from "./Meal.vue";
 import Header from "@/Pages/Header/Index.vue";
 import Gridtemplate from "@/Layouts/Gridtemplate.vue";
-import Background from "@/Layouts/Background.vue";
+import Testimonial from "@/Layouts/Testimonial.vue";
+import Footer from "@/Layouts/Footer.vue";
 defineProps({
     canLogin: {
         type: Boolean,
@@ -24,7 +25,7 @@ defineProps({
 </script>
 
 <template>
-    <div class="w-full min-h-screen">
+    <div class=" w-screen overflow-x-hidden  min-h-screen flex flex-col">
         <section
             class="relative w-full min-h-[95vh] flex flex-col items-center justify-center text-center px-6 lg:px-16 py-16 md:py-32"
         >
@@ -47,10 +48,10 @@ defineProps({
                 <p class="mt-4 text-lg md:text-xl">
                    Choose from the varieties of meal we have
                 </p>
-                <div class="mt-6">
+                <div class="mt-6 flex flex-col md:flex-row gap-4.5 items-center">
                     <a
                         href="#"
-                        class="group px-6 py-3 bg-lighred/50 hover:bg-lighred/60 rounded-lg text-lg font-semibold transition inline-flex items-center mr-2"
+                        class="group px-6 py-3  bg-lighred/50 hover:bg-lighred/60 rounded-lg text-lg font-semibold transition inline-flex items-center"
                     >
                         Order Takeout
                         <i
@@ -59,7 +60,7 @@ defineProps({
                     </a>
                     <a
                         href="#"
-                        class="group px-6 py-3 bg-polynesian/50  hover:bg-polynesian/60 rounded-lg text-lg font-semibold transition inline-flex items-center ml-2"
+                        class="group px-6 py-3 bg-polynesian/50  hover:bg-polynesian/60 rounded-lg text-lg font-semibold transition inline-flex items-center"
                     >
                         Make a Reservation
                         <i
@@ -225,7 +226,7 @@ defineProps({
            <!-- https://gist.github.com/goodreds/3d044027175954984fb96c7407a955ab -->
 
 <!-- Container -->
-<div class="relative flex flex-col items-center mx-auto lg:flex-row-reverse lg:max-w-5xl lg:mt-12 xl:max-w-6xl">
+<div class="relative flex flex-col items-center mx-auto lg:flex-row-reverse lg:max-w-5xl lg:mt-12 xl:max-w-6xl ">
 
     <!-- Image Column -->
     <div class="w-full h-64 lg:w-1/2 lg:h-auto">
@@ -235,32 +236,11 @@ defineProps({
 
     <!-- Text Column -->
     <div
-        class="max-w-lg bg-white md:max-w-2xl md:z-10 md:shadow-lg md:absolute md:top-0 md:mt-48 lg:w-3/5 lg:left-0 lg:mt-20 lg:ml-20 xl:mt-24 xl:ml-12">
+        class="max-w-lg container md:max-w-2xl md:z-10 md:shadow-lg md:absolute md:top-0 md:mt-48 lg:w-3/5 lg:left-0 lg:mt-20 lg:ml-20 xl:mt-24 xl:ml-12">
         <!-- Text Wrapper -->
-        <div class="flex flex-col p-12 md:px-16">
-            <h2 class="text-2xl font-medium uppercase text-polynesian lg:text-4xl">Testimonials</h2>
-          <figure class="relative rounded-2xl bg-white p-6 shadow-xl shadow-slate-900/10">
-    <svg aria-hidden="true" width="105" height="78" class="absolute top-6 left-6 fill-slate-100">
-        <path
-            d="M25.086 77.292c-4.821 0-9.115-1.205-12.882-3.616-3.767-2.561-6.78-6.102-9.04-10.622C1.054 58.534 0 53.411 0 47.686c0-5.273.904-10.396 2.712-15.368 1.959-4.972 4.746-9.567 8.362-13.786a59.042 59.042 0 0 1 12.43-11.3C28.325 3.917 33.599 1.507 39.324 0l11.074 13.786c-6.479 2.561-11.677 5.951-15.594 10.17-3.767 4.219-5.65 7.835-5.65 10.848 0 1.356.377 2.863 1.13 4.52.904 1.507 2.637 3.089 5.198 4.746 3.767 2.41 6.328 4.972 7.684 7.684 1.507 2.561 2.26 5.5 2.26 8.814 0 5.123-1.959 9.19-5.876 12.204-3.767 3.013-8.588 4.52-14.464 4.52Zm54.24 0c-4.821 0-9.115-1.205-12.882-3.616-3.767-2.561-6.78-6.102-9.04-10.622-2.11-4.52-3.164-9.643-3.164-15.368 0-5.273.904-10.396 2.712-15.368 1.959-4.972 4.746-9.567 8.362-13.786a59.042 59.042 0 0 1 12.43-11.3C82.565 3.917 87.839 1.507 93.564 0l11.074 13.786c-6.479 2.561-11.677 5.951-15.594 10.17-3.767 4.219-5.65 7.835-5.65 10.848 0 1.356.377 2.863 1.13 4.52.904 1.507 2.637 3.089 5.198 4.746 3.767 2.41 6.328 4.972 7.684 7.684 1.507 2.561 2.26 5.5 2.26 8.814 0 5.123-1.959 9.19-5.876 12.204-3.767 3.013-8.588 4.52-14.464 4.52Z">
-        </path>
-    </svg>
-    <blockquote class="relative">
-        <p class="text-lg tracking-tight text-slate-900">
-            Awesome idea. Can't wait to see how this turns out!
-        </p>
-    </blockquote>
-    <figcaption class="relative mt-6 flex items-center justify-between border-t border-slate-100 pt-6">
-        <div>
-            <div class="font-display text-base text-slate-900">Exmaple name</div>
-            <div class="mt-1 text-sm text-slate-500">Job designation</div>
-        </div>
-        <div class="overflow-hidden rounded-full bg-slate-50">
-            <img alt="" src="https://i.pravatar.cc/300" class="h-14 w-14 object-cover" loading="lazy" width="56" height="56">
-        </div>
-    </figcaption>
-</figure>
-        </div>
+        
+            <Testimonial></Testimonial>
+        
         <!-- Close Text Wrapper -->
     </div>
     <!-- Close Text Column -->
@@ -269,4 +249,6 @@ defineProps({
         </div>
 
     </div>
+
+    <Footer />
 </template>

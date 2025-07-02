@@ -58,7 +58,9 @@ library.add(
     faFacebook,
     faWhatsapp,
     faFileImage,
-    faTrash
+    faTrash,
+    faChevronLeft,
+    faChevronRight
 );
 
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";
