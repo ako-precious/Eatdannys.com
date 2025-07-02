@@ -93,7 +93,7 @@ defineProps({
                     <div class="relative">
                         <img
                             class="w-full h-56 object-cover"
-                            src="https://images.pexels.com/photos/61180/pexels-photo-61180.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+                            src="images/keesha-s-kitchen-woC24wGXsQ8-unsplash.jpg"
                             alt="Simplest Salad Recipe"
                         />
                         <div
@@ -109,11 +109,10 @@ defineProps({
                         <h2
                             class="font-semibold text-lg hover:text-lighred/60 transition"
                         >
-                            Simplest Salad Recipe
+                            Jollof Rice
                         </h2>
                         <p class="text-gray-500 text-sm mt-1">
-                            A fresh and healthy salad recipe that's easy to
-                            prepare.
+                           Often considered the "king" of Nigerian cuisine, Jollof Rice is a vibrant, savory, one-pot rice dish cooked in a flavorful tomato and pepper sauce.
                         </p>
                     </div>
                     <div class="px-6 py-3 flex justify-between bg-gray-100">
