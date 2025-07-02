@@ -48,7 +48,7 @@ defineProps({
                 <p class="mt-4 text-lg md:text-xl">
                    Choose from the varieties of meal we have
                 </p>
-                <div class="mt-6 flex flex-col md:flex-row gap-4.5 items-center">
+                <div class="mt-6 flex flex-col md:flex-row gap-4.5 items-center justify-center">
                     <a
                         href="#"
                         class="group px-6 py-3  bg-lighred/50 hover:bg-lighred/60 rounded-lg text-lg font-semibold transition inline-flex items-center"
@@ -136,7 +136,7 @@ defineProps({
                     <div class="relative">
                         <img
                             class="w-full h-56 object-cover"
-                            src="https://images.pexels.com/photos/1600727/pexels-photo-1600727.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+                            src="images/soup.png"
                             alt="FastFood Ideas"
                         />
                         <div
@@ -152,10 +152,10 @@ defineProps({
                         <h2
                             class="font-semibold text-lg hover:text-lighred/60 transition"
                         >
-                            Best FastFood Ideas
+                            Soup
                         </h2>
                         <p class="text-gray-500 text-sm mt-1">
-                            Quick and delicious fast food ideas to try at home.
+                            soups are a culinary delight! They're known for their incredible richness, diverse flavors, and comforting warmth, truly the heart of Nigerian cuisine.
                         </p>
                     </div>
                     <div class="px-6 py-3 flex justify-between bg-gray-100">
@@ -179,7 +179,7 @@ defineProps({
                     <div class="relative">
                         <img
                             class="w-full h-56 object-cover"
-                            src="https://images.pexels.com/photos/6086/food-salad-healthy-vegetables.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+                            src="images/poundedyam.png"
                             alt="Why to eat salad?"
                         />
                         <div
@@ -195,11 +195,10 @@ defineProps({
                         <h2
                             class="font-semibold text-lg hover:text-lighred/60 transition"
                         >
-                            Why to eat salad?
+                            Pounded Yam
                         </h2>
                         <p class="text-gray-500 text-sm mt-1">
-                            The benefits of including fresh salads in your daily
-                            diet.
+                           Pounded Yam is a beloved Nigerian staple, celebrated for its smooth, dough-like texture and mild, earthy flavor. It's the perfect "swallow" to accompany rich, flavorful Nigerian soups!
                         </p>
                     </div>
                     <div class="px-6 py-3 flex justify-between bg-gray-100">
