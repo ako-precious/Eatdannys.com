@@ -145,7 +145,7 @@ export default {
                           
                             <Link
                                 class="py-2 px-3 navbar-link"
-                                :href="route('dining')"
+                                :href="route('dining&takeout')"
                                 ><p class="font-bold two">
                                     <span class="hidden text-nowrap lg:block">dining  & take out</span>
                                     <span  class="lg:hidden block">dining...</span>
@@ -231,7 +231,7 @@ export default {
                           
                             <Link
                                 class="py-2 px-3 navbar-link text-oynx"
-                                :href="route('dining')"
+                                :href="route('dining&takeout')"
                                 ><p class="font-bold two">
                                     <span class="hidden text-nowrap lg:block">dining  & take out</span>
                                     <span  class="lg:hidden block">dining...</span>
