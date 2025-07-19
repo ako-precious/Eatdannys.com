@@ -42,15 +42,22 @@
                                 />
                             </p>
                         </div>
-                        <p
-                            class="text-lg mb-1 font-bold text-oynx truncate block capitalize"
-                        >
-                            {{ item.name }}
-                        </p>
+                        <div class="flex justify-between items-center">
+                            <p
+                                class="text-lg mb-1 font-bold text-oynx truncate block capitalize"
+                            >
+                                {{ item.name }} 
+                            </p>
+                            <span
+                                class="text-gray-600 mr-3 uppercase text-xxs"
+                                > {{ item.category.order_type }}</span
+                            >
+                          
+                        </div>
 
                         <!-- Component Start -->
                         <div
-                            class="grid grid-cols-3 gap-2 w-full max-w-screen-xs cursor-pointer"
+                            class="grid grid-cols-3 gap-2 w-full mb-3 max-w-screen-xs cursor-pointer"
                         >
                             <div
                                 v-for="(price, index) in item.prices"
@@ -87,7 +94,7 @@
                         </div>
 
                         <button
-                            class="mt-4 px-4 text-bold w-full rounded cursor-pointer"
+                            class=" px-4 text-bold w-full rounded cursor-pointer"
                             @click="addToCart(item, selectedOptions[item.id])"
                             title="Select an option before clicking"
                             :disabled="!selectedOptions[item.id]"
@@ -294,4 +301,6 @@ input:checked + label {
 .three:hover span {
     height: 120%;
 }
+
+
 </style>
