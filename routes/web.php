@@ -30,7 +30,7 @@ Route::get('/', function () {
 })->name('welcome');
 
 Route::get('/dine-in&takeout', function () {
-    return Inertia::render('DineIn', [
+    return Inertia::render('Dinein&Takeout', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
