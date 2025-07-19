@@ -115,18 +115,7 @@ defineProps({
                            Often considered the "king" of Nigerian cuisine, Jollof Rice is a vibrant, savory, one-pot rice dish cooked in a flavorful tomato and pepper sauce.
                         </p>
                     </div>
-                    <div class="px-6 py-3 flex justify-between bg-gray-100">
-                        <button
-                            class="px-4 py-2 text-lighred/50 border border-lighred/50 rounded-lg hover:bg-lighred/50 hover:text-snow transition"
-                        >
-                            View
-                        </button>
-                        <button
-                            class="px-4 py-2 bg-lighred/50 text-snow rounded-lg hover:bg-lighred/60 transition"
-                        >
-                            Add <i class="fa-solid fa-cart-plus"></i>
-                        </button>
-                    </div>
+                   
                 </div>
 
                 <!-- CARD 2 -->
@@ -158,18 +147,7 @@ defineProps({
                             soups are a culinary delight! They're known for their incredible richness, diverse flavors, and comforting warmth, truly the heart of Nigerian cuisine.
                         </p>
                     </div>
-                    <div class="px-6 py-3 flex justify-between bg-gray-100">
-                        <button
-                            class="px-4 py-2 text-lighred/50 border border-lighred/50 rounded-lg hover:bg-lighred/50 hover:text-snow transition"
-                        >
-                            View
-                        </button>
-                        <button
-                            class="px-4 py-2 bg-lighred/50 text-snow rounded-lg hover:bg-lighred/60 transition"
-                        >
-                            Add <i class="fa-solid fa-cart-plus"></i>
-                        </button>
-                    </div>
+                  
                 </div>
 
                 <!-- CARD 3 -->
@@ -201,18 +179,7 @@ defineProps({
                            Pounded Yam is a beloved Nigerian staple, celebrated for its smooth, dough-like texture and mild, earthy flavor. It's the perfect "swallow" to accompany rich, flavorful Nigerian soups!
                         </p>
                     </div>
-                    <div class="px-6 py-3 flex justify-between bg-gray-100">
-                        <button
-                            class="px-4 py-2 text-lighred/50 border border-lighred/50 rounded-lg hover:bg-lighred/50 hover:text-snow transition"
-                        >
-                            View
-                        </button>
-                        <button
-                            class="px-4 py-2 bg-lighred/50 text-snow rounded-lg hover:bg-lighred/60 transition"
-                        >
-                            Add <i class="fa-solid fa-cart-plus"></i>
-                        </button>
-                    </div>
+                    
                 </div>
             </div>
         </section>
@@ -250,3 +217,30 @@ defineProps({
 
     <Footer />
 </template>
+
+<style scoped>
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+
+/* Custom colors - add these to your Tailwind config */
+.bg-polynesian {
+  background-color: #1a3a5f;
+}
+.bg-polynesian\/50 {
+  background-color: rgba(26, 58, 95, 0.5);
+}
+.bg-polynesian\/60 {
+  background-color: rgba(26, 58, 95, 0.6);
+}
+.bg-polynesian-dark {
+  background-color: #0f2540;
+}
+.bg-sand-50 {
+  background-color: #faf5eb;
+}
+.text-african-sunset {
+  color: #e76f51;
+}
+.text-african-earth {
+  color: #5d4037;
+}
+</style>
