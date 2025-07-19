@@ -36,6 +36,15 @@ Route::get('/dine-in&takeout', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
+})->name('dining&takeout');
+
+Route::get('/dine-in', function () {
+    return Inertia::render('Dinein', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
 })->name('dining');
 
 Route::middleware([

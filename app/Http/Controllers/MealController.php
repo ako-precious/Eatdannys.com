@@ -45,11 +45,7 @@ class MealController extends Controller
         $perPage = $request->get('per_page', 9);
         $search = $request->input('search');
 
-        $query = Meal::with('category','photos')->orderBy("id", "desc") ;
-        
-
-
-
+        $query = Meal::with('category','photos')->orderBy("id", "desc") ;  
         // Apply search filter if provided
         if ($search) {
             $query->where(function ($q) use ($search) {
@@ -62,7 +58,7 @@ class MealController extends Controller
 
         return response()->json([
             'meals' => $query->whereHas('category', function ($query) {
-        $query->where('order_type', 'bulk');
+        $query->where('order_type', 'dine-in');
     })->paginate($perPage),
         ]);
     }

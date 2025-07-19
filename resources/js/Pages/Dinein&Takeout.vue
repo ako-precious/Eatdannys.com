@@ -49,15 +49,15 @@ defineProps({
                    Choose from the varieties of meal we have
                 </p>
                 <div class="mt-6 flex flex-col md:flex-row gap-4.5 items-center justify-center">
-                    <a
-                        href="#"
+                    <Link
+                         :href="route('dining')"
                         class="group px-6 py-3  bg-lighred/50 hover:bg-lighred/60 rounded-lg text-lg font-semibold transition inline-flex items-center"
                     >
                         Order Takeout
                         <i
                             class="fa-solid fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"
                         ></i>
-                    </a>
+                </Link>
                     <a
                         href="#"
                         class="group px-6 py-3 bg-polynesian/50  hover:bg-polynesian/60 rounded-lg text-lg font-semibold transition inline-flex items-center"
