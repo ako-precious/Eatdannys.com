@@ -71,7 +71,7 @@ defineProps({
             </div>
         </section>
 
-        <section class="px-8 my-16">
+        <section class="px-8 my-16 container">
             <div class="w-full flex justify-between items-center">
                 <h1 class="text-start font-semibold text-2xl md:text-4xl text-polynesian">
                     Popular Dishes
