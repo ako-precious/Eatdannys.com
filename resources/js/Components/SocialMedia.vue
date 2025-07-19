@@ -123,7 +123,7 @@
       <div class="tooltip">LinkedIn</div>
     </li>
     <li class="icon-content">
-      <a href="https://www.Facebook.com/dannys_african_restaurant/" aria-label="Facebook" data-social="Facebook">
+      <a href="https://www.facebook.com/profile.php?id=100077730384460&mibextid=wwXIfr&rdid=8MrQI8BLJ1wtjtcx&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F19eydpDDXE%2F%3Fmibextid%3DwwXIfr#" aria-label="Facebook" data-social="Facebook">
         <div class="filled"></div>
         <font-awesome-icon icon="fa-brands fa-facebook" />
       </a>
