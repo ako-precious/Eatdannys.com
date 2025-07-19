@@ -18,7 +18,7 @@ class MealController extends Controller
         $perPage = $request->get('per_page', 9);
         $search = $request->input('search');
 
-        $query = Meal::with('category','photos')->orderBy("id", "desc");
+        $query = Meal::with('category','photos')->orderBy("id", "desc") ;
         
 
 
@@ -34,7 +34,9 @@ class MealController extends Controller
         }
 
         return response()->json([
-            'meals' => $query->paginate($perPage),
+            'meals' => $query->whereHas('category', function ($query) {
+        $query->where('order_type', 'bulk');
+    })->paginate($perPage),
         ]);
     }
 

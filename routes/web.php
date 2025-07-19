@@ -29,7 +29,7 @@ Route::get('/', function () {
     ]);
 })->name('welcome');
 
-Route::get('/dine-in', function () {
+Route::get('/dine-in&takeout', function () {
     return Inertia::render('DineIn', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
