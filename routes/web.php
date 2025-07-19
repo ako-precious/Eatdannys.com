@@ -14,6 +14,12 @@ use Stripe\Stripe;
 use Stripe\PaymentIntent;
 use Illuminate\Support\Facades\Auth;
 
+
+
+// Route::get('/linkstorage', function () {
+//     Artisan::call('storage:link');
+// });
+
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),

@@ -231,7 +231,7 @@ export default {
                           
                             <Link
                                 class="py-2 px-3 navbar-link text-oynx"
-                                :href="route('welcome')"
+                                :href="route('dining')"
                                 ><p class="font-bold two">
                                     <span class="hidden text-nowrap lg:block">dining  & take out</span>
                                     <span  class="lg:hidden block">dining...</span>
