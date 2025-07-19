@@ -6,6 +6,34 @@ import Header from "@/Pages/Header/Index.vue";
 import Gridtemplate from "@/Layouts/Gridtemplate.vue";
 import Testimonial from "@/Layouts/Testimonial.vue";
 import Footer from "@/Layouts/Footer.vue";
+
+import { ref } from 'vue'
+import { Dialog, DialogPanel, DialogTitle, DialogDescription, TransitionRoot, TransitionChild } from '@headlessui/vue'
+
+const isOpen = ref(false)
+const reservationData = ref({
+  name: '',
+  email: '',
+  phone: '',
+  date: '',
+  time: '',
+  guests: 2,
+  specialRequests: ''
+})
+
+function openModal() {
+  isOpen.value = true
+}
+
+function closeModal() {
+  isOpen.value = false
+}
+
+function submitReservation() {
+  // Handle form submission here
+  console.log('Reservation submitted:', reservationData.value)
+  closeModal()
+}
 defineProps({
     canLogin: {
         type: Boolean,
@@ -59,7 +87,7 @@ defineProps({
                         ></i>
                 </Link>
                     <a
-                        href="#"
+                        href="#"  @click.prevent="openModal"
                         class="group px-6 py-3 bg-polynesian/50  hover:bg-polynesian/60 rounded-lg text-lg font-semibold transition inline-flex items-center"
                     >
                         Make a Reservation
@@ -67,6 +95,141 @@ defineProps({
                             class="fa-solid fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"
                         ></i>
                     </a>
+                    
+    <!-- Modal -->
+    <TransitionRoot appear :show="isOpen" as="template">
+      <Dialog as="div" @close="closeModal" class="relative z-100">
+        <TransitionChild
+          as="template"
+          enter="duration-300 ease-out"
+          enter-from="opacity-0"
+          enter-to="opacity-100"
+          leave="duration-200 ease-in"
+          leave-from="opacity-100"
+          leave-to="opacity-0"
+        >
+          <div class="fixed inset-0  bg-opacity-50" />
+        </TransitionChild>
+
+        <div class="fixed inset-0 overflow-y-auto">
+          <div class="flex min-h-full items-center justify-center p-4 text-center">
+            <TransitionChild
+              as="template"
+              enter="duration-300 ease-out"
+              enter-from="opacity-0 scale-95"
+              enter-to="opacity-100 scale-100"
+              leave="duration-200 ease-in"
+              leave-from="opacity-100 scale-100"
+              leave-to="opacity-0 scale-95"
+            >
+              <DialogPanel
+                class="w-full max-w-lg transform overflow-hidden rounded-2xl bg-sand-50 p-6 text-left align-middle shadow-xl transition-all"
+              >
+                <DialogTitle
+                  as="h3"
+                  class="text-2xl font-bold leading-6 text-african-sunset mb-4 flex items-center"
+                >
+                  <i class="fa-solid fa-utensils mr-2"></i>
+                  Reserve Your Table
+                </DialogTitle>
+
+                <form @submit.prevent="submitReservation">
+                  <div class="space-y-4">
+                    <div>
+                      <label class="block text-sm font-medium text-african-earth mb-1">Full Name</label>
+                      <input
+                        v-model="reservationData.name"
+                        required
+                        type="text"
+                        class="w-full px-3 py-2 border border-african-earth/30 rounded-md focus:outline-none focus:ring-2 focus:ring-polynesian"
+                      >
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                      <div>
+                        <label class="block text-sm font-medium text-african-earth mb-1">Email</label>
+                        <input
+                          v-model="reservationData.email"
+                          required
+                          type="email"
+                          class="w-full px-3 py-2 border border-african-earth/30 rounded-md focus:outline-none focus:ring-2 focus:ring-polynesian"
+                        >
+                      </div>
+                      <div>
+                        <label class="block text-sm font-medium text-african-earth mb-1">Phone</label>
+                        <input
+                          v-model="reservationData.phone"
+                          required
+                          type="tel"
+                          class="w-full px-3 py-2 border border-african-earth/30 rounded-md focus:outline-none focus:ring-2 focus:ring-polynesian"
+                        >
+                      </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                      <div>
+                        <label class="block text-sm font-medium text-african-earth mb-1">Date</label>
+                        <input
+                          v-model="reservationData.date"
+                          required
+                          type="date"
+                          class="w-full px-3 py-2 border border-african-earth/30 rounded-md focus:outline-none focus:ring-2 focus:ring-polynesian"
+                        >
+                      </div>
+                      <div>
+                        <label class="block text-sm font-medium text-african-earth mb-1">Time</label>
+                        <input
+                          v-model="reservationData.time"
+                          required
+                          type="time"
+                          class="w-full px-3 py-2 border border-african-earth/30 rounded-md focus:outline-none focus:ring-2 focus:ring-polynesian"
+                        >
+                      </div>
+                    </div>
+
+                    <div>
+                      <label class="block text-sm font-medium text-african-earth mb-1">Number of Guests</label>
+                      <select
+                        v-model="reservationData.guests"
+                        class="w-full px-3 py-2 border border-african-earth/30 rounded-md focus:outline-none focus:ring-2 focus:ring-polynesian"
+                      >
+                        <option v-for="n in 8" :value="n" :key="n">{{ n }} {{ n === 1 ? 'person' : 'people' }}</option>
+                        <option value="9">9+ people</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label class="block text-sm font-medium text-african-earth mb-1">Special Requests</label>
+                      <textarea
+                        v-model="reservationData.specialRequests"
+                        rows="3"
+                        class="w-full px-3 py-2 border border-african-earth/30 rounded-md focus:outline-none focus:ring-2 focus:ring-polynesian"
+                      ></textarea>
+                    </div>
+                  </div>
+
+                  <div class="mt-6 flex justify-between">
+                    <button
+                      type="button"
+                      @click="closeModal"
+                      class="px-4 py-2 text-sm font-medium text-african-earth hover:text-african-sunset"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      class="px-6 py-2 bg-polynesian/50 text-snow rounded-md  transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-polynesian"
+                    >
+                      Confirm Reservation
+                    </button>
+                  </div>
+                </form>
+              </DialogPanel>
+            </TransitionChild>
+          </div>
+        </div>
+      </Dialog>
+    </TransitionRoot>
                 </div>
             </div>
         </section>
