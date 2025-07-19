@@ -1,6 +1,15 @@
 <template>
     <!-- source: https://github.com/mfg888/Responsive-Tailwind-CSS-Grid/blob/main/index.html -->
-    <div
+   <Head title="Welcome" />
+    <Background>
+
+        <div
+            class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-snow"
+        >
+            <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
+                <main class="my-12">
+                    
+                 <div
         id="Projects"
         class="flex flex-col items-center py-12 bg-snow! dark:bg-oynx! relative"
     >
@@ -128,12 +137,57 @@
                 <p v-else>No meals available</p>
             </div>
         </section>
-    </div>
+    </div>   
+                </main>
+
+               
+            </div>
+        </div>
+        <div
+            class="relative z-10"
+            aria-labelledby="slide-over-title"
+            role="dialog"
+            aria-modal="true"
+        ></div>
+        <CartSlideOver ></CartSlideOver>
+<ScrollToTop></ScrollToTop>
+   </Background>
+    
 </template>
 
 <script setup>
+import { Head, Link } from "@inertiajs/vue3";
+
+import Meal from "./Meal.vue";
+import ScrollToTop from "@/Components/ScrollToTop.vue";
+import CartSlideOver from "./Header/CartSlideOver.vue";
+import Background from "@/Layouts/Background.vue";
+
 import Search from "@/Components/Search.vue";
 import Loader from "@/Components/Loader.vue";
+defineProps({
+    canLogin: {
+        type: Boolean,
+    },
+    canRegister: {
+        type: Boolean,
+    },
+    laravelVersion: {
+        type: String,
+        required: true,
+    },
+    phpVersion: {
+        type: String,
+        required: true,
+    },
+});
+
+function handleImageError() {
+    document.getElementById("screenshot-container")?.classList.add("hidden!");
+    document.getElementById("docs-card")?.classList.add("row-span-1!");
+    document.getElementById("docs-card-content")?.classList.add("flex-row!");
+    document.getElementById("background")?.classList.add("hidden!");
+}
 </script>
 <script>
 import axios from "axios";
