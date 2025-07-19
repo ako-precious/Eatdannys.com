@@ -39,6 +39,33 @@ class MealController extends Controller
     })->paginate($perPage),
         ]);
     }
+    public function getDineMeals(Request $request)
+    {
+
+        $perPage = $request->get('per_page', 9);
+        $search = $request->input('search');
+
+        $query = Meal::with('category','photos')->orderBy("id", "desc") ;
+        
+
+
+
+        // Apply search filter if provided
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhereHas('category', function ($catQuery) use ($search) {
+                        $catQuery->where('name', 'like', "%{$search}%");
+                    });
+            });
+        }
+
+        return response()->json([
+            'meals' => $query->whereHas('category', function ($query) {
+        $query->where('order_type', 'bulk');
+    })->paginate($perPage),
+        ]);
+    }
 
 
     public function index(Request $request)

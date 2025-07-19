@@ -12,6 +12,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::get('/meal', [MealController::class, 'getMeals']);
+Route::get('/dine-meal', [MealController::class, 'getDineMeals']);
 
 // routes/api.php or routes/web.php
 Route::post('/stripe/webhook', [WebhookController::class, 'handleWebhook']);
