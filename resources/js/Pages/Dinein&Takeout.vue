@@ -8,9 +8,13 @@ import Testimonial from "@/Layouts/Testimonial.vue";
 import Footer from "@/Layouts/Footer.vue";
 
 import { ref } from 'vue'
-import { Dialog, DialogPanel, DialogTitle, DialogDescription, TransitionRoot, TransitionChild } from '@headlessui/vue'
+import { Dialog, DialogPanel, DialogTitle, TransitionRoot, TransitionChild } from '@headlessui/vue'
 
 const isOpen = ref(false)
+const isLoading = ref(false)
+const successMessage = ref('')
+const errorMessage = ref('')
+
 const reservationData = ref({
   name: '',
   email: '',
@@ -18,21 +22,61 @@ const reservationData = ref({
   date: '',
   time: '',
   guests: 2,
-  specialRequests: ''
+  special_requests: ''
 })
 
 function openModal() {
   isOpen.value = true
+  successMessage.value = ''
+  errorMessage.value = ''
 }
 
 function closeModal() {
   isOpen.value = false
+  // Reset form after modal closes
+  setTimeout(() => {
+    reservationData.value = {
+      name: '',
+      email: '',
+      phone: '',
+      date: '',
+      time: '',
+      guests: 2,
+      special_requests: ''
+    }
+  }, 300)
 }
 
-function submitReservation() {
-  // Handle form submission here
-  console.log('Reservation submitted:', reservationData.value)
-  closeModal()
+async function submitReservation() {
+  isLoading.value = true
+  errorMessage.value = ''
+  
+  try {
+    const response = await fetch('/api/reservations', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+      },
+      body: JSON.stringify(reservationData.value)
+    })
+
+    const data = await response.json()
+    
+    if (!response.ok) {
+      throw new Error(data.message || 'Failed to create reservation')
+    }
+    
+    successMessage.value = 'Reservation created successfully!'
+    // Close modal after 2 seconds
+    setTimeout(() => {
+      closeModal()
+    }, 2000)
+  } catch (error) {
+    errorMessage.value = error.message || 'An error occurred. Please try again.'
+  } finally {
+    isLoading.value = false
+  }
 }
 defineProps({
     canLogin: {
@@ -97,6 +141,7 @@ defineProps({
                     </a>
                     
     <!-- Modal -->
+   
     <TransitionRoot appear :show="isOpen" as="template">
       <Dialog as="div" @close="closeModal" class="relative z-100">
         <TransitionChild
@@ -108,7 +153,7 @@ defineProps({
           leave-from="opacity-100"
           leave-to="opacity-0"
         >
-          <div class="fixed inset-0  bg-opacity-50" />
+          <div class="fixed inset-0 bg-black/50 bg-opacity-50" />
         </TransitionChild>
 
         <div class="fixed inset-0 overflow-y-auto">
@@ -133,9 +178,17 @@ defineProps({
                   Reserve Your Table
                 </DialogTitle>
 
+                <!-- Messages -->
+                <div v-if="successMessage" class="mb-4 p-3 bg-green-100 text-green-700 rounded-lg">
+                  {{ successMessage }}
+                </div>
+                <div v-if="errorMessage" class="mb-4 p-3 bg-red-100 text-red-700 rounded-lg">
+                  {{ errorMessage }}
+                </div>
+
                 <form @submit.prevent="submitReservation">
                   <div class="space-y-4">
-                    <div>
+                             <div>
                       <label class="block text-sm font-medium text-african-earth mb-1">Full Name</label>
                       <input
                         v-model="reservationData.name"
@@ -206,6 +259,7 @@ defineProps({
                         class="w-full px-3 py-2 border border-african-earth/30 rounded-md focus:outline-none focus:ring-2 focus:ring-polynesian"
                       ></textarea>
                     </div>
+                  
                   </div>
 
                   <div class="mt-6 flex justify-between">
@@ -213,14 +267,19 @@ defineProps({
                       type="button"
                       @click="closeModal"
                       class="px-4 py-2 text-sm font-medium text-african-earth hover:text-african-sunset"
+                      :disabled="isLoading"
                     >
                       Cancel
                     </button>
                     <button
                       type="submit"
-                      class="px-6 py-2 bg-polynesian/50 text-snow rounded-md  transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-polynesian"
+                      class="px-6 py-2 bg-polynesian/50 text-white rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-polynesian disabled:opacity-50"
+                      :disabled="isLoading"
                     >
-                      Confirm Reservation
+                      <span v-if="isLoading">
+                        <i class="fa-solid fa-spinner fa-spin mr-2"></i> Processing...
+                      </span>
+                      <span v-else>Confirm Reservation</span>
                     </button>
                   </div>
                 </form>
