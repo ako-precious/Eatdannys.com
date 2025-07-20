@@ -99,6 +99,14 @@ return [
 
     ],
 
+    // config/mail.php
+'address' => [
+    'restaurant' => [
+        'address' => env('RESTAURANT_ADDRESS', ''),
+        'name' => env('RESTAURANT_NAME', 'African Restaurant'),
+        'phone' => env('RESTAURANT_PHONE', ''),
+    ],
+],
     /*
     |--------------------------------------------------------------------------
     | Global "From" Address
@@ -111,7 +119,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
+        'address' => env('MAIL_FROM_ADDRESS', 'dannys@eatdannys.com'),
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 
