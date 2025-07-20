@@ -18,4 +18,10 @@ class Reservation extends Model
         'guests',
         'special_requests'
     ];
+
+    // app/Models/Reservation.php
+protected $casts = [
+    'date' => 'date:Y-m-d',
+    'time' => 'datetime:H:i',
+];
 }
