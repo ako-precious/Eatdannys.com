@@ -90,7 +90,7 @@ async function submitReservation() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        // 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
       },
       body: JSON.stringify(reservationData.value)
     })
@@ -107,6 +107,8 @@ async function submitReservation() {
       closeModal()
     }, 2000)
   } catch (error) {
+    console.log(error);
+    
     errorMessage.value = error.message || 'An error occurred. Please try again.'
   } finally {
     isLoading.value = false

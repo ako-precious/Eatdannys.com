@@ -158,7 +158,7 @@ export default {
                             ></Link>
                             <Link
                                 class="py-2 px-3 navbar-link"
-                                :href="route('welcome')"><p class="font-bold two">
+                                :href="route('bakery')"><p class="font-bold two">
                                     <span>Bakery</span>
                                     <span
                                         class="absolute bottom-1 left-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"
@@ -244,7 +244,7 @@ export default {
                             ></Link>
                             <Link
                                 class="py-2 px-3 navbar-link text-oynx"
-                                :href="route('welcome')"><p class="font-bold two">
+                                :href="route('bakery')"><p class="font-bold two">
                                     <span>Bakery</span>
                                     <span
                                         class="absolute bottom-1 left-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"
