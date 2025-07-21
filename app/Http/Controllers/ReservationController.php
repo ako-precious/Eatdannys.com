@@ -48,9 +48,9 @@ class ReservationController extends Controller
         $reservation = Reservation::create($validated);
 
         // Send email notification
-        Mail::to($reservation->email)
-            ->cc(config('mail.restaurant_email'))
-            ->send(new ReservationConfirmation($reservation));
+        // Mail::to($reservation->email)
+        //     ->cc(config('mail.restaurant_email'))
+        //     ->send(new ReservationConfirmation($reservation));
 
         return response()->json([
             'message' => 'Reservation created successfully',
