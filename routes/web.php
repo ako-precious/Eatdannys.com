@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MealController;
+use App\Http\Controllers\MealPhotoController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Models\Order;
@@ -13,6 +14,12 @@ use Stripe\Stripe;
 use Stripe\PaymentIntent;
 use Illuminate\Support\Facades\Auth;
 
+
+
+// Route::get('/linkstorage', function () {
+//     Artisan::call('storage:link');
+// });
+
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -21,6 +28,41 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 })->name('welcome');
+
+Route::get('/dine-in&takeout', function () {
+    return Inertia::render('Dinein&Takeout', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
+})->name('dining&takeout');
+
+Route::get('/bakery', function () {
+    return Inertia::render('Bakery', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
+})->name('bakery');
+Route::get('/catering', function () {
+    return Inertia::render('Catering', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
+})->name('catering');
+
+Route::get('/dine-in', function () {
+    return Inertia::render('Dinein', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
+})->name('dining');
 
 Route::middleware([
     'auth:sanctum',
@@ -42,10 +84,11 @@ Route::middleware([
 // routes/web.php
 // Auth::routes(['reset' => true]); // This enables password reset routes
 
+Route::resource('/meal-photos',  MealPhotoController::class);
 Route::get('/payment-status',[PaymentController::class, 'createPaymentIntent'])->name('payment.status');
 Route::get('/checkout/success', function () {
     return Inertia::render('Payment/Success',);})->name('checkout.success');
-
+ 
 
 // Create a simple Blade view for payment status (resources/views/payment-status.blade.php)
 // You could also use a Vue component for this page if you prefer SPA routing.

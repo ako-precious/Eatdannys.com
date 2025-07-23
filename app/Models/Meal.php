@@ -11,7 +11,7 @@ class Meal extends Model
 
     use HasFactory;
     protected $table = 'meals';
-    protected $fillable = ['category_id', 'name', 'description', 'price'];
+    protected $fillable = ['category_id', 'name', 'description', 'prices'];
 
     protected $casts = [
         'prices' => 'array',

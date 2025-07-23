@@ -13,7 +13,8 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    // config/app.php
+'name' => env('RESTAURANT_NAME', 'African Restaurant'),
 
     /*
     |--------------------------------------------------------------------------

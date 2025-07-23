@@ -157,7 +157,7 @@ onMounted(() => {
                         <td
                             class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 text-right"
                         >
-                            <table-dropdown />
+                            <table-dropdown :meal="meal" />
                         </td>
                     </tr>
                     <tr v-if="meals.length === 0">
