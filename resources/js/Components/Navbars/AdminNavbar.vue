@@ -32,7 +32,7 @@
       </form>
       <!-- User -->
       <ul class="flex-col md:flex-row list-none items-center hidden md:flex">
-        <user-dropdown />
+        <SettingsDropdown />
       </ul>
     </div>
   </nav>
@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import UserDropdown from "@/Components/Dropdowns/UserDropdown.vue";
+import SettingsDropdown from '../SettingsDropdown.vue';
 
 export default {
   components: {

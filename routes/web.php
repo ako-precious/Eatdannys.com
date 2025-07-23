@@ -75,6 +75,8 @@ Route::middleware([
     })->name('dashboard');
     Route::resource('/orders',  OrderController::class);
     Route::resource('/meals',  MealController::class);
+
+    
     Route::get('/api/order-stats', [AdminController::class, 'getOrderStats']);
     Route::get('/api/get-orders',[OrderController::class,'getOrder'])->name('getorder');
 });
