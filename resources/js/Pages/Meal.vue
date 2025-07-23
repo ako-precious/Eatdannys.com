@@ -2,7 +2,7 @@
     <!-- source: https://github.com/mfg888/Responsive-Tailwind-CSS-Grid/blob/main/index.html -->
     <div
         id="Projects"
-        class="flex flex-col items-center py-12 bg-snow! dark:bg-oynx! relative bg-snow m"
+        class="flex flex-col items-center py-12 bg-snow! dark:bg-oynx! relative"
     >
         <Search
             @search="handleSearch"
@@ -21,16 +21,16 @@
                 <div href="#" class="text-oynx/70">
                     <a href="">
                         <img
-                            src="https://images.unsplash.com/photo-1646753522408-077ef9839300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NjZ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
-                            alt="Product"
+                            :src="item.imageSrc || fallbackImage"
                             class="h-72 w-[19rem] object-cover rounded-t-xl"
+                            alt="Meal"
                         />
                     </a>
                     <div class="px-4 py-3 w-[19rem]">
                         <div class="flex justify-between items-center">
                             <span
                                 class="text-gray-600 mr-3 uppercase text-xs"
-                                >{{ item.category.name}}</span
+                                >{{ item.category.name }}</span
                             >
                             <p class="text-gray-500 text-sm">
                                 Qty
@@ -42,15 +42,22 @@
                                 />
                             </p>
                         </div>
-                        <p
-                            class="text-lg mb-1 font-bold text-oynx truncate block capitalize"
-                        >
-                            {{ item.name }}
-                        </p>
+                        <div class="flex justify-between items-center">
+                            <p
+                                class="text-lg mb-1 font-bold text-oynx truncate block capitalize"
+                            >
+                                {{ item.name }} 
+                            </p>
+                            <span
+                                class="text-gray-600 mr-3 uppercase text-xxs"
+                                > {{ item.category.order_type }}</span
+                            >
+                          
+                        </div>
 
                         <!-- Component Start -->
                         <div
-                            class="grid grid-cols-3 gap-2 w-full max-w-screen-sm cursor-pointer"
+                            class="grid grid-cols-3 gap-2 w-full mb-3 max-w-screen-xs cursor-pointer"
                         >
                             <div
                                 v-for="(price, index) in item.prices"
@@ -65,7 +72,7 @@
                                     v-model="selectedOptions[item.id]"
                                 />
                                 <label
-                                    class="flex flex-col p-2 border-2"
+                                    class="flex flex-col p-1 border-1"
                                     :class="{
                                         'border-oynx bg-blue-100':
                                             selectedOptions[item.id] === price,
@@ -87,7 +94,7 @@
                         </div>
 
                         <button
-                            class="mt-3 px-4 text-bold w-full rounded cursor-pointer"
+                            class=" px-4 text-bold w-full rounded cursor-pointer"
                             @click="addToCart(item, selectedOptions[item.id])"
                             title="Select an option before clicking"
                             :disabled="!selectedOptions[item.id]"
@@ -112,14 +119,14 @@
                     </div>
                 </div>
             </div>
-             <div v-if="loading" class="p-8 text-center m-auto">
-      <Loader></Loader>
-    </div>
-    
-    <div v-else-if="meals.length === 0" class="py-12 text-center">
-      <p v-if="searchTerm">No meals found for "{{ searchTerm }}"</p>
-      <p v-else>No meals available</p>
-    </div>
+            <div v-if="loading" class="p-8 text-center m-auto">
+                <Loader></Loader>
+            </div>
+
+            <div v-else-if="meals.length === 0" class="py-12 text-center">
+                <p v-if="searchTerm">No meals found for "{{ searchTerm }}"</p>
+                <p v-else>No meals available</p>
+            </div>
         </section>
     </div>
 </template>
@@ -142,6 +149,10 @@ export default {
             allLoaded: false,
             selectedOptions: {},
             quantities: {},
+            src: "",
+            fallbackImage:
+                "https://img.icons8.com/ios/100/image--v1.png",
+   
             searchTerm: "", // Track search term for pagination
         };
     },
@@ -158,68 +169,125 @@ export default {
             this.allLoaded = false;
             this.fetchMeals();
         },
-        async fetchMeals() {
-            if (this.loading || this.allLoaded) return;
-
-            this.loading = true;
+        async getPhoto(mealId) {
+            const fallbackImage =
+                "https://img.icons8.com/ios/50/image--v1.png";
             try {
-                const params = {
-                    page: this.page,
-                    per_page: this.perPage,
-                    search: this.searchTerm
-                };
-
-                const response = await axios.get("/api/meal", { params });
-                const fetchedMeals = response.data.meals.data; // Correct path
-
-                if (fetchedMeals.length === 0) {
-                    this.allLoaded = true;
-                    return;
-                }
-
-                this.meals = [...this.meals, ...fetchedMeals];
-                this.page++;
-
-                // Initialize selections
-                fetchedMeals.forEach(item => {
-                    this.$set(this.selectedOptions, item.id, item.prices?.[0] || null);
-                    this.$set(this.quantities, item.id, 1);
-                });
-
+                const response = await axios.get(`/meal-photos/${mealId}`);
+                const photoPath = response.data.firstPhoto?.image_path;
+                return photoPath ? `/storage/${photoPath}` : fallbackImage;
             } catch (error) {
-                console.error("Failed to load meals:", error);
-            } finally {
-                this.loading = false;
+                console.error("Error fetching photo:", error);
+                return fallbackImage;
             }
         },
-        addToCart(menuItem, selectedOption) {
+
+        // async fetchMeals() {
+        //     if (this.loading || this.allLoaded) return;
+
+        //     this.loading = true;
+        //     try {
+        //         const params = {
+        //             page: this.page,
+        //             per_page: this.perPage,
+        //             search: this.searchTerm,
+        //         };
+
+        //         const response = await axios.get("/api/meal", { params });
+        //         const fetchedMeals = response.data.meals.data; // Correct path
+
+        //         if (fetchedMeals.length === 0) {
+        //             this.allLoaded = true;
+        //             return;
+        //         }
+
+        //         this.meals = [...this.meals, ...fetchedMeals];
+        //         this.page++;
+
+        //         // Initialize selections
+        //         fetchedMeals.forEach((item) => {
+        //             this.$set(
+        //                 this.selectedOptions,
+        //                 item.id,
+        //                 item.prices?.[0] || null
+        //             );
+        //             this.$set(this.quantities, item.id, 1);
+        //         });
+        //     } catch (error) {
+        //         console.error("Failed to load meals:", error);
+        //     } finally {
+        //         this.loading = false;
+        //     }
+        // },
+      
+      async fetchMeals() {
+    if (this.loading || this.allLoaded) return;
+
+    this.loading = true;
+    try {
+        const params = {
+            page: this.page,
+            per_page: this.perPage,
+            search: this.searchTerm,
+        };
+
+        const response = await axios.get("/api/meal", { params });
+        const fetchedMeals = response.data.meals.data;
+
+        if (fetchedMeals.length === 0) {
+            this.allLoaded = true;
+            return;
+        }
+
+        // 👇 Fetch image for each meal
+        for (const meal of fetchedMeals) {
+            meal.imageSrc = await this.getPhoto(meal.id);
+        }
+
+        this.meals = [...this.meals, ...fetchedMeals];
+        this.page++;
+
+        fetchedMeals.forEach((item) => {
+            this.$set(this.selectedOptions, item.id, item.prices?.[0] || null);
+            this.$set(this.quantities, item.id, 1);
+        });
+
+    } catch (error) {
+        console.error("Failed to load meals:", error);
+    } finally {
+        this.loading = false;
+    }
+},
+  addToCart(menuItem, selectedOption) {
             if (!selectedOption) return;
             const quantity = this.quantities[menuItem.id] || 1;
-            
+
             this.cart.addItem({
                 name: menuItem.name,
                 category: menuItem.category.name,
                 price: selectedOption.price * quantity,
                 unit_price: selectedOption.price,
                 quantity,
-                size_or_quantity: selectedOption.size || selectedOption.quantity,
+                size_or_quantity:
+                    selectedOption.size || selectedOption.quantity,
+                    image: menuItem.imageSrc || null, // ✅ Add image to cart item
             });
         },
         handleScroll() {
-            const bottomOfWindow = 
-                document.documentElement.scrollTop + window.innerHeight >= 
+            const bottomOfWindow =
+                document.documentElement.scrollTop + window.innerHeight >=
                 document.documentElement.scrollHeight - 100;
-            
+
             if (bottomOfWindow) this.fetchMeals();
-        }
+        },
     },
     beforeUnmount() {
-        window.removeEventListener('scroll', this.handleScroll);
+        window.removeEventListener("scroll", this.handleScroll);
     },
     mounted() {
         this.fetchMeals();
-        window.addEventListener('scroll', this.handleScroll);
-    }
+        window.addEventListener("scroll", this.handleScroll);
+    },
 };
 </script>
 
@@ -233,4 +301,6 @@ input:checked + label {
 .three:hover span {
     height: 120%;
 }
+
+
 </style>

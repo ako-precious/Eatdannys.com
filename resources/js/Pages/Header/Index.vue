@@ -103,49 +103,25 @@ export default {
                                     ></span>
                                 </p>
                             </Link>
-                            <Dropdown  class="py-2 px-3 navbar-link cursor-pointer" >
-                            <template #trigger>
-                                
-                                    <p class="font-bold two">
-                                    <span>Catering</span>
+                            <Link
+                                class="py-2 px-3 navbar-link"
+                                :href="route('catering')"
+                            >
+                                <p class="font-bold two">
+                                    <span>Catering </span>
                                     <span
                                         class="absolute bottom-1 left-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"
                                     ></span>
                                     <span
-                                        class="absolute bottom-1 right-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"></span>
+                                        class="absolute bottom-1 right-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"
+                                    ></span>
                                 </p>
-                                
-                            </template>
-
-                            <template #content class="bg-snow w-30 dark:bg-oynx">
-                                <div
-                                    class=" absolute right-0 mt-2 delay-75 rounded-md  border-snow ring-1 bg-gradient-to-br from-[#e3dedf] to-[#ffffff]  hover:shadow-snow-sm uppercase dark:bg-gradient-to-br dark:from-[#2b312e] dark:to-[#333a37]   z-20 transition-all duration-250 ease-in dark:border-oynx"
-                                >
-                                  
-                                <!-- class="relative flex items-center rounded-md px-4 py-2 text-sm text-oynx hover:text-polynesian dark:text-snow dark:hover:text-lighred cursor-pointer transition-all duration-200 ease-in-out" -->
-                                    <Link
-                                         :href="route('welcome')"
-                                         class="flex items-center rounded-md px-4 py-2 text-sm text-oynx hover:text-polynesian dark:text-snow dark:hover:text-lighred cursor-pointer transition-all duration-200 ease-in-out"
-                                   
-                                    >
-                                        <p>Event </p>
-                                    </Link>
-                                    <hr class="m-2" />
-                                    <Link
-                                         :href="route('welcome')"
-                                        class="relative flex items-center rounded-md px-4 py-2 text-sm text-oynx hover:text-polynesian dark:text-snow dark:hover:text-lighred cursor-pointer transition-all duration-200 ease-in-out"
-                                    >
-                                        <p>Private </p>
-                                    </Link>
-                                   
-                                </div>
-                             
-                            </template>
-                        </Dropdown>
+                            </Link>
+                           
                           
                             <Link
                                 class="py-2 px-3 navbar-link"
-                                :href="route('welcome')"
+                                :href="route('dining&takeout')"
                                 ><p class="font-bold two">
                                     <span class="hidden text-nowrap lg:block">dining  & take out</span>
                                     <span  class="lg:hidden block">dining...</span>
@@ -158,7 +134,7 @@ export default {
                             ></Link>
                             <Link
                                 class="py-2 px-3 navbar-link"
-                                :href="route('welcome')"><p class="font-bold two">
+                                :href="route('bakery')"><p class="font-bold two">
                                     <span>Bakery</span>
                                     <span
                                         class="absolute bottom-1 left-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"
@@ -178,60 +154,37 @@ export default {
                             <Link
                                 class="py-2 px-3 navbar-link text-oynx!"
                                 :href="route('welcome')"
-                            >
+                                >
                                 <p class="font-bold two">
                                     <span>Bulk </span>
                                     <span
-                                        class="absolute bottom-1 left-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"
+                                    class="absolute bottom-1 left-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"
                                     ></span>
                                     <span
-                                        class="absolute bottom-1 right-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"
+                                    class="absolute bottom-1 right-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"
                                     ></span>
                                 </p>
                             </Link>
-                            <Dropdown  class="py-2 px-3 navbar-link cursor-pointer text-oynx" >
-                            <template #trigger>
-                                
-                                    <p class="font-bold two">
-                                    <span>Catering</span>
+                           
+                            <Link
+                                class="py-2 px-3 navbar-link text-oynx!"
+                                :href="route('welcome')"
+                                >
+                                <p class="font-bold two">
+                                    <span>Catering </span>
                                     <span
-                                        class="absolute bottom-1 left-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"
+                                    class="absolute bottom-1 left-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"
                                     ></span>
                                     <span
-                                        class="absolute bottom-1 right-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"></span>
+                                    class="absolute bottom-1 right-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"
+                                    ></span>
                                 </p>
-                                
-                            </template>
-
-                            <template #content class="bg-snow w-30 dark:bg-oynx">
-                                <div
-                                    class=" absolute right-0 mt-2 delay-75 rounded-md  border-snow ring-1 bg-gradient-to-br from-[#e3dedf] to-[#ffffff]  hover:shadow-snow-sm uppercase dark:bg-gradient-to-br dark:from-[#2b312e] dark:to-[#333a37]   z-20 transition-all duration-250 ease-in dark:border-oynx"
-                                >
-                                  
-                                <!-- class="relative flex items-center rounded-md px-4 py-2 text-sm text-oynx hover:text-polynesian dark:text-snow dark:hover:text-lighred cursor-pointer transition-all duration-200 ease-in-out" -->
-                                    <Link
-                                         :href="route('welcome')"
-                                         class="flex items-center rounded-md px-4 py-2 text-sm text-oynx hover:text-polynesian dark:text-snow dark:hover:text-lighred cursor-pointer transition-all duration-200 ease-in-out"
-                                   
-                                    >
-                                        <p>Event </p>
-                                    </Link>
-                                    <hr class="m-2" />
-                                    <Link
-                                         :href="route('welcome')"
-                                        class="relative flex items-center rounded-md px-4 py-2 text-sm text-oynx hover:text-polynesian dark:text-snow dark:hover:text-lighred cursor-pointer transition-all duration-200 ease-in-out"
-                                    >
-                                        <p>Private </p>
-                                    </Link>
-                                   
-                                </div>
-                             
-                            </template>
-                        </Dropdown>
+                            </Link>
+                           
                           
                             <Link
                                 class="py-2 px-3 navbar-link text-oynx"
-                                :href="route('welcome')"
+                                :href="route('dining&takeout')"
                                 ><p class="font-bold two">
                                     <span class="hidden text-nowrap lg:block">dining  & take out</span>
                                     <span  class="lg:hidden block">dining...</span>
@@ -244,7 +197,7 @@ export default {
                             ></Link>
                             <Link
                                 class="py-2 px-3 navbar-link text-oynx"
-                                :href="route('welcome')"><p class="font-bold two">
+                                :href="route('bakery')"><p class="font-bold two">
                                     <span>Bakery</span>
                                     <span
                                         class="absolute bottom-1 left-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"

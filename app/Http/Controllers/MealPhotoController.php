@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
+use App\Models\MealPhoto;
+
 use Illuminate\Http\Request;
 
 class MealPhotoController extends Controller
@@ -27,16 +30,19 @@ class MealPhotoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
+     public function show( string $id){
+       
+          $firstPhoto = MealPhoto::where('meal_id', $id)->orderBy('id', 'asc')->first();   
+          $otherPhotos = MealPhoto::where('meal_id', $id)->orderBy('id', 'asc')->get();
+          return response()->json(['firstPhoto' => $firstPhoto, 'otherPhotos' =>$otherPhotos]);
+      }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -57,8 +63,13 @@ class MealPhotoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(MealPhoto $photo)
     {
-        //
+        // Optionally delete file from storage
+        Storage::disk('public')->delete($photo->path);
+
+        $photo->delete();
+
+        return response()->json(['message' => 'Photo deleted']);
     }
 }

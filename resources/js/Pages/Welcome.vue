@@ -39,7 +39,8 @@ function handleImageError() {
         >
             <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
                 <main class="my-12">
-                    <Meal></Meal>
+                    <Meal></Meal> 
+                    
                 </main>
 
                
@@ -55,7 +56,7 @@ function handleImageError() {
 <ScrollToTop></ScrollToTop>
    </Background>
 </template>
-<style scoped>
+<!-- <style scoped>
 .pattern {
     position: relative;
     z-index: 1;
@@ -79,4 +80,4 @@ function handleImageError() {
     opacity: 0.7;
     z-index: -1;
 }
-</style>
+</style> -->
