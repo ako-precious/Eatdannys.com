@@ -9,4 +9,4 @@ import CardBarChart from "@/Components/Cards/CardBarChart.vue";
     <AppLayout title="Dashboard">
        <CardBarChart></CardBarChart>
     </AppLayout>
-</template>
+</template> 
