@@ -46,6 +46,14 @@ Route::get('/bakery', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 })->name('bakery');
+Route::get('/catering', function () {
+    return Inertia::render('Catering', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
+})->name('catering');
 
 Route::get('/dine-in', function () {
     return Inertia::render('Dinein', [

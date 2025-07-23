@@ -16,10 +16,10 @@ const logout = () => {
 <template>
     <!-- Settings Dropdown -->
     <div
-        class="ml-2 lg:mr-4 relative text-oynx active:text-persian hover:text-polynesian dark:text-snow dark:active:text-persian dark:hover:text-lighred rounded-full bg-snow shadow-snow-sm hover:-shadow-snow-sm focus:shadow-none active:shadow-none hover:border-polynesian  hover:dark:-shadow-oynx-sm active:dark:shadow-none z-20 transition-all duration-250 ease-in"
+    class="ml-2 lg:mr-4 relative bg-snow text-oynx active:text-persian hover:text-polynesian dark:text-snow dark:active:text-persian dark:hover:text-lighred rounded-full  shadow-snow-sm hover:-shadow-snow-sm focus:shadow-none active:shadow-none  z-20 transition-all duration-250 ease-in"
     >
-        <Dropdown align="right" width="48">
-            <template #trigger>
+    <Dropdown align="right" width="48">
+        <template #trigger>
                 <button
                     v-if="$page.props.jetstream.managesProfilePhotos"
                     class="flex w-11 h-11 relative text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition"
@@ -57,7 +57,7 @@ const logout = () => {
 
             <template #content class="bg-snow dark:bg-oynx">
                 <div
-                    class="origin-top-right disable-scrollbars overflow-y-scroll h-60 absolute right-0 mt-2 w-48 delay-75 rounded-md border-snow ring-1 bg-gradient-to-br from-[#e3dedf] to-[#ffffff] -shadow-snow-sm hover:shadow-snow-sm dark:bg-gradient-to-br dark:from-[#2b312e] dark:to-[#333a37] dark:-shadow-oynx-sm hover:dark:shadow-oynx-sm z-20 transition-all duration-250 ease-in dark:border-oynx"
+                class="origin-top-right disable-scrollbars overflow-y-scroll h-60 absolute right-0 mt-2 w-48 delay-75 rounded-md border-snow ring-1 bg-gradient-to-br from-[#e3dedf] to-[#ffffff] -shadow-snow-sm hover:shadow-snow-sm dark:bg-gradient-to-br dark:from-[#2b312e] dark:to-[#333a37] dark:-shadow-oynx-sm hover:dark:shadow-oynx-sm z-20 transition-all duration-250 ease-in dark:border-oynx"
                 >
                     <!-- Account Management -->
                     <div class="block px-4 py-2 text-xs text-gray-600">
