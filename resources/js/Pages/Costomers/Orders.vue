@@ -1,5 +1,5 @@
 <template>
-  <!-- <AppLayout  title="Order"> -->
+  <AppLayout  title="Order">
 
     <div class="flex flex-wrap mt-4">
       <div class="w-full mb-12 px-4">
@@ -7,7 +7,7 @@
       </div>
       
     </div>
-  <!-- </AppLayout> -->
+  </AppLayout>
 </template>
 <script>
 import OrderTable from "./OrdersTable.vue";

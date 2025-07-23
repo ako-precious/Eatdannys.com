@@ -44,7 +44,7 @@ import SettingsDropdown from '../SettingsDropdown.vue';
 
 export default {
   components: {
-    UserDropdown,
+    SettingsDropdown,
   },
 };
 </script>
