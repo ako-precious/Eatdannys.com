@@ -1,6 +1,6 @@
 <template>
-
-  <AppLayout  v-if=" $page.props.auth.user.role === 'admin'" title="Order">
+  
+  <AppLayout  title="Order">
 
     <div class="flex flex-wrap mt-4">
       <div class="w-full mb-12 px-4">
@@ -9,13 +9,6 @@
       
     </div>
   </AppLayout>
-
-   <div v-else class="flex flex-wrap mt-4">
-      <div class="w-full mb-12 px-4">
-        <order-table />
-      </div>
-      
-    </div>
 </template>
 <script>
 import OrderTable from "./OrdersTable.vue";

@@ -80,16 +80,16 @@ const logout = () => {
                         :href="route('profile.show')"
                         v-if=" $page.props.auth.user.role === 'user'"
                         class="flex w-full items-center rounded-md px-4 py-1 text-sm text-oynx hover:text-polynesian dark:text-snow dark:hover:text-lighred cursor-pointer transition-all duration-200 ease-in-out"
-                        ><font-awesome-icon icon="user" class="mr-2" />
+                        ><font-awesome-icon icon="fa-solid fa-cart-shopping" class="mr-2" />
                         Orders
                     </DropdownLink>
 
-                    <DropdownLink
+                    <!-- <DropdownLink
                         :href="route('api-tokens.index')"
                         class="flex w-full items-center rounded-md px-4 py-1 text-sm text-oynx hover:text-polynesian dark:text-snow dark:hover:text-lighred cursor-pointer transition-all duration-200 ease-in-out"
                     >
                         API Tokens
-                    </DropdownLink>
+                    </DropdownLink> -->
 
                     <!-- Authentication -->
                     <form @submit.prevent="logout">
