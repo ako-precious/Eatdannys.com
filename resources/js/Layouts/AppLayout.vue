@@ -42,23 +42,23 @@ export default {
     }
   },
   
-  // watch: {
-  //   user: {
-  //     immediate: true,
-  //     handler(user) {
-  //       if (user && user.role !== 'admin') {
-  //         // Redirect to user profile
-  //         Inertia.visit(`/user/${user.id}`);
-  //       }
-  //     }
-  //   }
-  // },
+  watch: {
+    user: {
+      immediate: true,
+      handler(user) {
+        if (user && user.role !== 'admin') {
+          // Redirect to user profile
+          Inertia.visit(`/oders}`);
+        }
+      }
+    }
+  },
   
-  // mounted() {
-  //   if (this.user && this.user.role !== 'admin') {
-  //     // Redirect to user profile
-  //     Inertia.visit(`/user/${this.user.id}`);
-  //   }
-  // }
+  mounted() {
+    if (this.user && this.user.role !== 'admin') {
+      // Redirect to user profile
+      Inertia.visit(`/orders`);
+    }
+  }
 };
 </script>
