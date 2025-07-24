@@ -46,6 +46,7 @@ Route::get('/bakery', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 })->name('bakery');
+
 Route::get('/catering', function () {
     return Inertia::render('Catering', [
         'canLogin' => Route::has('login'),
@@ -72,11 +73,10 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
-    Route::get('/boarddash', function () {
-        return Inertia::render('Boarddash');
-    })->name('boarddash');
     Route::resource('/orders',  OrderController::class);
     Route::resource('/meals',  MealController::class);
+
+    
     Route::get('/api/order-stats', [AdminController::class, 'getOrderStats']);
     Route::get('/api/get-orders',[OrderController::class,'getOrder'])->name('getorder');
 });

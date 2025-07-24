@@ -33,6 +33,7 @@ import {
     faUtensils,
     faHouse,
     faFileImage,
+    faDoorOpen,
 } from "@fortawesome/free-solid-svg-icons";
 import { faFacebook, faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 /* Add icons to the library */
@@ -60,7 +61,7 @@ library.add(
     faFileImage,
     faTrash,
     faChevronLeft,
-    faChevronRight
+    faDoorOpen
 );
 
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";
