@@ -3,18 +3,6 @@
     color: #262626;
     font-size: 2em;
     line-height: normal;
-    font-weight: 700;
-    margin-bottom: 0.5em;
-  }
-
-  .small-desc {
-    
-    line-height: 1.5em;
-    color: #452c2c;
-  }
-
-  .small-desc {
-    font-size: 1em;
   }
 
   .go-corner {
@@ -43,7 +31,7 @@
     position: relative;    
     background-color: #FFFCF9;
     border-radius: 10px;
-    padding: 2em 1.2em;
+    padding: 2em ;
     text-decoration: none;
     z-index: 0;
     overflow: hidden;
@@ -58,9 +46,9 @@
     top: -16px;
     right: -16px;
     background: linear-gradient(135deg, #00A6ED, #00A6Ec);
-    height: 32px;
-    width: 32px;
-    border-radius: 32px;
+    height: 72px;
+    width: 72px;
+    border-radius: 72px;
     transform: scale(1);
     transform-origin: 50% 50%;
     transition: transform 0.35s ease-out;
@@ -82,7 +70,7 @@
 </style>
 
 <template>
-  <div class="card max-w-2xl m-auto shadow-2xl">
+  <div class="card max-w-2xl m-auto shadow-2xl p-4">
         <p class="card-title">Orders Detail</p>
         <div class="flex flex-col">
 
@@ -139,7 +127,7 @@
 
         </div>
         <div class="go-corner">
-          <div class="go-arrow hidden">→</div>
+          <div class="go-arrow ">→</div>
         </div>
       </div>
 </template>
