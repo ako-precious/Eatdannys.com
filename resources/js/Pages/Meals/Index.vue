@@ -1,5 +1,5 @@
 <template>
-  <AppLayout  title="Meals">
+  <AppLayout  title="Meals"  v-if=" $page.props.auth.user.role === 'admin'">
 
     <div class="flex flex-wrap mt-4">
       <div class="w-full mb-12 px-4">
