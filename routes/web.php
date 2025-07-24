@@ -64,6 +64,9 @@ Route::get('/dine-in', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 })->name('dining');
+// Route::get('/dine-in', function () {
+//     return Inertia::render('404Page', );
+// })->name('dining');
 
 Route::middleware([
     'auth:sanctum',
