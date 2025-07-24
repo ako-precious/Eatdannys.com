@@ -24,11 +24,11 @@ const isActiveRoute = (route) => {
                                         ? 'text-snow p-4 rounded bg-polynesian shadow-md flex items-center justify-center'
                                             : 'p-4 rounded bg-snow text-polynesian shadow-md flex items-center justify-center',
                                     ]"
-                        >
+                        >  <Link href="/dashboard">
                         <!-- class="text-snow p-4 rounded bg-polynesian shadow-md flex items-center justify-center" -->
                            <font-awesome-icon icon="fa-solid fa-house" class="fas fa-tv mr-2 text-lg"
                                     />
-                            Home
+                            Home </Link>
                         </div>
                           <div
                              :class="[
@@ -36,9 +36,9 @@ const isActiveRoute = (route) => {
                                         ? 'text-snow p-4 rounded bg-polynesian shadow-md flex items-center justify-center'
                                             : 'p-4 rounded bg-snow text-polynesian shadow-md flex items-center justify-center',
                                     ]"
-                        > <font-awesome-icon icon="fa-solid fa-cart-shopping" class="mr-2 text-lg" />
+                        > <Link href="/orders"> <font-awesome-icon icon="fa-solid fa-cart-shopping" class="mr-2 text-lg" />
                           
-                            Order
+                            Order </Link>
                         </div>
                         <div
                              :class="[
@@ -46,9 +46,9 @@ const isActiveRoute = (route) => {
                                         ? 'text-snow p-4 rounded bg-polynesian shadow-md flex items-center justify-center'
                                             : 'p-4 rounded bg-snow text-polynesian shadow-md flex items-center justify-center',
                                     ]"
-                        >
+                        > <Link href="/user/profile">
                             <font-awesome-icon icon="user" class="mr-2 text-lg" />
-                            Profile
+                            Profile </Link>
                         </div>
                       
                     </div>
