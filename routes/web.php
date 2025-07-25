@@ -79,6 +79,7 @@ Route::middleware([
     })->name('dashboard');
     Route::resource('/orders',  OrderController::class);
     Route::resource('/meals',  MealController::class);
+    Route::resource('/reservations',  ReservationController::class);
 
     
     Route::get('/api/order-stats', [AdminController::class, 'getOrderStats']);

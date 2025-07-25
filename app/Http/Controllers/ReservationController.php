@@ -15,7 +15,7 @@ class ReservationController extends Controller
 
     public function index(Request $request)
     {
-         return  Inertia::render('Reservation/Index');
+         return  Inertia::render('Reservations/Index');
     }
 
      public function getReservation(Request $request)
@@ -32,7 +32,7 @@ class ReservationController extends Controller
             $query->where('user_id', $user->id);
         }
 
-        $reservations = $query->with('user')->paginate($perPage);
+        $reservations = $query->paginate($perPage);
        
         return response()->json([
             'reservations' => $reservations,

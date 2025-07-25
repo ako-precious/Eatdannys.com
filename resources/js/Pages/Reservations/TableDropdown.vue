@@ -18,20 +18,20 @@ import { Head, Link } from "@inertiajs/vue3";
       :class="{ hidden: !dropdownPopoverShow, block: dropdownPopoverShow }"
     >
       <Link
-        :href="`/meals/${meal.id}`"
+        :href="`/reservations/${reservation.id}`"
         class="text-sm py-2 px-4 font-bold block w-full whitespace-nowrap bg-transparent cursor-pointer text-polynesian"
       >
         Show
       </Link>
       <Link
-        :href="`/meals/${meal.id}/edit`"
+        :href="`/reservations/${reservation.id}/edit`"
         class="text-sm py-2 px-4 font-bold block w-full whitespace-nowrap bg-transparent cursor-pointer text-persian"
       >
         Edit
       </Link>
       <a
         href="#"
-        @click.prevent="deleteMeal"
+        @click.prevent="deletereservation"
         class="text-sm py-2 px-4 font-bold block w-full whitespace-nowrap bg-transparent cursor-pointer text-lighred"
       >
         Delete
@@ -45,7 +45,7 @@ import { createPopper } from "@popperjs/core";
 
 export default {
   props: {
-    meal: Object,
+    reservation: Object,
   },
   data() {
     return {
@@ -66,9 +66,9 @@ export default {
         );
       }
     },
-    deleteMeal() {
-      if (confirm("Are you sure you want to delete this meal?")) {
-        this.$inertia.delete(`/meals/${this.meal.id}`);
+    deletereservation() {
+      if (confirm("Are you sure you want to delete this reservation?")) {
+        this.$inertia.delete(`/reservations/${this.reservation.id}`);
       }
     },
   },
