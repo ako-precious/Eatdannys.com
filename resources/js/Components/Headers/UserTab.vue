@@ -20,7 +20,8 @@ const isActiveRoute = (route) => {
                 <div>
                     <div class="grid grid-cols-3 bg-white p-10 gap-5 mx-3.5">
                         <div   :class="[
-                                        isActiveRoute('/dashbord').value
+                                        
+                                    isActiveRoute('/dashboard').value
                                         ? 'text-snow p-4 rounded bg-polynesian shadow-md flex items-center justify-center'
                                             : 'p-4 rounded bg-snow text-polynesian shadow-md flex items-center justify-center',
                                     ]"
@@ -38,7 +39,7 @@ const isActiveRoute = (route) => {
                                     ]"
                         > <Link href="/orders"> <font-awesome-icon icon="fa-solid fa-cart-shopping" class="mr-2 text-lg" />
                           
-                            Order </Link>
+                            Orders </Link>
                         </div>
                         <div
                              :class="[
