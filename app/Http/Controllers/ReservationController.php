@@ -7,9 +7,45 @@ use Illuminate\Http\Request;
 use DateTime; // Import DateTime class
 use Illuminate\Support\Facades\Mail; // Import Mail facade
 use App\Mail\ReservationConfirmation; // Import the Mailable
+use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
 
 class ReservationController extends Controller
 {
+
+    public function index(Request $request)
+    {
+         return  Inertia::render('Reservation/Index');
+    }
+
+     public function getReservation(Request $request)
+    {
+//get the user token to continue
+
+        $user = Auth::user();
+        $perPage = $request->get('per_page', 10); // default 10
+
+        $query = Reservation::orderBy("id", "desc");
+
+        // If the user is not an admin, only show their orders
+        if ($user->role !== 'admin') {
+            $query->where('user_id', $user->id);
+        }
+
+        $reservations = $query->with('user')->paginate($perPage);
+       
+        return response()->json([
+            'reservations' => $reservations,
+        ]);
+    }
+
+     public function show(Reservation $reservation)
+    {      
+           $reservation->with('user');
+        return  Inertia::render('Reservation/Show',[
+            'reservation' => $reservation,
+        ]);
+    }
     public function store(Request $request)
     {
         $validated = $request->validate([
