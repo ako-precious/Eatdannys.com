@@ -2,8 +2,8 @@
 import { ref, reactive } from 'vue';
 import MealsTable from "./MealsTable.vue";
 import Button from "./Button.vue";
-// import AppLayout from "../../Layouts/Applayout.vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
+import NotFoundPage from "@/Pages/NotFoundPage.vue";
 
 const selectedFiles = ref([]);
 const imagePreviews = ref([]);
@@ -329,5 +329,8 @@ function removeImage(index) {
             </div>
         </div>
     </AppLayout>
+     <div v-else>
+<NotFoundPage></NotFoundPage>
+    </div>
 </template>
 

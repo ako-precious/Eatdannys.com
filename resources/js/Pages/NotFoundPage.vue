@@ -161,15 +161,15 @@
 @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300);
 
 .body {
-    background: -ms-radial-gradient(ellipse at center, #335b67 0%, #2c3e50 100%)
+    background: -ms-radial-gradient(ellipse at center, #00A6ED 0%, #2c3e50 100%)
         fixed no-repeat;
     background: -moz-radial-gradient(
             ellipse at center,
-            #335b67 0%,
+            #00A6ED 0%,
             #2c3e50 100%
         )
         fixed no-repeat;
-    background: -o-radial-gradient(ellipse at center, #335b67 0%, #2c3e50 100%)
+    background: -o-radial-gradient(ellipse at center, #00A6ED 0%, #2c3e50 100%)
         fixed no-repeat;
     background: -webkit-gradient(
         radial,
@@ -177,16 +177,16 @@
         0,
         center center,
         497,
-        color-stop(0, #335b67),
+        color-stop(0, #00A6ED),
         color-stop(1, #2c3e50)
     );
     background: -webkit-radial-gradient(
             ellipse at center,
-            #335b67 0%,
+            #00A6ED 0%,
             #2c3e50 100%
         )
         fixed no-repeat;
-    background: radial-gradient(ellipse at center, #335b67 0%, #2c3e50 100%)
+    background: radial-gradient(ellipse at center, #00A6ED 0%, #2c3e50 100%)
         fixed no-repeat;
     font-family: "Source Sans Pro", sans-serif;
     -webkit-font-smoothing: antialiased;
