@@ -83,6 +83,7 @@ Route::middleware([
 
     
     Route::get('/api/order-stats', [AdminController::class, 'getOrderStats']);
+    Route::get('/users', [AdminController::class, 'index']);
     Route::get('/api/get-orders',[OrderController::class,'getOrder'])->name('getorder');
     Route::get('/api/get-reservations',[ReservationController::class,'getReservation'])->name('getreservation');
 });
