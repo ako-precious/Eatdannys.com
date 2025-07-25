@@ -127,6 +127,10 @@ class ReservationController extends Controller
     // return back()->with('success', 'reser$reservation updated successfully.');
 }
 
-
+public function destroy(Reservation $reservation)
+    {
+        $reservation->delete();
+        return response()->json(['message' => 'reservation deleted']);
+    }
     
 }
