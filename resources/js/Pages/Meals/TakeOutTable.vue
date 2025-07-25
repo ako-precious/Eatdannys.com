@@ -34,7 +34,7 @@ const changePerPage = (value) => {
 // Fetch meals with search
 const getMeals = async (page = 1) => {
     try {
-        const response = await axios.get(`/api/meal`, {
+        const response = await axios.get(`/api/dine-meal`, {
             params: {
                 page: page,
                 per_page: perPage.value,
@@ -74,7 +74,7 @@ onMounted(() => {
             <div class="flex flex-wrap items-center justify-center">
                 <div class="relative w-full px-4 max-w-full flex-grow flex-1">
                     <h3 class="font-bold text-lg md:text-2xl text-oynx_alt">
-                        Meals For Bulk
+                        Meals For TakeOut
                     </h3>
                 </div>
                 <div class="w-full md:w-[50%]">
