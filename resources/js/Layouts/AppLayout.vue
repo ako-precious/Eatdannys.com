@@ -42,12 +42,7 @@ export default {
     CardBarChart,
   },
   
-  props: {
-    user: {
-      type: Object,
-      required: true
-    }
-  },
+  
   
   watch: {
     user: {
