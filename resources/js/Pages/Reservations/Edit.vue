@@ -1,7 +1,7 @@
 <script setup>
 import { ref, reactive } from 'vue';
 import { router } from '@inertiajs/vue3'
-import MealsTable from "./MealsTable.vue";
+import MealsTable from "./ReservationsTable.vue";
 import Button from "./Button.vue";
 // import AppLayout from "../../Layouts/Applayout.vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
@@ -100,18 +100,6 @@ formData.append("_method", "PUT"); // ← Spoofing PUT method
         });
 }
 
-function deletePhoto(photoId) {
-  if (!confirm("Are you sure you want to delete this photo?")) return;
-
-  axios
-    .delete(`/meal-photos/${photoId}`)
-    .then(() => {
-      Meal.photos = Meal.photos.filter((p) => p.id !== photoId);
-    })
-    .catch((err) => {
-      console.error("Failed to delete photo", err);
-    });
-}
 
 
 function removeImage(index) {
