@@ -93,4 +93,40 @@ class ReservationController extends Controller
             'reservation' => $reservation
         ], 201);
     }
+
+     public function edit(Reservation $Reservation)
+    {
+        return inertia('Reservations/Edit', [
+            'reservation' => $Reservation,
+        ]);
+    }
+
+     public function update(Request $request, Reservation $reservation)
+{
+    $validated = $request->validate([ 
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|max:255|email',
+        'phone' => 'required|string|max:255',
+        'date' => 'required|string|max:25',
+        'time' => 'required|string|max:25',
+        'guests' => 'required|integer' ,
+        'special_requests' => 'nullable|string|max:225',
+    ]);
+    
+
+     $reservation->update($validated);
+
+  
+    
+  return response()->json([
+          
+            '$reservation' => $reservation,
+             
+        ]);
+
+    // return back()->with('success', 'reser$reservation updated successfully.');
+}
+
+
+    
 }
