@@ -13,7 +13,7 @@
     </div>
 </template>
 <script>
-import ReservationsTable from "./ReservationsTable.vue";
+import ReservationsTable from "./UsersTable.vue";
 // import AppLayout from "../../Layouts/Applayout.vue";
 
 import NotFoundPage from "@/Pages/NotFoundPage.vue"
