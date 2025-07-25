@@ -1,12 +1,12 @@
 <template>
-  <div v-if="user && user.role === 'admin'">
+  <div v-if=" $page.props.auth.user.role == 'admin'">
     <sidebar />
     <div class="relative md:ml-64 bg-blueGray-100">
       <admin-navbar />
       <header-stats />
       <div class="px-4 md:px-10 mx-auto w-full -m-24">
         <slot />
-        <footer-admin />
+        <footer-admin /> 
       </div>
     </div>
   </div>
@@ -16,7 +16,7 @@
       <user-tab />
       <div class="px-4 md:px-10 mx-auto w-full -m-24">
         <slot />
-        <footer-admin />
+      <footer-admin /> {{ user && user.role }}
       </div>
     </div>
   </div>
