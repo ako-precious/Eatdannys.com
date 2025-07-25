@@ -34,7 +34,7 @@ const changePerPage = (value) => {
 // Fetch reservations with search
 const getreservations = async (page = 1) => {
     try {
-        const response = await axios.get(`/api/reservation`, {
+        const response = await axios.get(`/api/get-reservations`, {
             params: {
                 page: page,
                 per_page: perPage.value,
@@ -74,7 +74,7 @@ onMounted(() => {
             <div class="flex flex-wrap items-center justify-center">
                 <div class="relative w-full px-4 max-w-full flex-grow flex-1">
                     <h3 class="font-bold text-lg md:text-2xl text-oynx_alt">
-                        reservations Tables
+                        reservations Table
                     </h3>
                 </div>
                 <div class="w-full md:w-[50%]">
@@ -98,12 +98,32 @@ onMounted(() => {
                         <th
                             class="px-6 align-middle border border-solid py-3 text-sm uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-oynx/75"
                         >
-                            Categories
+                            Email
                         </th>
                         <th
                             class="px-6 align-middle border border-solid py-3 text-sm uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-oynx/75"
                         >
-                            Price
+                            Phone Number
+                        </th>
+                        <th
+                            class="px-6 align-middle border border-solid py-3 text-sm uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-oynx/75"
+                        >
+                            Date
+                        </th>
+                        <th
+                            class="px-6 align-middle border border-solid py-3 text-sm uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-oynx/75"
+                        >
+                            Time
+                        </th>
+                        <th
+                            class="px-6 align-middle border border-solid py-3 text-sm uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-oynx/75"
+                        >
+                            guests
+                        </th>
+                        <th
+                            class="px-6 align-middle border border-solid py-3 text-sm uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-oynx/75"
+                        >
+                            Special Requests
                         </th>
                         <th
                             class="px-6 align-middle border border-solid py-3 text-sm uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-oynx/75"
@@ -120,40 +140,35 @@ onMounted(() => {
                         <td
                             class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4"
                         >
-                            {{ reservation.category.name }}
+                            {{ reservation.email }}
                         </td>
                         <td
-                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4"
                         >
-                            <div
-                                class="grid grid-cols-4 gap-2 w-full cursor-pointer"
-                            >
-                                <div
-                                    v-for="(price, index) in reservation.prices"
-                                    :key="index"
-                                >
-                                    <input
-                                        class="hidden"
-                                        :id="`radio_${reservation.id}_${index}`"
-                                        type="radio"
-                                        :name="`option_${reservation.id}`"
-                                        :value="price"
-                                    />
-                                    <label
-                                        class="flex flex-col p-1 border-1 border-oynx/30"
-                                    >
-                                        <span
-                                            class="text-[0.68rem] font- uppercase"
-                                        >
-                                            {{ price.size ?? price.quantity }}
-                                        </span>
-                                        <span class="text-[0.8rem] font-bold">
-                                            ${{ price.price }}
-                                        </span>
-                                    </label>
-                                </div>
-                            </div>
+                            {{ reservation.phone }}
                         </td>
+                        <td
+                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4"
+                        >
+                            {{ reservation.date }}
+                        </td>
+                        <td
+                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4"
+                        >
+                            {{ reservation.time }}
+                        </td>
+                       
+                        <td
+                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4"
+                        >
+                            {{ reservation.guests }}
+                        </td>
+                        <td
+                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4"
+                        >
+                            {{ reservation.special_requests }}
+                        </td>
+                       
                         <td
                             class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 text-right"
                         >

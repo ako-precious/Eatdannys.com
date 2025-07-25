@@ -177,20 +177,20 @@
                         </Link>
                     </li>
                     <li class="items-center">
-                        <Link href="/reservation">
+                        <Link href="/reservations">
                             <a
                                 
                                 @click="navigate"
                                 class="text-sm uppercase py-3 font-bold block"
                                 :class="[
-                                    isActiveRoute('/reservation').value
+                                    isActiveRoute('/reservations').value
                                         ? 'text-polynesian hover:text-polynesian/60'
                                         : 'text-oynx hover:text-oynx/70',
                                 ]"
                             >
                                 <font-awesome-icon icon="fa-solid fa-book"  class="fas fa-map-marked mr-2 text-sm "
                                     :class="[
-                                        isActiveRoute('/reservation').value
+                                        isActiveRoute('/reservations').value
                                             ? 'opacity-75'
                                             : 'text-oynx_alt/70',
                                     ]"/>
