@@ -5,7 +5,7 @@ import { ref, onMounted } from "vue";
 import { Head, Link } from "@inertiajs/vue3";
 import axios from "axios";
 
-const meals = ref([]);
+const reservations = ref([]);
 const perPage = ref(10);
 const searchTerm = ref("");
 const pagination = ref({
@@ -22,19 +22,19 @@ const pagination = ref({
 // Handle search
 const handleSearch = (term) => {
     searchTerm.value = term;
-    getMeals(1); // Reset to page 1 when searching
+    getreservations(1); // Reset to page 1 when searching
 };
 
 // Handle per-page changes
 const changePerPage = (value) => {
     perPage.value = value;
-    getMeals(1); // Reset to page 1
+    getreservations(1); // Reset to page 1
 };
 
-// Fetch meals with search
-const getMeals = async (page = 1) => {
+// Fetch reservations with search
+const getreservations = async (page = 1) => {
     try {
-        const response = await axios.get(`/api/meal`, {
+        const response = await axios.get(`/api/reservation`, {
             params: {
                 page: page,
                 per_page: perPage.value,
@@ -42,30 +42,30 @@ const getMeals = async (page = 1) => {
             },
         });
 
-        meals.value = response.data.meals.data;
+        reservations.value = response.data.reservations.data;
 
         pagination.value = {
-            current_page: response.data.meals.current_page,
-            per_page: response.data.meals.per_page,
-            total: response.data.meals.total,
-            from: response.data.meals.from,
-            to: response.data.meals.to,
-            last_page: response.data.meals.last_page,
-            next_page_url: response.data.meals.next_page_url,
-            prev_page_url: response.data.meals.prev_page_url,
+            current_page: response.data.reservations.current_page,
+            per_page: response.data.reservations.per_page,
+            total: response.data.reservations.total,
+            from: response.data.reservations.from,
+            to: response.data.reservations.to,
+            last_page: response.data.reservations.last_page,
+            next_page_url: response.data.reservations.next_page_url,
+            prev_page_url: response.data.reservations.prev_page_url,
         };
     } catch (error) {
-        console.error("Failed to load meals:", error);
+        console.error("Failed to load reservations:", error);
     }
 };
 
 onMounted(() => {
-    getMeals();
+    getreservations();
 });
 </script>
 
 <template>
-    <Head title="Meals" />
+    <Head title="reservations" />
     <div
         class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded"
         :class="[color === 'light' ? 'bg-white' : 'bg-emerald-900 text-white']"
@@ -74,7 +74,7 @@ onMounted(() => {
             <div class="flex flex-wrap items-center justify-center">
                 <div class="relative w-full px-4 max-w-full flex-grow flex-1">
                     <h3 class="font-bold text-lg md:text-2xl text-oynx_alt">
-                        Meals Tables
+                        reservations Tables
                     </h3>
                 </div>
                 <div class="w-full md:w-[50%]">
@@ -111,16 +111,16 @@ onMounted(() => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="meal in meals" :key="meal.id">
+                    <tr v-for="reservation in reservations" :key="reservation.id">
                         <th
                             class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 text-left items-center"
                         >
-                            <span>{{ meal.name }}</span>
+                            <span>{{ reservation.name }}</span>
                         </th>
                         <td
                             class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4"
                         >
-                            {{ meal.category.name }}
+                            {{ reservation.category.name }}
                         </td>
                         <td
                             class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
@@ -129,14 +129,14 @@ onMounted(() => {
                                 class="grid grid-cols-4 gap-2 w-full cursor-pointer"
                             >
                                 <div
-                                    v-for="(price, index) in meal.prices"
+                                    v-for="(price, index) in reservation.prices"
                                     :key="index"
                                 >
                                     <input
                                         class="hidden"
-                                        :id="`radio_${meal.id}_${index}`"
+                                        :id="`radio_${reservation.id}_${index}`"
                                         type="radio"
-                                        :name="`option_${meal.id}`"
+                                        :name="`option_${reservation.id}`"
                                         :value="price"
                                     />
                                     <label
@@ -157,12 +157,12 @@ onMounted(() => {
                         <td
                             class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 text-right"
                         >
-                            <table-dropdown :meal="meal" />
+                            <table-dropdown :reservation="reservation" />
                         </td>
                     </tr>
-                    <tr v-if="meals.length === 0">
+                    <tr v-if="reservations.length === 0">
                         <td colspan="4" class="text-center py-8">
-                            No meals found
+                            No reservations found
                             <span v-if="searchTerm">
                                 for "{{ searchTerm }}"</span
                             >
@@ -174,7 +174,7 @@ onMounted(() => {
         <Pagination
             :pagination="pagination"
             :per-page="perPage"
-            @page-changed="getMeals"
+            @page-changed="getreservations"
             @per-page-changed="changePerPage"
         />
     </div>

@@ -1,6 +1,6 @@
 <script setup>
 import { ref, reactive } from 'vue';
-import MealsTable from "./MealsTable.vue";
+import MealsTable from "./ReservationsTable.vue";
 import Button from "./Button.vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import NotFoundPage from "@/Pages/NotFoundPage.vue";
