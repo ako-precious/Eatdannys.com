@@ -5,6 +5,7 @@ use App\Http\Controllers\MealController;
 use App\Http\Controllers\MealPhotoController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ReservationController;
 use App\Models\Order;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -82,6 +83,7 @@ Route::middleware([
     
     Route::get('/api/order-stats', [AdminController::class, 'getOrderStats']);
     Route::get('/api/get-orders',[OrderController::class,'getOrder'])->name('getorder');
+    Route::get('/api/get-reservations',[ReservationController::class,'getReservation'])->name('getreservation');
 });
 
 // routes/web.php

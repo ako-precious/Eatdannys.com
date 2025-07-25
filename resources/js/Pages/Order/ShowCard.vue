@@ -10,13 +10,13 @@
     align-items: center;
     justify-content: center;
     position: absolute;
-    width: 2em;
-    height: 2em;
+    width: 4em;
+    height: 4em;
     overflow: hidden;
     top: 0;
     right: 0;
     background: linear-gradient(135deg,  #00A6ED, #00A6Ec);
-    border-radius: 0 4px 0 32px;
+    border-radius: 0 4px 0 60px;
   }
 
   .go-arrow {
@@ -74,60 +74,71 @@
         <p class="card-title">Orders Detail</p>
         <div class="flex flex-col">
 
-            <p class="small-desc font-bold text-base ">
-             Order ID: 
+            <p class="small-desc font-bold text-lg ">
+             Order ID
             </p>
-            <p class="small-desc text-xs">
+            <p class="small-desc text-base">
              {{ order.session_id }}
             </p>
         </div>
+        <div class="flex flex-wrap justify-between">
         <div class="flex flex-col">
 
-            <p class="small-desc font-bold text-base ">
-             Customer's Email: 
+            <p class="small-desc font-bold text-lg ">
+             Customer's Email 
             </p>
-            <p class="small-desc text-xs">
-             {{ order.user }}
+            <p class="small-desc text-base">
+             {{ order.user.email }}
             </p>
         </div>
         <div class="flex flex-col">
 
-            <p class="small-desc font-bold text-base ">
-             Items : 
+            <p class="small-desc font-bold text-lg ">
+             Customers Name 
+            </p>
+            <p class="small-desc text-base">
+             {{ order.user.email }}
+            </p>
+        </div>
+        </div>
+        <div class="flex flex-col">
+
+            <p class="small-desc font-bold text-lg ">
+             Items 
             </p>
             <div >
-                 <p class="small-desc text-xs flex justify-around"  >
-            <span> Name</span>  <span>Price</span> <span>Quantity</span>
+                 <p class="small-desc text-base flex justify-between font-bold"  >
+            <span> Name</span>  <span> Unit Price</span> <span>Quantity</span>
             </p>
-                 <p class="small-desc text-xs flex justify-around"  v-for="items in order.menu" :key="order.id">
+                 <p class="small-desc text-base flex justify-between"  v-for="items in order.menu" :key="order.id">
             <span> {{ items.name }}  </span>  <span> ${{ items.unit_price }}</span> <span> {{ items.quantity }}</span>
             </p>
             </div>
            
         </div>
-        <div class="flex justify-between">
+        <div class="flex flex-wrap justify-between">
             <div class="flex flex-col">
     
-               <p class="small-desc font-bold text-base ">
-                Total Price: 
+               <p class="small-desc font-bold text-lg ">
+                Total Price
                </p>
-               <p class="small-desc text-xs">
+               <p class="small-desc text-base">
                $ {{ order.total_price }}
                </p>
            </div>
             <div class="flex flex-col">
     
-               <p class="small-desc font-bold text-base ">
-                Payment Status: 
+               <p class="small-desc font-bold text-lg ">
+                Payment Status
                </p>
-               <p class="small-desc text-xs">
+               <p class="small-desc text-base">
                 {{ order.status }}
                </p>
            </div>
 
         </div>
         <div class="go-corner">
-          <div class="go-arrow ">→</div>
+          <div class="go-arrow "></div>
         </div>
       </div>
 </template>

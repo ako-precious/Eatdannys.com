@@ -38,7 +38,7 @@ class OrderController extends Controller
 
      public function show(Order $order)
     {      
-           $order->with('user');
+            $order->load('user');
         return  Inertia::render('Order/Show',[
             'order' => $order,
         ]);

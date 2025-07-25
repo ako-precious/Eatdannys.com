@@ -1,3 +1,6 @@
+<script setup>
+import { Head, Link } from "@inertiajs/vue3";
+</script>
 <template>
   <div>
     <a
@@ -15,12 +18,12 @@
         block: dropdownPopoverShow,
       }"
     >
-      <a
-        href="javascript:void(0);"
+      <Link
+        :href="`/orders/${order.id}`"
         class="text-sm py-2 px-4 font-bold block w-full whitespace-nowrap bg-transparent text-polynesian "
       >
         Show
-      </a>
+    </Link>
       <a
         href="javascript:void(0);"
         class="text-sm py-2 px-4 font-bold block w-full whitespace-nowrap bg-transparent text-persian"
@@ -44,6 +47,10 @@ export default {
     return {
       dropdownPopoverShow: false,
     };
+  },
+
+   props: {
+    order: Object,
   },
   methods: {
     toggleDropdown: function (event) {
