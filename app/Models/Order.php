@@ -24,7 +24,7 @@ class Order extends Model
         'address' => 'array', // This tells Eloquent to automatically cast to/from JSON
     ];
 
-    public function User()
+    public function user()
     {
 
         return $this->belongsTo(User::class);
