@@ -5,6 +5,9 @@
       <div class="w-full mb-12 px-4">
         <meals-table />
       </div>
+      <div class="w-full mb-12 px-4">
+        <TakeOutTable />
+      </div>
       
     </div>
   </AppLayout>
@@ -18,12 +21,14 @@ import MealsTable from "./MealsTable.vue";
 
 import NotFoundPage from "@/Pages/NotFoundPage.vue"
 import AppLayout from "@/Layouts/AppLayout.vue";
+import TakeOutTable from "./TakeOutTable.vue";
 export default {
    
   components: {
     MealsTable,
     AppLayout,
-    NotFoundPage
+    NotFoundPage,
+    TakeOutTable
   },
 };
 </script>
