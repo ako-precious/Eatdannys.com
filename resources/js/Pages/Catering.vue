@@ -6,8 +6,9 @@ import Gridtemplate from "@/Layouts/Gridtemplate.vue";
 import Testimonial from "@/Layouts/Testimonial.vue";
 import Footer from "@/Layouts/Footer.vue";
 
-import { ref } from 'vue'
+import { ref } from "vue";
 import Reservation from "@/Layouts/Reservation.vue";
+import CartingCard from "@/Layouts/CartingCard.vue";
 
 defineProps({
     canLogin: {
@@ -28,188 +29,229 @@ defineProps({
 </script>
 
 <template>
-    <div class=" w-screen overflow-x-hidden  min-h-screen flex flex-col">
+    <div class="w-screen overflow-x-hidden bg-oynx lg:min-h-screen flex flex-col">
+        <div class="absolute top-0 w-screen">
+            <Header class="w-full z-100" />
+        </div>
         <section
-            class="relative w-full min-h-[95vh] flex flex-col items-center justify-center text-center px-6 lg:px-16 py-16 md:py-32"
+            class="lg:fixed w-full lg:min-h-[95vh] z-0 flex flex-col items-center justify-center text-center px-6 lg:px-16 "
         >
-        <!-- Background Image -->
-        <div
-        class="absolute inset-0 bg-cover bg-center"
-        style="
-                    background-image: url('images/keesha-s-kitchen-PqG32DYCTM8-unsplash.jpg');
-                    "
-            ></div>
-            <div class="absolute inset-0 bg-oynx opacity-70"></div>
-            
-            <div  class=" absolute top-0 w-screen  ">  <Header class="w-full "  /></div>
-          
+            <div class="absolute -inset-100 opacity-5 animate"></div>
+
+            <!-- Background Image -->
+
             <!-- Content -->
-            <div class="relative z-10 text-snow max-w-3xl">
-                <h1 class="text-4xl md:text-6xl font-black uppercase leading-tight">
-                    Your Table Awaits, or We'll Come to You!
+            <div class="relative z-10 text-snow lg:min-h-screen p-6">
+                <h1
+                    class="text-[14vw] font-black uppercase lg:text-nowrap pt-30"
+                >
+                    EAT DANNy's
                 </h1>
-                <p class="mt-4 text-lg md:text-xl">
-                   Choose from the varieties of meal we have
-                </p>
-                <div class="mt-6 flex flex-col md:flex-row gap-4.5 items-center justify-center">
-                    <Link
-                         :href="route('dining')"
-                        class="group px-6 py-3  bg-lighred/50 hover:bg-lighred/60 rounded-lg text-lg font-semibold transition inline-flex items-center"
+                <div class="flex lg:items-end lg:h-[30vh] lg:w-[35vw]">
+                    <p
+                        class="mt-4 text-lg md:text-xl left-0 right-0 mx-auto max-w-2xl text-left"
                     >
-                        Order Takeout
-                        <i
-                            class="fa-solid fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"
-                        ></i>
-                </Link>
-                   <Reservation></Reservation>
+                        Welcome to our catering service! 👋 We are dedicated to
+                        providing you with the best culinary experience for your
+                        events. 🍽️✨ Whether it's a wedding 💒, corporate
+                        gathering 🏢, or private party 🎉, we have a wide range
+                        of delicious options 😋 to suit your needs.
+                    </p>
                 </div>
             </div>
         </section>
 
-        <section class="px-8 my-16 container">
-            <div class="w-full flex justify-between items-center">
-                <h1 class="text-start font-semibold text-2xl md:text-4xl text-polynesian">
-                    Popular Dishes
-                </h1>
-                <a
-                    href="#"
-                    class="px-6 py-3 text-lighred/50 font-semibold rounded-lg hover:text-lighred/60 transition"
-                    >All</a
-                >
-            </div>
+        <section
+            class="px-16 lg:mt-[370px] z-10 flex flex-col lg:flex-row justify-center lg:justify-between text-snow items-end "
+        >
+            <div class="w-[90vw]  md:w-[50vw] bg-transparent"></div>
+            <div class="flex flex-col  gap-4 items-center  bg-oynx min-h-screen w-[85vw]   lg:w-[50vw]">
+               
+            <div class="flex flex-col  gap-4 w-full ">
+                
 
-            <div
-                class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-5"
-            >
-                <!-- CARD 1 -->
-                <div
-                    class="rounded-lg overflow-hidden border border-gray-300 shadow-lg flex flex-col bg-snow"
-                >
-                    <div class="relative">
-                        <img
-                            class="w-full h-56 object-cover"
-                            src="images/keesha-s-kitchen-woC24wGXsQ8-unsplash.jpg"
-                            alt="Simplest Salad Recipe"
-                        />
-                        <div
-                            class="absolute inset-0 bg-oynx opacity-25 hover:opacity-0 transition"
-                        ></div>
-                        <div
-                            class="text-xs absolute top-2 right-2 bg-lighred/50 px-3 py-1 text-snow rounded-lg"
-                        >
-                            #1
-                        </div>
-                    </div>
-                    <div class="px-6 py-4 flex-grow">
-                        <h2
-                            class="font-semibold text-lg hover:text-lighred/60 transition"
-                        >
-                            Jollof Rice
-                        </h2>
-                        <p class="text-gray-500 text-sm mt-1">
-                           Often considered the "king" of Nigerian cuisine, Jollof Rice is a vibrant, savory, one-pot rice dish cooked in a flavorful tomato and pepper sauce.
-                        </p>
-                    </div>
-                   
-                </div>
+            <CartingCard class="relative h-full overflow-hidden">
+                <template #first>
+                    <div
+                        class="absolute inset-0 bg-cover bg-center"
+                        style="background-image: url('images/wedding.jpg')"
+                    ></div>
+                    <div class="absolute inset-0 bg-oynx opacity-50"></div>
+                </template>
 
-                <!-- CARD 2 -->
-                <div
-                    class="rounded-lg overflow-hidden shadow-lg border border-gray-300 flex flex-col bg-snow"
-                >
-                    <div class="relative">
-                        <img
-                            class="w-full h-56 object-cover"
-                            src="images/soup.png"
-                            alt="FastFood Ideas"
-                        />
-                        <div
-                            class="absolute inset-0 bg-oynx opacity-25 hover:opacity-0 transition"
-                        ></div>
-                        <div
-                            class="text-xs absolute top-2 right-2 bg-lighred/50 px-3 py-1 text-snow rounded-lg"
-                        >
-                            #2
-                        </div>
-                    </div>
-                    <div class="px-6 py-4 flex-grow">
-                        <h2
-                            class="font-semibold text-lg hover:text-lighred/60 transition"
-                        >
-                            Soup
-                        </h2>
-                        <p class="text-gray-500 text-sm mt-1">
-                            soups are a culinary delight! They're known for their incredible richness, diverse flavors, and comforting warmth, truly the heart of Nigerian cuisine.
-                        </p>
-                    </div>
-                  
-                </div>
-
-                <!-- CARD 3 -->
-                <div
-                    class="rounded-lg overflow-hidden shadow-lg border border-gray-300 flex flex-col bg-snow"
-                >
-                    <div class="relative">
-                        <img
-                            class="w-full h-56 object-cover"
-                            src="images/poundedyam.png"
-                            alt="Why to eat salad?"
-                        />
-                        <div
-                            class="absolute inset-0 bg-oynx opacity-25 hover:opacity-0 transition"
-                        ></div>
-                        <div
-                            class="text-xs absolute top-2 right-2 bg-lighred/50 px-3 py-1 text-snow rounded-lg"
-                        >
-                            #3
-                        </div>
-                    </div>
-                    <div class="px-6 py-4 flex-grow">
-                        <h2
-                            class="font-semibold text-lg hover:text-lighred/60 transition"
-                        >
-                            Pounded Yam
-                        </h2>
-                        <p class="text-gray-500 text-sm mt-1">
-                           Pounded Yam is a beloved Nigerian staple, celebrated for its smooth, dough-like texture and mild, earthy flavor. It's the perfect "swallow" to accompany rich, flavorful Nigerian soups!
-                        </p>
-                    </div>
+                <template #second>
                     
-                </div>
+                        <video
+                            class="absolute inset-0 w-full h-[90vh] object-cover rounded-[15px]"
+                            autoplay
+                            muted
+                            loop
+                            playsinline
+                            onloadedmetadata="this.playbackRate = 0.5"
+                        >
+                            <source src="images/wedding.mp4" type="video/mp4" />
+                            <!-- <source src="videos/your-video-file.webm" type="video/webm"> -->
+                            <!-- Fallback image in case video doesn't load -->
+                            Your browser does not support the video tag.
+                        </video>
+                       
+                   
+                </template>
+            </CartingCard>
+             <div class="py-6">
+                <h1 class="text-xl md:text-4xl font-black uppercase leading-tight">
+                    Wedding Cermony
+                </h1>
+                <p class="mt-4 text-sm md:text-lg max-w-4xl">
+                    Your dream day deserves a culinary masterpiece. From elegant plated dinners to lavish buffets, we work with you to create a menu as unique as your love story.
+                </p>
+            </div>
+            </div>
+            <div class="flex flex-col m gap-4 w-full ">
+                
+
+            <CartingCard class="relative h-full overflow-hidden">
+                <template #first>
+                    <video
+                            class="absolute inset-0 w-full h-[90vh] object-cover rounded-[15px]"
+                            autoplay
+                            muted
+                            loop
+                            playsinline
+                            onloadedmetadata="this.playbackRate = 0.5"
+                        >
+                            <source src="images/anniversary.mp4" type="video/mp4" />
+                            <!-- <source src="videos/your-video-file.webm" type="video/webm"> -->
+                            <!-- Fallback image in case video doesn't load -->
+                            Your browser does not support the video tag.
+                        </video>
+                </template>
+
+                <template #second>
+                     <div
+                        class="absolute inset-0 bg-cover bg-center"
+                        style="background-image: url('images/manniversary.jpg')"
+                    ></div>
+                    <div class="absolute inset-0 bg-oynx opacity-50"></div>
+                       
+                       
+                   
+                </template>
+            </CartingCard>
+             <div class="py-6">
+                <h1 class="text-xl md:text-4xl font-black uppercase leading-tight">
+                    Anniversary Cermony
+                </h1>
+                <p class="mt-4 text-sm md:text-lg max-w-4xl">
+                   Celebrate life's milestones with delectable food that delights every guest. Fun and vibrant, or sophisticated and chic – we cater to your style.
+                </p>
+            </div>
+            </div>
+            <div class="flex flex-col m gap-4 w-full ">
+                
+
+            <CartingCard class="relative h-full overflow-hidden">
+                <template #first>
+                    <video
+                            class="absolute inset-0 w-full h-[90vh] object-cover rounded-[15px]"
+                            autoplay
+                            muted
+                            loop
+                            playsinline
+                            onloadedmetadata="this.playbackRate = 0.5"
+                        >
+                            <source src="images/birthday.mp4" type="video/mp4" />
+                            <!-- <source src="videos/your-video-file.webm" type="video/webm"> -->
+                            <!-- Fallback image in case video doesn't load -->
+                            Your browser does not support the video tag.
+                        </video>
+                </template>
+
+                <template #second>
+                     <div
+                        class="absolute inset-0 bg-cover bg-center"
+                        style="background-image: url('images/birthday.jpg')"
+                    ></div>
+                    <div class="absolute inset-0 bg-oynx opacity-50"></div>
+                       
+                       
+                   
+                </template>
+            </CartingCard>
+             <div class="py-6">
+                <h1 class="text-xl md:text-4xl font-black uppercase leading-tight">
+                    Birthday Cermony
+                </h1>
+                <p class="mt-4 text-sm md:text-lg max-w-4xl">
+                   Celebrate life's milestones with delectable food that delights every guest. Fun and vibrant, or sophisticated and chic – we cater to your style.
+                </p>
+            </div>
+            </div>
+            <div class="flex flex-col m gap-4 w-full ">
+                
+
+            <CartingCard class="relative h-full overflow-hidden">
+                <template #first>
+                    <video
+                            class="absolute inset-0 w-full h-[90vh] object-cover rounded-[15px]"
+                            autoplay
+                            muted
+                            loop
+                            playsinline
+                            onloadedmetadata="this.playbackRate = 0.5"
+                        >
+                            <source src="images/foodboxing.mp4" type="video/mp4" />
+                            <!-- <source src="videos/your-video-file.webm" type="video/webm"> -->
+                            <!-- Fallback image in case video doesn't load -->
+                            Your browser does not support the video tag.
+                        </video>
+                </template>
+
+                <template #second>
+                     <div
+                        class="absolute inset-0 bg-cover bg-center"
+                        style="background-image: url('images/foodpacking.png')"
+                    ></div>
+                    <div class="absolute inset-0 bg-oynx opacity-50"></div>
+                       
+                       
+                   
+                </template>
+            </CartingCard>
+             <div class="py-6">
+                <h1 class="text-xl md:text-4xl font-black uppercase leading-tight">
+                    Food Boxing
+                </h1>
+                <p class="mt-4 text-sm md:text-lg max-w-4xl">
+                  Individually portioned gourmet meals, freshly prepared and perfectly packaged for corporate meetings, team lunches, or group outings. Choose from a variety of balanced and delicious options.
+                </p>
+                <p class="mt-4 text-sm md:text-lg max-w-4xl">
+                 You can get all these and more. just contact us on and we will make your day </p>
+            </div>
+            </div>
             </div>
         </section>
-        <div class="py-10 " >
-            <Gridtemplate></Gridtemplate>
-        </div>
-        
-        <div class="py-10 " >
-           <!-- https://gist.github.com/goodreds/3d044027175954984fb96c7407a955ab -->
+       
 
-<!-- Container -->
-<div class="relative flex flex-col items-center mx-auto lg:flex-row-reverse lg:max-w-5xl lg:mt-12 xl:max-w-6xl ">
+        <!--  -->
 
-    <!-- Image Column -->
-    <div class="w-full h-64 lg:w-1/2 lg:h-auto">
-        <img class="h-full w-full object-cover" src="images/keesha-s-kitchen-3gbiqiGJYUc-unsplash.jpg" alt="Winding mountain road">
+        <Footer class="z-10" />
     </div>
-    <!-- Close Image Column -->
-
-    <!-- Text Column -->
-    <div
-        class="max-w-lg container md:max-w-2xl md:z-10 md:shadow-lg md:absolute md:top-0 md:mt-48 lg:w-3/5 lg:left-0 lg:mt-20 lg:ml-20 xl:mt-24 xl:ml-12">
-        <!-- Text Wrapper -->
-        
-            <Testimonial></Testimonial>
-        
-        <!-- Close Text Wrapper -->
-    </div>
-    <!-- Close Text Column -->
-
-</div>
-        </div>
-
-    </div>
-
-    <Footer />
 </template>
 
+<style scoped>
+.animate {
+    position: absolute;
+    z-index: -1;
+    animation: identifier 0.3s linear infinite both;
+    background-image: url("images/noise.png");
+}
+@keyframes identifier {
+    0% {
+        transform: translateX(10%) translateY(10%);
+    }
+    100% {
+        transform: translateX(-10%) translateY(-10%);
+    }
+}
+</style>

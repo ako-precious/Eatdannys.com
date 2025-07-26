@@ -20,15 +20,16 @@ const isActiveRoute = (route) => {
                 <div>
                     <div class="grid grid-cols-3 bg-white p-10 gap-5 mx-3.5">
                         <div   :class="[
-                                        isActiveRoute('/dashbord').value
+                                        
+                                    isActiveRoute('/dashboard').value
                                         ? 'text-snow p-4 rounded bg-polynesian shadow-md flex items-center justify-center'
                                             : 'p-4 rounded bg-snow text-polynesian shadow-md flex items-center justify-center',
                                     ]"
-                        >
+                        >  <Link href="/dashboard">
                         <!-- class="text-snow p-4 rounded bg-polynesian shadow-md flex items-center justify-center" -->
                            <font-awesome-icon icon="fa-solid fa-house" class="fas fa-tv mr-2 text-lg"
                                     />
-                            Home
+                            Home </Link>
                         </div>
                           <div
                              :class="[
@@ -36,9 +37,9 @@ const isActiveRoute = (route) => {
                                         ? 'text-snow p-4 rounded bg-polynesian shadow-md flex items-center justify-center'
                                             : 'p-4 rounded bg-snow text-polynesian shadow-md flex items-center justify-center',
                                     ]"
-                        > <font-awesome-icon icon="fa-solid fa-cart-shopping" class="mr-2 text-lg" />
+                        > <Link href="/orders"> <font-awesome-icon icon="fa-solid fa-cart-shopping" class="mr-2 text-lg" />
                           
-                            Order
+                            Orders </Link>
                         </div>
                         <div
                              :class="[
@@ -46,9 +47,9 @@ const isActiveRoute = (route) => {
                                         ? 'text-snow p-4 rounded bg-polynesian shadow-md flex items-center justify-center'
                                             : 'p-4 rounded bg-snow text-polynesian shadow-md flex items-center justify-center',
                                     ]"
-                        >
+                        > <Link href="/user/profile">
                             <font-awesome-icon icon="user" class="mr-2 text-lg" />
-                            Profile
+                            Profile </Link>
                         </div>
                       
                     </div>

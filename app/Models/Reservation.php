@@ -24,4 +24,6 @@ protected $casts = [
     'date' => 'date:Y-m-d',
     'time' => 'datetime:H:i',
 ];
+
+
 }

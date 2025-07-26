@@ -74,7 +74,7 @@ onMounted(() => {
             <div class="flex flex-wrap items-center justify-center">
                 <div class="relative w-full px-4 max-w-full flex-grow flex-1">
                     <h3 class="font-bold text-lg md:text-2xl text-oynx_alt">
-                        Meals Tables
+                        Meals For Bulk
                     </h3>
                 </div>
                 <div class="w-full md:w-[50%]">
