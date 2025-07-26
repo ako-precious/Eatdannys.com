@@ -34,7 +34,7 @@ defineProps({
         <div  class=" absolute top-0 w-screen  ">  <Header class="w-full  z-100 "  /></div>
         <section
             class="fixed w-full min-h-[95vh] z-0  flex flex-col items-center justify-center text-center px-6 lg:px-16 py-16 "
-        >  <div  class="absolute -inset-100  opacity-10 animate"></div>
+        >  <div  class="absolute -inset-100  opacity-5 animate"></div>
        
         <!-- Background Image -->
                
@@ -61,16 +61,20 @@ defineProps({
 
         <section class="px-8 mt-[350px] z-10 flex flex-col md:flex-row justify-between  p-16">
             <div class="max-w-[50vh] w-[50vh]">  </div>
-           <CartingCard> <template #first>
-        <div>
-            
-        </div>
+           <CartingCard class="relative"> <template #first>
+        <div
+        class="absolute inset-0 bg-cover bg-center"
+        style="
+                    background-image: url('images/keesha-s-kitchen-PqG32DYCTM8-unsplash.jpg');
+                    "
+            ></div>
+            <div class="absolute inset-0 bg-oynx opacity-50"></div>
       </template>
       
       <template #second>
-        <h2>This goes in the second content area</h2>
-        <p>Any content for the second slot</p>
-      </template></CartingCard>
+        
+      </template>
+    </CartingCard>
         </section>
        
         
