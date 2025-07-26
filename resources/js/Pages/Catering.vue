@@ -34,7 +34,7 @@ defineProps({
             <Header class="w-full z-100" />
         </div>
         <section
-            class="lg:fixed w-full min-h-[95vh] z-0 flex flex-col items-center justify-center text-center px-6 lg:px-16 py-16"
+            class="lg:fixed w-full lg:min-h-[95vh] z-0 flex flex-col items-center justify-center text-center px-6 lg:px-16 "
         >
             <div class="absolute -inset-100 opacity-5 animate"></div>
 
@@ -43,11 +43,11 @@ defineProps({
             <!-- Content -->
             <div class="relative z-10 text-snow lg:min-h-screen p-6">
                 <h1
-                    class="text-4xl md:text-[14vw] font-black uppercase text-nowrap pt-30"
+                    class="text-[14vw] font-black uppercase lg:text-nowrap pt-30"
                 >
                     EAT DANNy's
                 </h1>
-                <div class="flex items-end lg:h-[40vh] lg:w-[35vw]">
+                <div class="flex lg:items-end lg:h-[30vh] lg:w-[35vw]">
                     <p
                         class="mt-4 text-lg md:text-xl left-0 right-0 mx-auto max-w-2xl text-left"
                     >
@@ -62,12 +62,12 @@ defineProps({
         </section>
 
         <section
-            class="px-16 mt-[350px] z-10 flex flex-col lg:flex-row justify-between text-snow items-end "
+            class="px-16 lg:mt-[370px] z-10 flex flex-col lg:flex-row justify-center lg:justify-between text-snow items-end "
         >
             <div class="w-[90vw]  md:w-[50vw] bg-transparent"></div>
-            <div class="flex flex-col  gap-4 items-center  bg-oynx min-h-screen w-[90vw]   lg:w-[50vw]">
+            <div class="flex flex-col  gap-4 items-center  bg-oynx min-h-screen w-[85vw]   lg:w-[50vw]">
                
-            <div class="flex flex-col m gap-4 w-full ">
+            <div class="flex flex-col  gap-4 w-full ">
                 
 
             <CartingCard class="relative h-full overflow-hidden">
