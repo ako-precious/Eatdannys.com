@@ -29,12 +29,14 @@ defineProps({
 </script>
 
 <template>
-    <div class="w-screen overflow-x-hidden bg-oynx lg:min-h-screen flex flex-col">
+    <div
+        class="w-screen overflow-x-hidden bg-oynx lg:min-h-screen flex flex-col"
+    >
         <div class="absolute top-0 w-screen">
             <Header class="w-full z-100" />
         </div>
         <section
-            class="lg:fixed w-full lg:min-h-[95vh] z-0 flex flex-col items-center justify-center text-center px-6 lg:px-16 "
+            class="lg:fixed w-full lg:min-h-[95vh] z-0 flex flex-col items-center justify-center text-center px-6 lg:px-16"
         >
             <div class="absolute -inset-100 opacity-5 animate"></div>
 
@@ -62,176 +64,206 @@ defineProps({
         </section>
 
         <section
-            class="px-16 lg:mt-[370px] z-10 flex flex-col lg:flex-row justify-center lg:justify-between text-snow items-end "
+            class="px-16 lg:mt-[430px] z-10 flex flex-col lg:flex-row justify-center lg:justify-between text-snow items-end relative"
         >
-            <div class="w-[90vw]  md:w-[50vw] bg-transparent"></div>
-            <div class="flex flex-col  gap-4 items-center  bg-oynx min-h-screen w-[85vw]   lg:w-[50vw]">
-               
-            <div class="flex flex-col  gap-4 w-full ">
-                
+        <div class="w-[90vw] md:w-[50vw] bg-transparent"></div>
+        <div
+        class="flex flex-col gap-4 items-center bg-oynx min-h-screen w-[85vw] lg:w-[50vw]"
+        >
+       
+                <div class="flex flex-col gap-4 w-full">
+                    <CartingCard class="relative h-full overflow-hidden">
+                        <template #first>
+                            <div
+                                class="absolute inset-0 bg-cover bg-center"
+                                style="
+                                    background-image: url('images/wedding.jpg');
+                                "
+                            ></div>
+                            <div
+                                class="absolute inset-0 bg-oynx opacity-50"
+                            ></div>
+                        </template>
 
-            <CartingCard class="relative h-full overflow-hidden">
-                <template #first>
-                    <div
-                        class="absolute inset-0 bg-cover bg-center"
-                        style="background-image: url('images/wedding.jpg')"
-                    ></div>
-                    <div class="absolute inset-0 bg-oynx opacity-50"></div>
-                </template>
-
-                <template #second>
-                    
-                        <video
-                            class="absolute inset-0 w-full h-[90vh] object-cover rounded-[15px]"
-                            autoplay
-                            muted
-                            loop
-                            playsinline
-                            onloadedmetadata="this.playbackRate = 0.5"
+                        <template #second>
+                            <video
+                                class="absolute inset-0 w-full h-[90vh] object-cover rounded-[15px]"
+                                autoplay
+                                muted
+                                loop
+                                playsinline
+                                onloadedmetadata="this.playbackRate = 0.5"
+                            >
+                                <source
+                                    src="images/wedding.mp4"
+                                    type="video/mp4"
+                                />
+                                <!-- <source src="videos/your-video-file.webm" type="video/webm"> -->
+                                <!-- Fallback image in case video doesn't load -->
+                                Your browser does not support the video tag.
+                            </video>
+                        </template>
+                    </CartingCard>
+                    <div class="py-6">
+                        <h1
+                            class="text-xl md:text-4xl font-black uppercase leading-tight"
                         >
-                            <source src="images/wedding.mp4" type="video/mp4" />
-                            <!-- <source src="videos/your-video-file.webm" type="video/webm"> -->
-                            <!-- Fallback image in case video doesn't load -->
-                            Your browser does not support the video tag.
-                        </video>
-                       
-                   
-                </template>
-            </CartingCard>
-             <div class="py-6">
-                <h1 class="text-xl md:text-4xl font-black uppercase leading-tight">
-                    Wedding Cermony
-                </h1>
-                <p class="mt-4 text-sm md:text-lg max-w-4xl">
-                    Your dream day deserves a culinary masterpiece. From elegant plated dinners to lavish buffets, we work with you to create a menu as unique as your love story.
-                </p>
-            </div>
-            </div>
-            <div class="flex flex-col m gap-4 w-full ">
-                
+                            Wedding Cermony
+                        </h1>
+                        <p class="mt-4 text-sm md:text-lg max-w-4xl">
+                            Your dream day deserves a culinary masterpiece. From
+                            elegant plated dinners to lavish buffets, we work
+                            with you to create a menu as unique as your love
+                            story.
+                        </p>
+                    </div>
+                </div>
+                <div class="flex flex-col m gap-4 w-full">
+                    <CartingCard class="relative h-full overflow-hidden">
+                        <template #first>
+                           <div
+                                class="absolute inset-0 bg-cover bg-center z-10"
+                                style="
+                                    background-image: url('images/anniversary.jpg');
+                                "
+                            ></div>
+                            <div
+                                class="absolute inset-0 bg-oynx opacity-50"
+                            ></div>  
+                        </template>
 
-            <CartingCard class="relative h-full overflow-hidden">
-                <template #first>
-                    <video
-                            class="absolute inset-0 w-full h-[90vh] object-cover rounded-[15px]"
-                            autoplay
-                            muted
-                            loop
-                            playsinline
-                            onloadedmetadata="this.playbackRate = 0.5"
+                        <template #second>
+                           <video
+                                class="absolute inset-0 w-full h-[90vh] object-cover rounded-[15px]"
+                                autoplay
+                                muted
+                                loop
+                                playsinline
+                                onloadedmetadata="this.playbackRate = 0.5"
+                            >
+                                <source
+                                    src="images/anniversary.mp4"
+                                    type="video/mp4"
+                                />
+                                <!-- <source src="videos/your-video-file.webm" type="video/webm"> -->
+                                <!-- Fallback image in case video doesn't load -->
+                                Your browser does not support the video tag.
+                            </video>
+                        </template>
+                    </CartingCard>
+                    <div class="py-6">
+                        <h1
+                            class="text-xl md:text-4xl font-black uppercase leading-tight"
                         >
-                            <source src="images/anniversary.mp4" type="video/mp4" />
-                            <!-- <source src="videos/your-video-file.webm" type="video/webm"> -->
-                            <!-- Fallback image in case video doesn't load -->
-                            Your browser does not support the video tag.
-                        </video>
-                </template>
+                            Anniversary Cermony
+                        </h1>
+                        <p class="mt-4 text-sm md:text-lg max-w-4xl">
+                            Celebrate life's milestones with delectable food
+                            that delights every guest. Fun and vibrant, or
+                            sophisticated and chic – we cater to your style.
+                        </p>
+                    </div>
+                </div>
+                <div class="flex flex-col m gap-4 w-full">
+                    <CartingCard class="relative h-full overflow-hidden">
+                        <template #first>
+                           <div
+                                class="absolute inset-0 bg-cover bg-center"
+                                style="
+                                    background-image: url('images/birthday.jpg');
+                                "
+                            ></div>
+                            <div
+                                class="absolute inset-0 bg-oynx opacity-50"
+                            ></div> 
+                        </template>
 
-                <template #second>
-                     <div
-                        class="absolute inset-0 bg-cover bg-center"
-                        style="background-image: url('images/manniversary.jpg')"
-                    ></div>
-                    <div class="absolute inset-0 bg-oynx opacity-50"></div>
-                       
-                       
-                   
-                </template>
-            </CartingCard>
-             <div class="py-6">
-                <h1 class="text-xl md:text-4xl font-black uppercase leading-tight">
-                    Anniversary Cermony
-                </h1>
-                <p class="mt-4 text-sm md:text-lg max-w-4xl">
-                   Celebrate life's milestones with delectable food that delights every guest. Fun and vibrant, or sophisticated and chic – we cater to your style.
-                </p>
-            </div>
-            </div>
-            <div class="flex flex-col m gap-4 w-full ">
-                
-
-            <CartingCard class="relative h-full overflow-hidden">
-                <template #first>
-                    <video
-                            class="absolute inset-0 w-full h-[90vh] object-cover rounded-[15px]"
-                            autoplay
-                            muted
-                            loop
-                            playsinline
-                            onloadedmetadata="this.playbackRate = 0.5"
+                        <template #second>
+                            <video
+                                class="absolute inset-0 w-full h-[90vh] object-cover rounded-[15px]"
+                                autoplay
+                                muted
+                                loop
+                                playsinline
+                                onloadedmetadata="this.playbackRate = 0.5"
+                            >
+                                <source
+                                    src="images/birthday.mp4"
+                                    type="video/mp4"
+                                />
+                                <!-- <source src="videos/your-video-file.webm" type="video/webm"> -->
+                                <!-- Fallback image in case video doesn't load -->
+                                Your browser does not support the video tag.
+                            </video>
+                        </template>
+                    </CartingCard>
+                    <div class="py-6">
+                        <h1
+                            class="text-xl md:text-4xl font-black uppercase leading-tight"
                         >
-                            <source src="images/birthday.mp4" type="video/mp4" />
-                            <!-- <source src="videos/your-video-file.webm" type="video/webm"> -->
-                            <!-- Fallback image in case video doesn't load -->
-                            Your browser does not support the video tag.
-                        </video>
-                </template>
+                            Birthday Cermony
+                        </h1>
+                        <p class="mt-4 text-sm md:text-lg max-w-4xl">
+                            Celebrate life's milestones with delectable food
+                            that delights every guest. Fun and vibrant, or
+                            sophisticated and chic – we cater to your style.
+                        </p>
+                    </div>
+                </div>
+                <div class="flex flex-col m gap-4 w-full">
+                    <CartingCard class="relative h-full overflow-hidden">
+                        <template #first>
+                           <div
+                                class="absolute inset-0 bg-cover bg-center"
+                                style="
+                                    background-image: url('images/foodboxing.png');
+                                "
+                            ></div>
+                            <div
+                                class="absolute inset-0 bg-oynx opacity-50"
+                            ></div> 
+                        </template>
 
-                <template #second>
-                     <div
-                        class="absolute inset-0 bg-cover bg-center"
-                        style="background-image: url('images/birthday.jpg')"
-                    ></div>
-                    <div class="absolute inset-0 bg-oynx opacity-50"></div>
-                       
-                       
-                   
-                </template>
-            </CartingCard>
-             <div class="py-6">
-                <h1 class="text-xl md:text-4xl font-black uppercase leading-tight">
-                    Birthday Cermony
-                </h1>
-                <p class="mt-4 text-sm md:text-lg max-w-4xl">
-                   Celebrate life's milestones with delectable food that delights every guest. Fun and vibrant, or sophisticated and chic – we cater to your style.
-                </p>
-            </div>
-            </div>
-            <div class="flex flex-col m gap-4 w-full ">
-                
-
-            <CartingCard class="relative h-full overflow-hidden">
-                <template #first>
-                    <video
-                            class="absolute inset-0 w-full h-[90vh] object-cover rounded-[15px]"
-                            autoplay
-                            muted
-                            loop
-                            playsinline
-                            onloadedmetadata="this.playbackRate = 0.5"
+                        <template #second>
+                            <video
+                                class="absolute inset-0 w-full h-[90vh] object-cover rounded-[15px]"
+                                autoplay
+                                muted
+                                loop
+                                playsinline
+                                onloadedmetadata="this.playbackRate = 0.5"
+                            >
+                                <source
+                                    src="images/foodboxing.mp4"
+                                    type="video/mp4"
+                                />
+                                <!-- <source src="videos/your-video-file.webm" type="video/webm"> -->
+                                <!-- Fallback image in case video doesn't load -->
+                                Your browser does not support the video tag.
+                            </video>
+                        </template>
+                    </CartingCard>
+                    <div class="py-6">
+                        <h1
+                            class="text-xl md:text-4xl font-black uppercase leading-tight"
                         >
-                            <source src="images/foodboxing.mp4" type="video/mp4" />
-                            <!-- <source src="videos/your-video-file.webm" type="video/webm"> -->
-                            <!-- Fallback image in case video doesn't load -->
-                            Your browser does not support the video tag.
-                        </video>
-                </template>
-
-                <template #second>
-                     <div
-                        class="absolute inset-0 bg-cover bg-center"
-                        style="background-image: url('images/foodpacking.png')"
-                    ></div>
-                    <div class="absolute inset-0 bg-oynx opacity-50"></div>
-                       
-                       
-                   
-                </template>
-            </CartingCard>
-             <div class="py-6">
-                <h1 class="text-xl md:text-4xl font-black uppercase leading-tight">
-                    Food Boxing
-                </h1>
-                <p class="mt-4 text-sm md:text-lg max-w-4xl">
-                  Individually portioned gourmet meals, freshly prepared and perfectly packaged for corporate meetings, team lunches, or group outings. Choose from a variety of balanced and delicious options.
-                </p>
-                <p class="mt-4 text-sm md:text-lg max-w-4xl">
-                 You can get all these and more. just contact us on and we will make your day </p>
-            </div>
-            </div>
+                            Food Boxing
+                        </h1>
+                        <p class="mt-4 text-sm md:text-lg max-w-4xl">
+                            Individually portioned gourmet meals, freshly
+                            prepared and perfectly packaged for corporate
+                            meetings, team lunches, or group outings. Choose
+                            from a variety of balanced and delicious options.
+                        </p>
+                        <p class="mt-4 text-sm md:text-lg max-w-4xl">
+                            You can get all these and more. just contact us on
+                            and we will make your day
+                        </p>
+                    </div>
+                </div>
+                
             </div>
         </section>
-       
 
         <!--  -->
 
