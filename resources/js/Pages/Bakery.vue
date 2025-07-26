@@ -56,7 +56,7 @@ defineProps({
      
     <!-- Content -->
     <div class="relative z-10 text-snow max-w-3xl">
-        <h1 class="text-5xl md:text-7xl font-black uppercase leading-tight">
+        <h1 class="text-5xl md:text-10xl font-black uppercase leading-tight">
             Coming Soon
             <br> Stay Tunned 
            

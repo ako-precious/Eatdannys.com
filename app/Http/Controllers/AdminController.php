@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Models\Meal;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -71,4 +71,7 @@ class AdminController extends Controller
             'mealsGrowth' => round($mealsGrowth, 2),
         ]);
     }
+
+   
+
 }

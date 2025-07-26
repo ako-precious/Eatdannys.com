@@ -5,7 +5,7 @@ import MealsTable from "./MealsTable.vue";
 import Button from "./Button.vue";
 // import AppLayout from "../../Layouts/Applayout.vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
-
+import NotFoundPage from "@/Pages/NotFoundPage.vue"
 const selectedFiles = ref([]);
 const imagePreviews = ref([]);
 const errors = ref([]);
@@ -121,7 +121,7 @@ function removeImage(index) {
 </script>
 
 <template>
-    <AppLayout title="Meals">
+    <AppLayout  title="Meals"  v-if=" $page.props.auth.user.role === 'admin'">
         <div class="flex flex-wrap mt-4">
             <div class="w-full mb-12 px-4">
                 <div class="bg-white border rounded-lg shadow relative p-5">
@@ -366,4 +366,8 @@ function removeImage(index) {
             </div>
         </div>
     </AppLayout>
+
+    <div v-else>
+<NotFoundPage></NotFoundPage>
+    </div>
 </template>
