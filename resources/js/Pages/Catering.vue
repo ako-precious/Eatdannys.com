@@ -29,47 +29,45 @@ defineProps({
 </script>
 
 <template>
-    <div class=" w-screen overflow-x-hidden  min-h-screen flex flex-col">
+    <div class=" w-screen overflow-x-hidden bg-oynx  min-h-screen flex flex-col">
         
         <section
-            class="relative w-full min-h-[95vh] flex flex-col items-center justify-center text-center px-6 lg:px-16 py-16 md:py-32"
+            class="fixed w-full min-h-[95vh]  flex flex-col items-center justify-center text-center px-6 lg:px-16 py-16 "
         >
         <!-- Background Image -->
-        <div
-        class="absolute inset-0 bg-cover bg-center"
-        style="
-                    background-image: url('images/keesha-s-kitchen-PqG32DYCTM8-unsplash.jpg');
-                    "
-            ></div>
-            <div class="absolute inset-0 bg-oynx opacity-70"></div>
-            
+               
             <div  class=" absolute top-0 w-screen  ">  <Header class="w-full "  /></div>
           
             <!-- Content -->
-            <div class="relative z-10 text-snow max-w-3xl">
-                <h1 class="text-4xl md:text-6xl font-black uppercase leading-tight">
-                    Your Table Awaits, or We'll Come to You!
+            <div class="relative z-10 text-snow min-h-screen p-6">
+                <h1 class="text-4xl md:text-[14vw] font-black uppercase  text-nowrap pt-30">
+                    EAT DANNy's
                 </h1>
-                <p class="mt-4 text-lg md:text-xl">
-                   Choose from the varieties of meal we have
-                </p>
-                <div class="mt-6 flex flex-col md:flex-row gap-4.5 items-center justify-center">
-                    <Link
-                         :href="route('dining')"
-                        class="group px-6 py-3  bg-lighred/50 hover:bg-lighred/60 rounded-lg text-lg font-semibold transition inline-flex items-center"
-                    >
-                        Order Takeout
-                        <i
-                            class="fa-solid fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"
-                        ></i>
-                </Link>
-                   <Reservation></Reservation>
+                <div class="flex items-end  h-full">
+                    <div>
+
+                        <p class="mt-4 text-lg md:text-xl">
+                           Choose from the varieties of meal we have
+                        </p>
+                        <div class="mt-6 flex flex-col md:flex-row gap-4.5 items-center justify-center">
+                            <Link
+                                 :href="route('dining')"
+                                class="group px-6 py-3  bg-lighred/50 hover:bg-lighred/60 rounded-lg text-lg font-semibold transition inline-flex items-center"
+                            >
+                                Order Takeout
+                                <i
+                                    class="fa-solid fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"
+                                ></i>
+                        </Link>
+                           
+                    </div>
+                </div>
                 </div>
             </div>
         </section>
 
-        <section class="px-8 my-16  flex flex-col justify-between">
-            <div class="max-w-[50vh] w-[50vh]"> we hav  </div>
+        <section class="px-8 mt-[350px]  flex flex-col md:flex-row justify-between">
+            <div class="max-w-[50vh] w-[50vh]">  </div>
            <CartingCard></CartingCard>
         </section>
         <div class="py-10 " >
