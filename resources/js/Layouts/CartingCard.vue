@@ -12,7 +12,7 @@
   .card:hover {
     border-radius: 15px;
     cursor: pointer;
-    transform: scale(1.1);
+    transform: scale(1.01);
     animation-delay: 3s;
     box-shadow: 0px 0px 10px 5px  rgba(0, 0, 0, 0.705);
     background: rgb(103, 151, 255);
@@ -56,14 +56,12 @@
 </style>
 
 <template>
-  <div class="card min-h-[90vh] min-w-[50vw]">
+  <div class="card min-h-[90vh] min-w-[50vw] p-6">
     <div class="first-content">
-      <span>First</span>
+      <slot name="first"></slot>
     </div>
     <div class="second-content">
-  <span>Second</span>
+      <slot name="second"></slot>
     </div>
-
-
   </div>
 </template>

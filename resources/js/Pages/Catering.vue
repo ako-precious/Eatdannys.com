@@ -31,77 +31,70 @@ defineProps({
 <template>
     <div class=" w-screen overflow-x-hidden bg-oynx  min-h-screen flex flex-col">
         
+        <div  class=" absolute top-0 w-screen  ">  <Header class="w-full  z-100 "  /></div>
         <section
-            class="fixed w-full min-h-[95vh]  flex flex-col items-center justify-center text-center px-6 lg:px-16 py-16 "
-        >
+            class="fixed w-full min-h-[95vh] z-0  flex flex-col items-center justify-center text-center px-6 lg:px-16 py-16 "
+        >  <div  class="absolute -inset-100  opacity-10 animate"></div>
+       
         <!-- Background Image -->
                
-            <div  class=" absolute top-0 w-screen  ">  <Header class="w-full "  /></div>
           
             <!-- Content -->
             <div class="relative z-10 text-snow min-h-screen p-6">
                 <h1 class="text-4xl md:text-[14vw] font-black uppercase  text-nowrap pt-30">
                     EAT DANNy's
                 </h1>
-                <div class="flex items-end  h-full">
-                    <div>
+                <div class="flex items-end  h-[40vh] w-[35vw] ">
+                    
 
-                        <p class="mt-4 text-lg md:text-xl">
-                           Choose from the varieties of meal we have
-                        </p>
-                        <div class="mt-6 flex flex-col md:flex-row gap-4.5 items-center justify-center">
-                            <Link
-                                 :href="route('dining')"
-                                class="group px-6 py-3  bg-lighred/50 hover:bg-lighred/60 rounded-lg text-lg font-semibold transition inline-flex items-center"
-                            >
-                                Order Takeout
-                                <i
-                                    class="fa-solid fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"
-                                ></i>
-                        </Link>
+                        <p class="mt-4 text-lg md:text-xl   left-0 right-0 mx-auto max-w-2xl text-left">
                            
-                    </div>
+                           Welcome to our catering service! 👋 We are dedicated to providing you with the best culinary experience for your events. 🍽️✨ Whether it's a wedding 💒, corporate gathering 🏢, or private party 🎉, we have a wide range of delicious options 😋 to suit your needs.  </p>
+                       
+                           
+                    
+                
                 </div>
-                </div>
+                
             </div>
         </section>
 
-        <section class="px-8 mt-[350px]  flex flex-col md:flex-row justify-between">
+        <section class="px-8 mt-[350px] z-10 flex flex-col md:flex-row justify-between  p-16">
             <div class="max-w-[50vh] w-[50vh]">  </div>
-           <CartingCard></CartingCard>
+           <CartingCard> <template #first>
+        <div>
+            
+        </div>
+      </template>
+      
+      <template #second>
+        <h2>This goes in the second content area</h2>
+        <p>Any content for the second slot</p>
+      </template></CartingCard>
         </section>
-        <div class="py-10 " >
-            <Gridtemplate></Gridtemplate>
-        </div>
+       
         
-        <div class="py-10 " >
-           <!-- https://gist.github.com/goodreds/3d044027175954984fb96c7407a955ab -->
+      
 
-<!-- Container -->
-<div class="relative flex flex-col items-center mx-auto lg:flex-row-reverse lg:max-w-5xl lg:mt-12 xl:max-w-6xl ">
-
-    <!-- Image Column -->
-    <div class="w-full h-64 lg:w-1/2 lg:h-auto">
-        <img class="h-full w-full object-cover" src="images/keesha-s-kitchen-3gbiqiGJYUc-unsplash.jpg" alt="Winding mountain road">
+        <Footer class="z-10" />
     </div>
-    <!-- Close Image Column -->
-
-    <!-- Text Column -->
-    <div
-        class="max-w-lg container md:max-w-2xl md:z-10 md:shadow-lg md:absolute md:top-0 md:mt-48 lg:w-3/5 lg:left-0 lg:mt-20 lg:ml-20 xl:mt-24 xl:ml-12">
-        <!-- Text Wrapper -->
-        
-            <Testimonial></Testimonial>
-        
-        <!-- Close Text Wrapper -->
-    </div>
-    <!-- Close Text Column -->
-
-</div>
-        </div>
-
-    </div>
-
-    <Footer />
 </template>
 
+
+<style scoped>
+.animate {
+ position: absolute;
+  z-index: -1;
+    animation: identifier 0.3s linear infinite both;
+    background-image: url("images/noise.png");
+}
+@keyframes identifier {
+  0% {
+    transform: translateX(10%) translateY(10%);
+  }
+  100% {
+    transform: translateX(-10%) translateY(-10%);
+  }
+    
+}
+</style>
