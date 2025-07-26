@@ -1,21 +1,20 @@
 <style scoped>
   .card {
     
-    background: rgb(103, 225, 255);
+    /* background: rgb(103, 225, 255); */
     transition: all 1s;
     border-radius: 10px;
-    box-shadow: 0px 0px 10px 5px  rgba(0, 0, 0, 0.705);
+    /* box-shadow: 0px 0px 10px 5px  rgba(0, 0, 0, 0.705); */
     font-size: 30px;
     font-weight: 900;
   }
 
   .card:hover {
-    border-radius: 15px;
+    /* border-radius: 15px; */
     cursor: pointer;
-    transform: scale(1.01);
+    transform: scale(1.05);
     animation-delay: 3s;
-    box-shadow: 0px 0px 10px 5px  rgba(0, 0, 0, 0.705);
-    background: rgb(103, 151, 255);
+    background: transparent;
   }
 
   .first-content {
@@ -56,7 +55,7 @@
 </style>
 
 <template>
-  <div class="card min-h-[90vh] min-w-[50vw] p-6">
+  <div class="card min-h-[90vh] lg:max-w-[50vw]  p-6">
     <div class="first-content">
       <slot name="first"></slot>
     </div>
