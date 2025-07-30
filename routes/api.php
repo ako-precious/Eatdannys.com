@@ -23,3 +23,6 @@ Route::get('/checkout/success', [PaymentController::class, 'success'])->name('ap
 Route::get('/checkout/cancel', [PaymentController::class, 'cancel'])->name('api.checkout.cancel');
 Route::get('/get-orders',[OrderController::class,'getOrder'])->name('getorder');
 Route::post('/reservations', [ReservationController::class, 'store']);
+Route::get('/stripe-key', action: function() {
+    return response()->json(['stripePublicKey' => env('STRIPE_KEY')]);
+});

@@ -140,4 +140,6 @@ public function success(Request $request)
         return response()->json(['error' => $e->getMessage()], 500);
     }
 }
+
+
 }
