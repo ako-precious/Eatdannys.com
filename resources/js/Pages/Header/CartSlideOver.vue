@@ -176,6 +176,7 @@
                                         Shipping and taxes calculated at
                                         checkout.
                                     </p>
+                                    <!-- {{ stripePromise }} -->
                                     <div class="mt-6">
                                         <button
                                             @click="checkout"
@@ -200,29 +201,30 @@ import CartIcon from "./CartIcon.vue";
 import { useUIStore } from "@/stores/ui";
 import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
-import { onMounted, ref } from "vue";
+import { ref, onMounted } from "vue";
 
 const cart = useCartStore();
 const ui = useUIStore();
 
 const fallbackImage = "https://img.icons8.com/ios/50/image--v1.png";
 
-// Stripe promise setup
+// Declare stripePromise as a ref to avoid "not defined" error
 const stripePromise = ref(null);
 
+// Load Stripe key on mount
 onMounted(async () => {
     try {
         const response = await axios.get("/api/stripe-key");
         stripePromise.value = await loadStripe(response.data.stripePublicKey);
-        console.log("Stripe public key loaded:", response.data.stripePublicKey);
+        // console.log("Stripe key loaded:", response.data.stripePublicKey);
     } catch (error) {
-        console.error("Error loading Stripe public key:", error);
+        console.error("Error loading Stripe key:", error);
     }
 });
 
 async function checkout() {
     if (!stripePromise.value) {
-        console.error("Stripe not initialized yet.");
+        console.error("Stripe not ready.");
         return;
     }
 
@@ -238,19 +240,15 @@ async function checkout() {
         });
 
         if (result.error) {
-            console.error(result.error.message);
+            console.error("Stripe error:", result.error.message);
         } else {
-            cart.clearCart(); // ✅ Clear only after redirect is attempted
+            cart.clearCart();
         }
     } catch (error) {
         console.error("Checkout error:", error);
     }
 }
 
-function openCart() {
-    ui.openCart();
-}
-function closeCart() {
-    ui.closeCart();
-}
+const openCart = () => ui.openCart();
+const closeCart = () => ui.closeCart();
 </script>
