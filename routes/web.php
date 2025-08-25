@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Auth;
 // });
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
+    return Inertia::render('Dinein&Takeout', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
@@ -31,7 +31,7 @@ Route::get('/', function () {
 })->name('welcome');
 
 Route::get('/dine-in&takeout', function () {
-    return Inertia::render('Dinein&Takeout', [
+    return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
