@@ -17,7 +17,7 @@
                             <div class="overflow-hidden">
                                 <Link :href="route('dining')"> 
                                      <button
-                                    class="relative cursor-pointer py-4 px-8 text-center font-barlow inline-flex justify-center text-base uppercase text-white rounded-lg border-solid transition-transform duration-300 ease-in-out group outline-offset-4 focus:outline focus:outline-2 focus:outline-white focus:outline-offset-4 overflow-hidden"
+                                    class="relative cursor-pointer py-4 px-8 text-center font-barlow inline-flex justify-center text-base uppercase text-white rounded-lg border-solid transition-transform duration-300 ease-in-out group outline-offset-4 focus:outline-2 focus:outline-white focus:outline-offset-4 overflow-hidden"
                                 >
                                
                                     <span class="relative z-20 font-semibold  text-oynx dark:text-snow"
