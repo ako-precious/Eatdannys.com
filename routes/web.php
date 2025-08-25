@@ -30,7 +30,7 @@ Route::get('/', function () {
     ]);
 })->name('welcome');
 
-Route::get('/dine-in&takeout', function () {
+Route::get('/bulk', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),

@@ -1,146 +1,244 @@
 <template>
     <!-- source: https://github.com/mfg888/Responsive-Tailwind-CSS-Grid/blob/main/index.html -->
-   <Head title="Welcome" />
+    <Head title="Welcome" />
     <Background>
-
         <div
             class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-snow"
         >
             <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
                 <main class="my-12">
-                    
-                 <div
-        id="Projects"
-        class="flex flex-col items-center py-12 bg-snow! dark:bg-oynx! relative"
-    >
-        <Search
-            @search="handleSearch"
-            class="flex my-6 sticky top-0 transition-all duration-300 delay-75 ease-in animate-fade-in w-[80%]"
-        ></Search>
-
-        <section
-            id="Projects"
-            class="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-16 gap-x-10 bg-snow"
-        >
-            <div
-                class="w-[19rem] bg-snow shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
-                v-for="(item, index) in meals"
-                :key="index"
-            >
-                <div href="#" class="text-oynx/70">
-                    <a href="">
-                        <img
-                            :src="item.imageSrc || fallbackImage"
-                            class="h-72 w-[19rem] object-cover rounded-t-xl"
-                            alt="Meal"
-                        />
-                    </a>
-                    <div class="px-4 py-3 w-[19rem]">
-                        <div class="flex justify-between items-center">
-                            <span
-                                class="text-gray-600 mr-3 uppercase text-xs"
-                                >{{ item.category.name }}</span
-                            >
-                            <p class="text-gray-500 text-sm">
-                                Qty
-                                <input
-                                    type="number"
-                                    min="1"
-                                    class="w-20 h-7 border rounded px-1 text-sm"
-                                    v-model.number="quantities[item.id]"
-                                />
-                            </p>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <p
-                                class="text-lg mb-1 font-bold text-oynx truncate block capitalize"
-                            >
-                                {{ item.name }} 
-                            </p>
-                            <span
-                                class="text-gray-600 mr-3 uppercase text-xxs"
-                                > {{ item.category.order_type }}</span
-                            >
-                          
-                        </div>
-
-                        <!-- Component Start -->
+                    <div
+                        id="Projects"
+                        class="flex flex-col items-center py-12 bg-snow! dark:bg-oynx! relative"
+                    >
                         <div
-                            class="grid grid-cols-3 gap-2 w-full mb-3 max-w-screen-xs cursor-pointer"
+                            class="flex justify-around items-center w-full mb-4 gap-6"
                         >
-                            <div
-                                v-for="(price, index) in item.prices"
-                                :key="index"
-                            >
-                                <input
-                                    class="hidden"
-                                    :id="`radio_${item.id}_${index}`"
-                                    type="radio"
-                                    :name="`option_${item.id}`"
-                                    :value="price"
-                                    v-model="selectedOptions[item.id]"
-                                />
-                                <label
-                                    class="flex flex-col p-1 border-1"
-                                    :class="{
-                                        'border-oynx bg-blue-100':
-                                            selectedOptions[item.id] === price,
-                                        'border-gray-400':
-                                            selectedOptions[item.id] !== price,
-                                    }"
-                                    :for="`radio_${item.id}_${index}`"
+                            <div class="overflow-hidden">
+                                <Link :href="route('dining')"> 
+                                     <button
+                                    class="relative cursor-pointer py-4 px-8 text-center font-barlow inline-flex justify-center text-base uppercase text-white rounded-lg border-solid transition-transform duration-300 ease-in-out group outline-offset-4 focus:outline focus:outline-2 focus:outline-white focus:outline-offset-4 overflow-hidden"
                                 >
-                                    <span
-                                        class="text-[0.68rem] font-semibold uppercase"
+                               
+                                    <span class="relative z-20 font-semibold  text-oynx dark:text-snow"
+                                        >Dine in</span
                                     >
-                                        {{ price.size ?? price.quantity }}
-                                    </span>
-                                    <span class="text-[0.8rem] font-bold">
-                                        ${{ price.price }}
-                                    </span>
-                                </label>
+
+                                    <span
+                                        class="absolute left-[-75%] top-0 h-full w-[50%] bg-oynx/20 rotate-12 z-10 blur-lg group-hover:left-[125%] transition-all duration-1000 ease-in-out"
+                                    ></span>
+
+                                    <span
+                                        class="w-1/2 drop-shadow-3xl transition-all duration-300 block border-[#D4EDF9] absolute h-[20%] rounded-tl-lg border-l-2 border-t-2 top-0 left-0"
+                                    ></span>
+                                    <span
+                                        class="w-1/2 drop-shadow-3xl transition-all duration-300 block border-[#D4EDF9] absolute group-hover:h-[90%] h-[60%] rounded-tr-lg border-r-2 border-t-2 top-0 right-0"
+                                    ></span>
+                                    <span
+                                        class="w-1/2 drop-shadow-3xl transition-all duration-300 block border-[#D4EDF9] absolute h-[60%] group-hover:h-[90%] rounded-bl-lg border-l-2 border-b-2 left-0 bottom-0"
+                                    ></span>
+                                    <span
+                                        class="w-1/2 drop-shadow-3xl transition-all duration-300 block border-[#D4EDF9] absolute h-[20%] rounded-br-lg border-r-2 border-b-2 right-0 bottom-0"
+                                    ></span>
+                                </button>
+                                </Link>
+                               
+                            </div>
+                            <div class="overflow-hidden">
+                                <!-- From Uiverse.io by tirth_5172 -->
+                                <Link :href="route('dining&takeout')">
+                                    <button
+                                        class="relative cursor-pointer py-4 px-8 text-center font-barlow inline-flex justify-center text-base uppercase text-white rounded-lg border-solid transition-transform duration-300 ease-in-out group outline-offset-4 focus:outline-2 focus:outline-white focus:outline-offset-4 overflow-hidden"
+                                    >
+                                        <span class="relative z-20 font-semibold text-oynx dark:text-snow">
+                                            Bulk Order</span
+                                        >
+    
+                                        <span
+                                            class="absolute left-[-75%] top-0 h-full w-[50%] bg-oynx/20 rotate-12 z-10 blur-lg group-hover:left-[125%] transition-all duration-1000 ease-in-out"
+                                        ></span>
+    
+                                        <span
+                                            class="w-1/2 drop-shadow-3xl transition-all duration-300 block border-[#D4EDF9] absolute h-[20%] rounded-tl-lg border-l-2 border-t-2 top-0 left-0"
+                                        ></span>
+                                        <span
+                                            class="w-1/2 drop-shadow-3xl transition-all duration-300 block border-[#D4EDF9] absolute group-hover:h-[90%] h-[60%] rounded-tr-lg border-r-2 border-t-2 top-0 right-0"
+                                        ></span>
+                                        <span
+                                            class="w-1/2 drop-shadow-3xl transition-all duration-300 block border-[#D4EDF9] absolute h-[60%] group-hover:h-[90%] rounded-bl-lg border-l-2 border-b-2 left-0 bottom-0"
+                                        ></span>
+                                        <span
+                                            class="w-1/2 drop-shadow-3xl transition-all duration-300 block border-[#D4EDF9] absolute h-[20%] rounded-br-lg border-r-2 border-b-2 right-0 bottom-0"
+                                        ></span>
+                                    </button>
+                                </Link>
                             </div>
                         </div>
+                        <!-- From Uiverse.io by tirth_5172 -->
 
-                        <button
-                            class=" px-4 text-bold w-full rounded cursor-pointer"
-                            @click="addToCart(item, selectedOptions[item.id])"
-                            title="Select an option before clicking"
-                            :disabled="!selectedOptions[item.id]"
+                        <Search
+                            @search="handleSearch"
+                            class="flex my-6 sticky top-0 transition-all duration-300 delay-75 ease-in animate-fade-in w-[80%]"
+                        ></Search>
+
+                        <section
+                            id="Projects"
+                            class="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-16 gap-x-10 bg-snow"
                         >
-                            <p
-                                class="flex font-bold justify-between w-full items-center text-sm m-auto relative three py-1 px-3"
+                            <div
+                                class="w-[19rem] bg-snow shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
+                                v-for="(item, index) in meals"
+                                :key="index"
                             >
-                                <!-- <div>
+                                <div href="#" class="text-oynx/70">
+                                    <a href="">
+                                        <img
+                                            :src="
+                                                item.imageSrc || fallbackImage
+                                            "
+                                            class="h-72 w-[19rem] object-cover rounded-t-xl"
+                                            alt="Meal"
+                                        />
+                                    </a>
+                                    <div class="px-4 py-3 w-[19rem]">
+                                        <div
+                                            class="flex justify-between items-center"
+                                        >
+                                            <span
+                                                class="text-gray-600 mr-3 uppercase text-xs"
+                                                >{{ item.category.name }}</span
+                                            >
+                                            <p class="text-gray-500 text-sm">
+                                                Qty
+                                                <input
+                                                    type="number"
+                                                    min="1"
+                                                    class="w-20 h-7 border rounded px-1 text-sm"
+                                                    v-model.number="
+                                                        quantities[item.id]
+                                                    "
+                                                />
+                                            </p>
+                                        </div>
+                                        <div
+                                            class="flex justify-between items-center"
+                                        >
+                                            <p
+                                                class="text-lg mb-1 font-bold text-oynx truncate block capitalize"
+                                            >
+                                                {{ item.name }}
+                                            </p>
+                                            <span
+                                                class="text-gray-600 mr-3 uppercase text-xxs"
+                                            >
+                                                {{
+                                                    item.category.order_type
+                                                }}</span
+                                            >
+                                        </div>
+
+                                        <!-- Component Start -->
+                                        <div
+                                            class="grid grid-cols-3 gap-2 w-full mb-3 max-w-screen-xs cursor-pointer"
+                                        >
+                                            <div
+                                                v-for="(
+                                                    price, index
+                                                ) in item.prices"
+                                                :key="index"
+                                            >
+                                                <input
+                                                    class="hidden"
+                                                    :id="`radio_${item.id}_${index}`"
+                                                    type="radio"
+                                                    :name="`option_${item.id}`"
+                                                    :value="price"
+                                                    v-model="
+                                                        selectedOptions[item.id]
+                                                    "
+                                                />
+                                                <label
+                                                    class="flex flex-col p-1 border-1"
+                                                    :class="{
+                                                        'border-oynx bg-blue-100':
+                                                            selectedOptions[
+                                                                item.id
+                                                            ] === price,
+                                                        'border-gray-400':
+                                                            selectedOptions[
+                                                                item.id
+                                                            ] !== price,
+                                                    }"
+                                                    :for="`radio_${item.id}_${index}`"
+                                                >
+                                                    <span
+                                                        class="text-[0.68rem] font-semibold uppercase"
+                                                    >
+                                                        {{
+                                                            price.size ??
+                                                            price.quantity
+                                                        }}
+                                                    </span>
+                                                    <span
+                                                        class="text-[0.8rem] font-bold"
+                                                    >
+                                                        ${{ price.price }}
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <button
+                                            class="px-4 text-bold w-full rounded cursor-pointer"
+                                            @click="
+                                                addToCart(
+                                                    item,
+                                                    selectedOptions[item.id]
+                                                )
+                                            "
+                                            title="Select an option before clicking"
+                                            :disabled="
+                                                !selectedOptions[item.id]
+                                            "
+                                        >
+                                            <p
+                                                class="flex font-bold justify-between w-full items-center text-sm m-auto relative three py-1 px-3"
+                                            >
+                                                <!-- <div>
                         
                       </div> -->
-                                <font-awesome-icon
-                                    icon="fa-solid fa-cart-plus"
-                                    class="text-lg mr-2"
-                                />
-                                <span class="px-1">Add To Cart</span>
-                                <span
-                                    class="absolute left-0 -bottom-1 w-full h-6 transition-all bg-persian"
-                                    style="z-index: -9"
-                                ></span>
-                            </p>
-                        </button>
+                                                <font-awesome-icon
+                                                    icon="fa-solid fa-cart-plus"
+                                                    class="text-lg mr-2"
+                                                />
+                                                <span class="px-1"
+                                                    >Add To Cart</span
+                                                >
+                                                <span
+                                                    class="absolute left-0 -bottom-1 w-full h-6 transition-all bg-persian"
+                                                    style="z-index: -9"
+                                                ></span>
+                                            </p>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-if="loading" class="p-8 text-center m-auto">
+                                <Loader></Loader>
+                            </div>
+
+                            <div
+                                v-else-if="meals.length === 0"
+                                class="py-12 text-center"
+                            >
+                                <p v-if="searchTerm">
+                                    No meals found for "{{ searchTerm }}"
+                                </p>
+                                <p v-else>No meals available</p>
+                            </div>
+                        </section>
                     </div>
-                </div>
-            </div>
-            <div v-if="loading" class="p-8 text-center m-auto">
-                <Loader></Loader>
-            </div>
-
-            <div v-else-if="meals.length === 0" class="py-12 text-center">
-                <p v-if="searchTerm">No meals found for "{{ searchTerm }}"</p>
-                <p v-else>No meals available</p>
-            </div>
-        </section>
-    </div>   
                 </main>
-
-               
             </div>
         </div>
         <div
@@ -149,10 +247,9 @@
             role="dialog"
             aria-modal="true"
         ></div>
-        <CartSlideOver ></CartSlideOver>
-<ScrollToTop></ScrollToTop>
-   </Background>
-    
+        <CartSlideOver></CartSlideOver>
+        <ScrollToTop></ScrollToTop>
+    </Background>
 </template>
 
 <script setup>
@@ -204,9 +301,8 @@ export default {
             selectedOptions: {},
             quantities: {},
             src: "",
-            fallbackImage:
-                "https://img.icons8.com/ios/100/image--v1.png",
-   
+            fallbackImage: "https://img.icons8.com/ios/100/image--v1.png",
+
             searchTerm: "", // Track search term for pagination
         };
     },
@@ -224,8 +320,7 @@ export default {
             this.fetchMeals();
         },
         async getPhoto(mealId) {
-            const fallbackImage =
-                "https://img.icons8.com/ios/50/image--v1.png";
+            const fallbackImage = "https://img.icons8.com/ios/50/image--v1.png";
             try {
                 const response = await axios.get(`/meal-photos/${mealId}`);
                 const photoPath = response.data.firstPhoto?.image_path;
@@ -273,46 +368,49 @@ export default {
         //         this.loading = false;
         //     }
         // },
-      
-      async fetchMeals() {
-    if (this.loading || this.allLoaded) return;
 
-    this.loading = true;
-    try {
-        const params = {
-            page: this.page,
-            per_page: this.perPage,
-            search: this.searchTerm,
-        };
+        async fetchMeals() {
+            if (this.loading || this.allLoaded) return;
 
-        const response = await axios.get("/api/dine-meal", { params });
-        const fetchedMeals = response.data.meals.data;
+            this.loading = true;
+            try {
+                const params = {
+                    page: this.page,
+                    per_page: this.perPage,
+                    search: this.searchTerm,
+                };
 
-        if (fetchedMeals.length === 0) {
-            this.allLoaded = true;
-            return;
-        }
+                const response = await axios.get("/api/dine-meal", { params });
+                const fetchedMeals = response.data.meals.data;
 
-        // 👇 Fetch image for each meal
-        for (const meal of fetchedMeals) {
-            meal.imageSrc = await this.getPhoto(meal.id);
-        }
+                if (fetchedMeals.length === 0) {
+                    this.allLoaded = true;
+                    return;
+                }
 
-        this.meals = [...this.meals, ...fetchedMeals];
-        this.page++;
+                // 👇 Fetch image for each meal
+                for (const meal of fetchedMeals) {
+                    meal.imageSrc = await this.getPhoto(meal.id);
+                }
 
-        fetchedMeals.forEach((item) => {
-            this.$set(this.selectedOptions, item.id, item.prices?.[0] || null);
-            this.$set(this.quantities, item.id, 1);
-        });
+                this.meals = [...this.meals, ...fetchedMeals];
+                this.page++;
 
-    } catch (error) {
-        console.error("Failed to load meals:", error);
-    } finally {
-        this.loading = false;
-    }
-},
-  addToCart(menuItem, selectedOption) {
+                fetchedMeals.forEach((item) => {
+                    this.$set(
+                        this.selectedOptions,
+                        item.id,
+                        item.prices?.[0] || null
+                    );
+                    this.$set(this.quantities, item.id, 1);
+                });
+            } catch (error) {
+                console.error("Failed to load meals:", error);
+            } finally {
+                this.loading = false;
+            }
+        },
+        addToCart(menuItem, selectedOption) {
             if (!selectedOption) return;
             const quantity = this.quantities[menuItem.id] || 1;
 
@@ -324,7 +422,7 @@ export default {
                 quantity,
                 size_or_quantity:
                     selectedOption.size || selectedOption.quantity,
-                    image: menuItem.imageSrc || null, // ✅ Add image to cart item
+                image: menuItem.imageSrc || null, // ✅ Add image to cart item
             });
         },
         handleScroll() {
@@ -355,6 +453,4 @@ input:checked + label {
 .three:hover span {
     height: 120%;
 }
-
-
 </style>

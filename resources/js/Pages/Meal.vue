@@ -4,6 +4,70 @@
         id="Projects"
         class="flex flex-col items-center py-12 bg-snow! dark:bg-oynx! relative"
     >
+ <div
+                            class="flex justify-around items-center w-full mb-4 gap-6"
+                        >
+                            <div class="overflow-hidden">
+                                <Link :href="route('dining')"> 
+                                     <button
+                                    class="relative cursor-pointer py-4 px-8 text-center font-barlow inline-flex justify-center text-base uppercase text-white rounded-lg border-solid transition-transform duration-300 ease-in-out group outline-offset-4 focus:outline focus:outline-2 focus:outline-white focus:outline-offset-4 overflow-hidden"
+                                >
+                               
+                                    <span class="relative z-20 font-semibold  text-oynx dark:text-snow"
+                                        >Dine in</span
+                                    >
+
+                                    <span
+                                        class="absolute left-[-75%] top-0 h-full w-[50%] bg-oynx/20 rotate-12 z-10 blur-lg group-hover:left-[125%] transition-all duration-1000 ease-in-out"
+                                    ></span>
+
+                                    <span
+                                        class="w-1/2 drop-shadow-3xl transition-all duration-300 block border-[#D4EDF9] absolute h-[20%] rounded-tl-lg border-l-2 border-t-2 top-0 left-0"
+                                    ></span>
+                                    <span
+                                        class="w-1/2 drop-shadow-3xl transition-all duration-300 block border-[#D4EDF9] absolute group-hover:h-[90%] h-[60%] rounded-tr-lg border-r-2 border-t-2 top-0 right-0"
+                                    ></span>
+                                    <span
+                                        class="w-1/2 drop-shadow-3xl transition-all duration-300 block border-[#D4EDF9] absolute h-[60%] group-hover:h-[90%] rounded-bl-lg border-l-2 border-b-2 left-0 bottom-0"
+                                    ></span>
+                                    <span
+                                        class="w-1/2 drop-shadow-3xl transition-all duration-300 block border-[#D4EDF9] absolute h-[20%] rounded-br-lg border-r-2 border-b-2 right-0 bottom-0"
+                                    ></span>
+                                </button>
+                                </Link>
+                               
+                            </div>
+                            <div class="overflow-hidden">
+                                <!-- From Uiverse.io by tirth_5172 -->
+                                <Link :href="route('dining&takeout')">
+                                    <button
+                                        class="relative cursor-pointer py-4 px-8 text-center font-barlow inline-flex justify-center text-base uppercase text-white rounded-lg border-solid transition-transform duration-300 ease-in-out group outline-offset-4 focus:outline-2 focus:outline-white focus:outline-offset-4 overflow-hidden"
+                                    >
+                                        <span class="relative z-20 font-semibold text-oynx dark:text-snow">
+                                            Bulk Order</span
+                                        >
+    
+                                        <span
+                                            class="absolute left-[-75%] top-0 h-full w-[50%] bg-oynx/20 rotate-12 z-10 blur-lg group-hover:left-[125%] transition-all duration-1000 ease-in-out"
+                                        ></span>
+    
+                                        <span
+                                            class="w-1/2 drop-shadow-3xl transition-all duration-300 block border-[#D4EDF9] absolute h-[20%] rounded-tl-lg border-l-2 border-t-2 top-0 left-0"
+                                        ></span>
+                                        <span
+                                            class="w-1/2 drop-shadow-3xl transition-all duration-300 block border-[#D4EDF9] absolute group-hover:h-[90%] h-[60%] rounded-tr-lg border-r-2 border-t-2 top-0 right-0"
+                                        ></span>
+                                        <span
+                                            class="w-1/2 drop-shadow-3xl transition-all duration-300 block border-[#D4EDF9] absolute h-[60%] group-hover:h-[90%] rounded-bl-lg border-l-2 border-b-2 left-0 bottom-0"
+                                        ></span>
+                                        <span
+                                            class="w-1/2 drop-shadow-3xl transition-all duration-300 block border-[#D4EDF9] absolute h-[20%] rounded-br-lg border-r-2 border-b-2 right-0 bottom-0"
+                                        ></span>
+                                    </button>
+                                </Link>
+                            </div>
+                        </div>
+
         <Search
             @search="handleSearch"
             class="flex my-6 sticky top-0 transition-all duration-300 delay-75 ease-in animate-fade-in w-[80%]"
@@ -132,6 +196,7 @@
 </template>
 
 <script setup>
+import { Head, Link } from "@inertiajs/vue3";
 import Search from "@/Components/Search.vue";
 import Loader from "@/Components/Loader.vue";
 </script>

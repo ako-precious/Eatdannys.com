@@ -1,6 +1,6 @@
 <template>
     <div
-        class="container mx-auto px-4 lg:px-10 flex justify-between items-center"
+        class="container mx-auto px-4 lg:px-10 flex justify-between items-center "
     >
         <!-- logo -->
         <div class="md:w-48 flex-shrink-0 flex items-center">
@@ -25,7 +25,7 @@
 
         <!-- buttons -->
         <nav class="contents">
-            <ul class="ml-4 xl:w-48 flex items-center justify-end">
+            <ul class="ml-4 xl:w-48 flex items-center justify-endrounded-full">
               
                   <slot name="dropdown"> </slot>
                 <div class="md:hidden px-4 flex items-center">
@@ -52,38 +52,28 @@
 
                             <template #content class="bg-snow dark:bg-oynx">
                                 <div
-                                    class="origin-top-right absolute right-0 mt-2 w-48 delay-75 rounded-md border-snow ring-1 bg-gradient-to-br from-[#e3dedf] to-[#ffffff] -shadow-snow-sm  hover:shadow-snow-sm uppercase dark:bg-gradient-to-br dark:from-[#2b312e] dark:to-[#333a37] dark:-shadow-oynx-sm  hover:dark:shadow-oynx-sm  z-20 transition-all duration-250 ease-in dark:border-oynx"
+                                    class="origin-top-right absolute right-0 mt-2 w-48 delay-75 rounded-md border-snow ring-1 hover:shadow-snow-sm uppercase w-full  bg-snow dark:bg-oynx   z-20 transition-all duration-250 ease-in dark:border-oynx"
                                 >
-                                    <DropdownLink
-                                        :href="route('welcome')"
-                                        class="flex w-full items-center rounded-md px-4 py-2 text-sm text-oynx hover:text-polynesian dark:text-snow dark:hover:text-lighred cursor-pointer transition-all duration-200 ease-in-out"
-                                    >
-                                        <p>Bulk</p>
-                                    </DropdownLink>
-                                    <DropdownLink
+                                   <DropdownLink
                                          :href="route('welcome')"
-                                        class="relative flex items-center rounded-md px-4 py-2 text-sm text-oynx hover:text-polynesian dark:text-snow dark:hover:text-lighred cursor-pointer transition-all duration-200 ease-in-out"
+                                        class="relative flex items-center rounded-md py-2 text-sm text-oynx hover:text-polynesian dark:text-snow dark:hover:text-lighred cursor-pointer transition-all duration-200 ease-in-out text-nowrap w-full"
                                     >
-                                        <p>Event Catering</p>
+                                        <p class="w-full">dining & take out</p>
                                     </DropdownLink>
                                     <DropdownLink
-                                         :href="route('welcome')"
-                                        class="relative flex items-center rounded-md px-4 py-2 text-sm text-oynx hover:text-polynesian dark:text-snow dark:hover:text-lighred cursor-pointer transition-all duration-200 ease-in-out"
+                                           :href="route('catering')"
+                                        class="relative flex items-center rounded-md  py-2 text-sm text-oynx hover:text-polynesian dark:text-snow dark:hover:text-lighred cursor-pointer transition-all duration-200 ease-in-out text-nowrap w-full"
                                     >
-                                        <p>Private Catering</p>
+                                        <p class="w-full">Event Catering</p>
                                     </DropdownLink>
+                                   
+                                   
                                     <DropdownLink
-                                         :href="route('welcome')"
-                                        class="relative flex items-center rounded-md px-4 py-2 text-sm text-oynx hover:text-polynesian dark:text-snow dark:hover:text-lighred cursor-pointer transition-all duration-200 ease-in-out"
-                                    >
-                                        <p>dining and take out</p>
-                                    </DropdownLink>
-                                    <DropdownLink
-                                          :href="route('welcome')"
-                                        class="relative flex items-center rounded-md px-4 py-2 text-sm text-oynx hover:text-polynesian dark:text-snow dark:hover:text-lighred cursor-pointer transition-all duration-200 ease-in-out"
+                                          :href="route('bakery')"
+                                        class="relative flex items-center rounded-md py-2 text-sm text-oynx hover:text-polynesian dark:text-snow dark:hover:text-lighred cursor-pointer transition-all duration-200 ease-in-out text-nowrap w-full"
                                     >
                                         
-                                            <p>bakery</p>
+                                            <p class="w-full">bakery</p>
                                         
                                     </DropdownLink>
                                 </div>
