@@ -93,16 +93,17 @@ export default {
                                 class="py-2 px-3 navbar-link"
                                 :href="route('welcome')"
                             >
-                                <p class="font-bold two">
-                                    <span>Bulk </span>
-                                    <span
-                                        class="absolute bottom-1 left-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"
-                                    ></span>
-                                    <span
-                                        class="absolute bottom-1 right-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"
-                                    ></span>
-                                </p>
-                            </Link>
+                            <p class="font-bold two">
+                                <span class="hidden text-nowrap lg:block">dining  & take out</span>
+                                <span  class="lg:hidden block">dining...</span>
+                                <span
+                                    class="absolute bottom-1 left-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"
+                                ></span>
+                                <span
+                                    class="absolute bottom-1 right-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"
+                                ></span></p
+                        ></Link>
+                               
                             <Link
                                 class="py-2 px-3 navbar-link"
                                 :href="route('catering')"
@@ -119,19 +120,7 @@ export default {
                             </Link>
                            
                           
-                            <Link
-                                class="py-2 px-3 navbar-link"
-                                :href="route('dining&takeout')"
-                                ><p class="font-bold two">
-                                    <span class="hidden text-nowrap lg:block">dining  & take out</span>
-                                    <span  class="lg:hidden block">dining...</span>
-                                    <span
-                                        class="absolute bottom-1 left-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"
-                                    ></span>
-                                    <span
-                                        class="absolute bottom-1 right-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"
-                                    ></span></p
-                            ></Link>
+                            
                             <Link
                                 class="py-2 px-3 navbar-link"
                                 :href="route('bakery')"><p class="font-bold two">
@@ -151,21 +140,20 @@ export default {
                             name=""
                             id=""
                         >
-                            <Link
-                                class="py-2 px-3 navbar-link text-oynx!"
-                                :href="route('welcome')"
-                                >
-                                <p class="font-bold two">
-                                    <span>Bulk </span>
+                            
+                           <Link
+                                class="py-2 px-3 navbar-link text-oynx"
+                                :href="route('dining&takeout')"
+                                ><p class="font-bold two">
+                                    <span class="hidden text-nowrap lg:block">dining  & take out</span>
+                                    <span  class="lg:hidden block">dining...</span>
                                     <span
-                                    class="absolute bottom-1 left-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"
+                                        class="absolute bottom-1 left-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"
                                     ></span>
                                     <span
-                                    class="absolute bottom-1 right-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"
-                                    ></span>
-                                </p>
-                            </Link>
-                           
+                                        class="absolute bottom-1 right-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"
+                                    ></span></p
+                            ></Link>
                             <Link
                                 class="py-2 px-3 navbar-link text-oynx!"
                                 :href="route('welcome')"
@@ -182,19 +170,7 @@ export default {
                             </Link>
                            
                           
-                            <Link
-                                class="py-2 px-3 navbar-link text-oynx"
-                                :href="route('dining&takeout')"
-                                ><p class="font-bold two">
-                                    <span class="hidden text-nowrap lg:block">dining  & take out</span>
-                                    <span  class="lg:hidden block">dining...</span>
-                                    <span
-                                        class="absolute bottom-1 left-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"
-                                    ></span>
-                                    <span
-                                        class="absolute bottom-1 right-1/2 w-0 transition-all h-1 bg-polynesian duration-250 ease-in"
-                                    ></span></p
-                            ></Link>
+                            
                             <Link
                                 class="py-2 px-3 navbar-link text-oynx"
                                 :href="route('bakery')"><p class="font-bold two">

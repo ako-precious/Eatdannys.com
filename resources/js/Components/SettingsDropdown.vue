@@ -17,7 +17,7 @@ const logout = () => {
 <template>
     <!-- Settings Dropdown -->
     <div
-        class="ml-2 lg:mr-4 relative bg-snow text-oynx active:text-persian hover:text-polynesian dark:text-snow dark:active:text-persian dark:hover:text-lighred rounded-full shadow-snow-sm hover:-shadow-snow-sm focus:shadow-none active:shadow-none z-20 transition-all duration-250 ease-in"
+        class="ml-2 lg:mr-4 relative bg-snow text-oynx active:text-persian hover:text-polynesian dark:text-snow dark:active:text-persian dark:hover:text-lighred rounded-full dark:bg-oynx focus:shadow-none active:shadow-none z-20 transition-all duration-250 ease-in"
     >
         <Dropdown align="right" width="48">
             <template #trigger>

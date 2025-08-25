@@ -41,8 +41,7 @@ defineProps({
             <!-- Account Management -->
             <div
                    
-                    id="dropdown-menu"
-                    class="origin-top-right absolute right-0 mt-2 w-48 delay-75 rounded-md border-snow  ring-1 bg-snow  hover:shadow-snow-sm dark:bg-gradient-to-br dark:from-[#2b312e] dark:to-[#333a37]  hover:dark:shadow-oynx-sm  transition-all duration-250 ease-in dark:border-oynx"
+                    class="origin-top-right absolute right-0 mt-2 w-48 delay-75 rounded-md border-snow  ring-1 bg-snow dark:bg-oynx  transition-all duration-250 ease-in dark:border-oynx"
                 >
                     <div
                         class="py-2 p-2"
