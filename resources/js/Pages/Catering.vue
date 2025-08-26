@@ -68,7 +68,7 @@ defineProps({
         >
         <div class="w-[90vw] md:w-[50vw] bg-transparent"></div>
         <div
-        class="flex flex-col gap-4 items-center bg-oynx min-h-screen w-[85vw] lg:w-[50vw]"
+        class="flex flex-col gap-4 items-center mx-auto bg-oynx min-h-screen w-[85vw] lg:w-[50vw]"
         >
        
                 <div class="flex flex-col gap-4 w-full">
