@@ -4,69 +4,68 @@
         id="Projects"
         class="flex flex-col items-center py-12 bg-snow! dark:bg-oynx! relative"
     >
- <div
-                            class="flex justify-around items-center w-full mb-4 gap-6"
+        <div class="flex justify-around items-center w-full mb-4 gap-6">
+            <div class="overflow-hidden">
+                <Link :href="route('dining')">
+                    <button
+                        class="relative cursor-pointer py-4 px-8 text-center font-barlow inline-flex justify-center text-base uppercase text-white rounded-lg border-solid transition-transform duration-300 ease-in-out group outline-offset-4 focus:outline-2 focus:outline-white focus:outline-offset-4 overflow-hidden"
+                    >
+                        <span
+                            class="relative z-20 font-semibold text-oynx dark:text-snow"
+                            >Dine in</span
                         >
-                            <div class="overflow-hidden">
-                                <Link :href="route('dining')"> 
-                                     <button
-                                    class="relative cursor-pointer py-4 px-8 text-center font-barlow inline-flex justify-center text-base uppercase text-white rounded-lg border-solid transition-transform duration-300 ease-in-out group outline-offset-4 focus:outline-2 focus:outline-white focus:outline-offset-4 overflow-hidden"
-                                >
-                               
-                                    <span class="relative z-20 font-semibold  text-oynx dark:text-snow"
-                                        >Dine in</span
-                                    >
 
-                                    <span
-                                        class="absolute left-[-75%] top-0 h-full w-[50%] bg-oynx/20 rotate-12 z-10 blur-lg group-hover:left-[125%] transition-all duration-1000 ease-in-out"
-                                    ></span>
+                        <span
+                            class="absolute left-[-75%] top-0 h-full w-[50%] bg-oynx/20 rotate-12 z-10 blur-lg group-hover:left-[125%] transition-all duration-1000 ease-in-out"
+                        ></span>
 
-                                    <span
-                                        class="w-1/2 drop-shadow-3xl transition-all duration-300 block border-[#D4EDF9] absolute h-[20%] rounded-tl-lg border-l-2 border-t-2 top-0 left-0"
-                                    ></span>
-                                    <span
-                                        class="w-1/2 drop-shadow-3xl transition-all duration-300 block border-[#D4EDF9] absolute group-hover:h-[90%] h-[60%] rounded-tr-lg border-r-2 border-t-2 top-0 right-0"
-                                    ></span>
-                                    <span
-                                        class="w-1/2 drop-shadow-3xl transition-all duration-300 block border-[#D4EDF9] absolute h-[60%] group-hover:h-[90%] rounded-bl-lg border-l-2 border-b-2 left-0 bottom-0"
-                                    ></span>
-                                    <span
-                                        class="w-1/2 drop-shadow-3xl transition-all duration-300 block border-[#D4EDF9] absolute h-[20%] rounded-br-lg border-r-2 border-b-2 right-0 bottom-0"
-                                    ></span>
-                                </button>
-                                </Link>
-                               
-                            </div>
-                            <div class="overflow-hidden">
-                                <!-- From Uiverse.io by tirth_5172 -->
-                                <Link :href="route('dining&takeout')">
-                                    <button
-                                        class="relative cursor-pointer py-4 px-8 text-center font-barlow inline-flex justify-center text-base uppercase text-white rounded-lg border-solid transition-transform duration-300 ease-in-out group outline-offset-4 focus:outline-2 focus:outline-white focus:outline-offset-4 overflow-hidden"
-                                    >
-                                        <span class="relative z-20 font-semibold text-oynx dark:text-snow">
-                                            Bulk Order</span
-                                        >
-    
-                                        <span
-                                            class="absolute left-[-75%] top-0 h-full w-[50%] bg-oynx/20 rotate-12 z-10 blur-lg group-hover:left-[125%] transition-all duration-1000 ease-in-out"
-                                        ></span>
-    
-                                        <span
-                                            class="w-1/2 drop-shadow-3xl transition-all duration-300 block border-[#D4EDF9] absolute h-[20%] rounded-tl-lg border-l-2 border-t-2 top-0 left-0"
-                                        ></span>
-                                        <span
-                                            class="w-1/2 drop-shadow-3xl transition-all duration-300 block border-[#D4EDF9] absolute group-hover:h-[90%] h-[60%] rounded-tr-lg border-r-2 border-t-2 top-0 right-0"
-                                        ></span>
-                                        <span
-                                            class="w-1/2 drop-shadow-3xl transition-all duration-300 block border-[#D4EDF9] absolute h-[60%] group-hover:h-[90%] rounded-bl-lg border-l-2 border-b-2 left-0 bottom-0"
-                                        ></span>
-                                        <span
-                                            class="w-1/2 drop-shadow-3xl transition-all duration-300 block border-[#D4EDF9] absolute h-[20%] rounded-br-lg border-r-2 border-b-2 right-0 bottom-0"
-                                        ></span>
-                                    </button>
-                                </Link>
-                            </div>
-                        </div>
+                        <span
+                            class="w-1/2 drop-shadow-3xl transition-all duration-300 block border-[#D4EDF9] absolute h-[20%] rounded-tl-lg border-l-2 border-t-2 top-0 left-0"
+                        ></span>
+                        <span
+                            class="w-1/2 drop-shadow-3xl transition-all duration-300 block border-[#D4EDF9] absolute group-hover:h-[90%] h-[60%] rounded-tr-lg border-r-2 border-t-2 top-0 right-0"
+                        ></span>
+                        <span
+                            class="w-1/2 drop-shadow-3xl transition-all duration-300 block border-[#D4EDF9] absolute h-[60%] group-hover:h-[90%] rounded-bl-lg border-l-2 border-b-2 left-0 bottom-0"
+                        ></span>
+                        <span
+                            class="w-1/2 drop-shadow-3xl transition-all duration-300 block border-[#D4EDF9] absolute h-[20%] rounded-br-lg border-r-2 border-b-2 right-0 bottom-0"
+                        ></span>
+                    </button>
+                </Link>
+            </div>
+            <div class="overflow-hidden">
+                <!-- From Uiverse.io by tirth_5172 -->
+                <Link :href="route('dining&takeout')">
+                    <button
+                        class="relative cursor-pointer py-4 px-8 text-center font-barlow inline-flex justify-center text-base uppercase text-white rounded-lg border-solid transition-transform duration-300 ease-in-out group outline-offset-4 focus:outline-2 focus:outline-white focus:outline-offset-4 overflow-hidden"
+                    >
+                        <span
+                            class="relative z-20 font-semibold text-oynx dark:text-snow"
+                        >
+                            Bulk Order</span
+                        >
+
+                        <span
+                            class="absolute left-[-75%] top-0 h-full w-[50%] bg-oynx/20 rotate-12 z-10 blur-lg group-hover:left-[125%] transition-all duration-1000 ease-in-out"
+                        ></span>
+
+                        <span
+                            class="w-1/2 drop-shadow-3xl transition-all duration-300 block border-[#D4EDF9] absolute h-[20%] rounded-tl-lg border-l-2 border-t-2 top-0 left-0"
+                        ></span>
+                        <span
+                            class="w-1/2 drop-shadow-3xl transition-all duration-300 block border-[#D4EDF9] absolute group-hover:h-[90%] h-[60%] rounded-tr-lg border-r-2 border-t-2 top-0 right-0"
+                        ></span>
+                        <span
+                            class="w-1/2 drop-shadow-3xl transition-all duration-300 block border-[#D4EDF9] absolute h-[60%] group-hover:h-[90%] rounded-bl-lg border-l-2 border-b-2 left-0 bottom-0"
+                        ></span>
+                        <span
+                            class="w-1/2 drop-shadow-3xl transition-all duration-300 block border-[#D4EDF9] absolute h-[20%] rounded-br-lg border-r-2 border-b-2 right-0 bottom-0"
+                        ></span>
+                    </button>
+                </Link>
+            </div>
+        </div>
 
         <Search
             @search="handleSearch"
@@ -110,13 +109,11 @@
                             <p
                                 class="text-lg mb-1 font-bold text-oynx truncate block capitalize"
                             >
-                                {{ item.name }} 
+                                {{ item.name }}
                             </p>
-                            <span
-                                class="text-gray-600 mr-3 uppercase text-xxs"
-                                > {{ item.category.order_type }}</span
+                            <span class="text-gray-600 mr-3 uppercase text-xxs">
+                                {{ item.category.order_type }}</span
                             >
-                          
                         </div>
 
                         <!-- Component Start -->
@@ -158,7 +155,7 @@
                         </div>
 
                         <button
-                            class=" px-4 text-bold w-full rounded cursor-pointer"
+                            class="px-4 text-bold w-full rounded cursor-pointer"
                             @click="addToCart(item, selectedOptions[item.id])"
                             title="Select an option before clicking"
                             :disabled="!selectedOptions[item.id]"
@@ -213,11 +210,10 @@ export default {
             loading: false,
             allLoaded: false,
             selectedOptions: {},
-            quantities: {},
+            quantities: 1,
             src: "",
-            fallbackImage:
-                "https://img.icons8.com/ios/100/image--v1.png",
-   
+            fallbackImage: "https://img.icons8.com/ios/100/image--v1.png",
+
             searchTerm: "", // Track search term for pagination
         };
     },
@@ -235,8 +231,7 @@ export default {
             this.fetchMeals();
         },
         async getPhoto(mealId) {
-            const fallbackImage =
-                "https://img.icons8.com/ios/50/image--v1.png";
+            const fallbackImage = "https://img.icons8.com/ios/50/image--v1.png";
             try {
                 const response = await axios.get(`/meal-photos/${mealId}`);
                 const photoPath = response.data.firstPhoto?.image_path;
@@ -247,83 +242,55 @@ export default {
             }
         },
 
-        // async fetchMeals() {
-        //     if (this.loading || this.allLoaded) return;
+        async fetchMeals() {
+            if (this.loading || this.allLoaded) return;
 
-        //     this.loading = true;
-        //     try {
-        //         const params = {
-        //             page: this.page,
-        //             per_page: this.perPage,
-        //             search: this.searchTerm,
-        //         };
+            this.loading = true;
+            try {
+                const params = {
+                    page: this.page,
+                    per_page: this.perPage,
+                    search: this.searchTerm,
+                };
 
-        //         const response = await axios.get("/api/meal", { params });
-        //         const fetchedMeals = response.data.meals.data; // Correct path
+                const response = await axios.get("/api/meal", { params });
+                const fetchedMeals = response.data.meals.data;
 
-        //         if (fetchedMeals.length === 0) {
-        //             this.allLoaded = true;
-        //             return;
-        //         }
+                if (fetchedMeals.length === 0) {
+                    this.allLoaded = true;
+                    return;
+                }
 
-        //         this.meals = [...this.meals, ...fetchedMeals];
-        //         this.page++;
+                // 👇 Fetch image for each meal
+                for (const meal of fetchedMeals) {
+                    meal.imageSrc = await this.getPhoto(meal.id);
+                    
+                    
+                    // // ✅ Make the first price the default
+                    if (meal.prices?.length > 0) {
+                        this.selectedOptions[meal.id] = meal.prices[0];
+                    }
+                    
+                }
 
-        //         // Initialize selections
-        //         fetchedMeals.forEach((item) => {
-        //             this.$set(
-        //                 this.selectedOptions,
-        //                 item.id,
-        //                 item.prices?.[0] || null
-        //             );
-        //             this.$set(this.quantities, item.id, 1);
-        //         });
-        //     } catch (error) {
-        //         console.error("Failed to load meals:", error);
-        //     } finally {
-        //         this.loading = false;
-        //     }
-        // },
-      
-      async fetchMeals() {
-    if (this.loading || this.allLoaded) return;
+                this.meals = [...this.meals, ...fetchedMeals];
+                this.page++;
 
-    this.loading = true;
-    try {
-        const params = {
-            page: this.page,
-            per_page: this.perPage,
-            search: this.searchTerm,
-        };
-
-        const response = await axios.get("/api/meal", { params });
-        const fetchedMeals = response.data.meals.data;
-
-        if (fetchedMeals.length === 0) {
-            this.allLoaded = true;
-            return;
-        }
-
-        // 👇 Fetch image for each meal
-        for (const meal of fetchedMeals) {
-            meal.imageSrc = await this.getPhoto(meal.id);
-        }
-
-        this.meals = [...this.meals, ...fetchedMeals];
-        this.page++;
-
-        fetchedMeals.forEach((item) => {
-            this.$set(this.selectedOptions, item.id, item.prices?.[0] || null);
-            this.$set(this.quantities, item.id, 1);
-        });
-
-    } catch (error) {
-        console.error("Failed to load meals:", error);
-    } finally {
-        this.loading = false;
-    }
-},
-  addToCart(menuItem, selectedOption) {
+                fetchedMeals.forEach((item) => {
+                    this.$set(
+                        this.selectedOptions,
+                        item.id,
+                        item.prices?.[0] || null
+                    );
+                    this.$set(this.quantities, item.id, 1);
+                });
+            } catch (error) {
+                console.error("Failed to load meals:", error);
+            } finally {
+                this.loading = false;
+            }
+        },
+        addToCart(menuItem, selectedOption) {
             if (!selectedOption) return;
             const quantity = this.quantities[menuItem.id] || 1;
 
@@ -335,7 +302,7 @@ export default {
                 quantity,
                 size_or_quantity:
                     selectedOption.size || selectedOption.quantity,
-                    image: menuItem.imageSrc || null, // ✅ Add image to cart item
+                image: menuItem.imageSrc || null, // ✅ Add image to cart item
             });
         },
         handleScroll() {
@@ -366,6 +333,4 @@ input:checked + label {
 .three:hover span {
     height: 120%;
 }
-
-
 </style>

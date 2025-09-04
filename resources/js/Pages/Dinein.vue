@@ -331,44 +331,7 @@ export default {
             }
         },
 
-        // async fetchMeals() {
-        //     if (this.loading || this.allLoaded) return;
-
-        //     this.loading = true;
-        //     try {
-        //         const params = {
-        //             page: this.page,
-        //             per_page: this.perPage,
-        //             search: this.searchTerm,
-        //         };
-
-        //         const response = await axios.get("/api/meal", { params });
-        //         const fetchedMeals = response.data.meals.data; // Correct path
-
-        //         if (fetchedMeals.length === 0) {
-        //             this.allLoaded = true;
-        //             return;
-        //         }
-
-        //         this.meals = [...this.meals, ...fetchedMeals];
-        //         this.page++;
-
-        //         // Initialize selections
-        //         fetchedMeals.forEach((item) => {
-        //             this.$set(
-        //                 this.selectedOptions,
-        //                 item.id,
-        //                 item.prices?.[0] || null
-        //             );
-        //             this.$set(this.quantities, item.id, 1);
-        //         });
-        //     } catch (error) {
-        //         console.error("Failed to load meals:", error);
-        //     } finally {
-        //         this.loading = false;
-        //     }
-        // },
-
+       
         async fetchMeals() {
             if (this.loading || this.allLoaded) return;
 
@@ -391,6 +354,10 @@ export default {
                 // 👇 Fetch image for each meal
                 for (const meal of fetchedMeals) {
                     meal.imageSrc = await this.getPhoto(meal.id);
+
+                       if (meal.prices?.length > 0) {
+                        this.selectedOptions[meal.id] = meal.prices[0];
+                    }
                 }
 
                 this.meals = [...this.meals, ...fetchedMeals];
