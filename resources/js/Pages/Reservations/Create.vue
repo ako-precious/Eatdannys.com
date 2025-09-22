@@ -153,12 +153,12 @@ formData.append("_method", "PUT"); // ← Spoofing PUT method
                                         >Guests</label
                                     >
                                     <input
-                                        type="number"
+                                        type="number" 
                                         name="reservation-name"
-                                        id="reservation-name"
+                                        id="reservation-name" 
                                          v-model="reservation.guests"
                                         class="shadow-sm bg-oynx/5 border border-oynx/30 text-oynx/90 sm:text-sm rounded-lg focus:ring-polynesian/60 focus:border-polynesian/60 block w-full p-2.5"
-                                        placeholder=" "
+                                        placeholder=" Put in only number"
                                         required
                                     />
                                 </div>

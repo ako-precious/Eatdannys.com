@@ -167,11 +167,28 @@
                                     <div
                                         class="flex justify-between text-base font-medium text-gray-900"
                                     >
-                                        <p>Subtotal</p>
+                                        <p>Subtotal:</p>
                                         <div>
-                                            <p>Total: ${{ cart.subtotal }}</p>
+                                            <p> ${{ cart.subtotal }}</p>
                                         </div>
                                     </div>
+                                    <div
+                                        class="flex justify-between text-base font-medium text-gray-900"
+                                    >
+                                        <p>Tax:</p>
+                                        <div>
+                                            <p> ${{ cart.tax }}</p>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="flex justify-between text-base font-medium text-gray-900"
+                                    >
+                                        <p>Total:</p>
+                                        <div>
+                                            <p> ${{ cart.total }}</p>
+                                        </div>
+                                    </div>
+                                   
                                     <p class="mt-0.5 text-sm text-gray-500">
                                         Shipping and taxes calculated at
                                         checkout.

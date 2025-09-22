@@ -30,15 +30,15 @@ defineProps({
 
 <template>
     <div
-        class="w-screen overflow-x-hidden bg-oynx lg:min-h-screen flex flex-col"
+        class="w-screen  bg-oynx lg:min-h-screen flex flex-col"
     >
         <div class="absolute top-0 w-screen">
             <Header class="w-full z-100" />
         </div>
         <section
-            class="lg:fixed w-full lg:min-h-[95vh] z-0 flex flex-col items-center justify-center text-center px-6 lg:px-16"
+            class="lg:fixed w-full lg:min-h-[95vh] z-0 flex flex-col items-center justify-center text-center px-6 lg:px-16 overflow-x-hidden"
         >
-            <div class="absolute -inset-100 opacity-5 animate"></div>
+            <div class="absolute -inset-100 opacity-5 animate  w-screen"></div>
 
             <!-- Background Image -->
 
@@ -64,7 +64,7 @@ defineProps({
         </section>
 
         <section
-            class="px-16 lg:mt-[430px] z-10 flex flex-col lg:flex-row justify-center lg:justify-between text-snow items-end relative"
+            class="px-16 lg:mt-[430px] z-10 flex flex-col lg:flex-row justify-center lg:justify-between text-snow items-end relative overflow-x-hidden"
         >
         <div class="w-[90vw] md:w-[50vw] bg-transparent"></div>
         <div
