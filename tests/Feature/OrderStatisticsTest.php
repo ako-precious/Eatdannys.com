@@ -5,6 +5,7 @@ use App\Models\User;
 use App\Models\Order;
 use App\Models\Meal;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Sanctum\Sanctum;
 // use Illuminate\Foundation\Auth\User;
 use Tests\TestCase;
 
@@ -15,9 +16,9 @@ class OrderStatisticsTest extends TestCase
     public function test_total_orders(): void
     {
         $this->actingAs(User::factory()->create());
-        Order::factory()->count(15)->create();
+        Order::factory()->count(12)->create();
         $response = $this->getJson( 'api/order-stats');
-        $response->assertJsonCount(15);
+        $response->assertJsonCount(12);
     }
     
     public function test_orders_this_month(): void
