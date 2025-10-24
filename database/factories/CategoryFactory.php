@@ -21,8 +21,8 @@ class CategoryFactory extends Factory
     {
         return [
             //
-            'name' => fake()->word(),
-            'order_type' => fake()->randomElement(['bulk', 'dine-in']),            
+            'name' => fake()->randomElement(['soup', 'pastries', 'grills', 'meals', 'mains', 'soups', 'lunch special', 'suya sampler platter', 'beverages']), 
+            'order_type' => fake()->randomElement(['bulk', 'dine-in']),           
             'created_at' => now(),
             'updated_at' => now(),
 
