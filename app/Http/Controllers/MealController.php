@@ -77,6 +77,9 @@ class MealController extends Controller
 
     public function create()
     {
+        if (Auth::user()->role !== 'admin') {
+            return abort(403);
+        }
         //
     }
 
@@ -85,6 +88,9 @@ class MealController extends Controller
      */
     public function store(Request $request)
     {
+        if (Auth::user()->role !== 'admin') {
+            return abort(403);
+        }
         //
     }
 
@@ -93,6 +99,13 @@ class MealController extends Controller
      */
     public function show(string $id)
     {
+        if (Auth::user()->role !== 'admin') {
+            return abort(403);
+        }
+            $meal = Meal::with('category', 'photos')->find($id);
+        return inertia('Meals/Show', [
+            'Meal' => $meal,
+        ]);
         //
     }
 
@@ -101,6 +114,9 @@ class MealController extends Controller
      */
     public function edit(Meal $meal)
     {
+        if (Auth::user()->role !== 'admin') {
+            return abort(403);
+        }
         // $meal = Meal::with( 'category')->find(1);
         $meal::with( 'category', 'photo');
         $categories = Category::all();
@@ -118,6 +134,9 @@ class MealController extends Controller
      */
     public function update(Request $request, Meal $meal)
 {
+    if (Auth::user()->role !== 'admin') {
+        return abort(403);
+    }
     $validated = $request->validate([
         'name' => 'required|string|max:255',
         'category_id' => 'nullable|exists:categories,id',
@@ -160,6 +179,9 @@ class MealController extends Controller
      */
     public function destroy(string $id)
     {
+        if (Auth::user()->role !== 'admin') {
+            return abort(403);
+        }
         //
     }
 }

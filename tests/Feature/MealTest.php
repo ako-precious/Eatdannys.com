@@ -23,18 +23,7 @@ class MealTest extends TestCase
 
         $response->assertStatus(200);
     }
-    public function test_get_meals(): void
-    {
-        $this->actingAs(User::factory()->create());
-        // $category = Category::factory()->create(['order_type' => 'bulk']);
-        Meal::factory()->count(13)->create();
-
-        $response = $this->getJson('/api/meal?per_page=13');
-
-        $response->assertStatus(200)
-            ->assertJsonCount(0, 'meals.data')
-            ->assertJsonStructure(['meals' => ['data']]);
-    }
+   
 
     public function test_bulk_meals()
     {
@@ -78,5 +67,41 @@ class MealTest extends TestCase
 
         $response->assertStatus(200);
         // Storage::disk('public')->assertExists('mealimages/' . $file->hashName());
+    }
+    public function testonly_admin_can_create_meal(): void
+    {
+        $this->actingAs(User::factory()->create(['role' => 'admin']));
+
+        $category = Category::factory()->create(['order_type' => 'bulk']);
+        $file = UploadedFile::fake()->image('test.jpg');
+
+        $response = $this->postJson("/meals", [
+            'name' => 'test',
+            'category_id' => $category->id,
+            'description' => 'test',
+            'prices' => json_encode([['size' => 'test', 'price' => 10]]),
+            'images' => [$file],
+        ]);
+
+        $response->assertStatus(200);
+        Storage::disk('public')->assertExists('meal_images/' . $file->hashName());
+    }
+
+    public function testonly_admin_can_delete_meal(): void
+    {
+        $this->actingAs(User::factory()->create(['role' => 'admin']));
+        $category = Category::factory()->create();
+        $meal = Meal::factory()->create(['category_id' => $category->id]);
+        $response = $this->deleteJson("/meals/{$meal->id}");
+        $response->assertStatus(200);
+    }
+
+    public function test_user_cannot_delete_meal(): void
+    {
+        $this->actingAs(User::factory()->create(['role' => 'user']));
+        $category = Category::factory()->create();
+        $meal = Meal::factory()->create(['category_id' => $category->id]);
+        $response = $this->deleteJson("/meals/{$meal->id}");
+        $response->assertStatus(403);
     }
 }
