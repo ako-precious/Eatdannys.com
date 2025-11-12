@@ -6,6 +6,7 @@ use App\Http\Controllers\MealPhotoController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\RatingController;
 use App\Models\Order;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -86,6 +87,10 @@ Route::middleware([
     Route::get('/users', [AdminController::class, 'index']);
     Route::get('/api/get-orders',[OrderController::class,'getOrder'])->name('getorder');
     Route::get('/api/get-reservations',[ReservationController::class,'getReservation'])->name('getreservation');
+
+
+    Route::resource('/ratings',  RatingController::class);
+    Route::post('/meals/{meal}/rate', [RatingController::class, 'rateMeal'])->name('rate.meal');
 });
 
 // routes/web.php
@@ -96,6 +101,7 @@ Route::get('/payment-status',[PaymentController::class, 'createPaymentIntent'])-
 Route::get('/checkout/success', function () {
     return Inertia::render('Payment/Success',);})->name('checkout.success');
  
+
 
 // Create a simple Blade view for payment status (resources/views/payment-status.blade.php)
 // You could also use a Vue component for this page if you prefer SPA routing.
