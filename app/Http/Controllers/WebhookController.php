@@ -16,7 +16,7 @@ class WebhookController extends Controller
     {
         $payload = @file_get_contents('php://input');
         $sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'] ?? '';
-        $endpoint_secret = config('stripe.webhook_secret');
+        $endpoint_secret = config('services.stripe.webhook_secret');
 
         try {
             $event = \Stripe\Webhook::constructEvent(

@@ -2,72 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Storage;
 use App\Models\MealPhoto;
-
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class MealPhotoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function show(string $id)
     {
-        //
+        $photos = MealPhoto::where('meal_id', $id)->orderBy('id', 'asc')->get();
+
+        return response()->json([
+            'firstPhoto' => $photos->first(),
+            'otherPhotos' => $photos,
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        
-    }
-
-    /**
-     * Display the specified resource.
-     */
-     public function show( string $id){
-       
-          $firstPhoto = MealPhoto::where('meal_id', $id)->orderBy('id', 'asc')->first();   
-          $otherPhotos = MealPhoto::where('meal_id', $id)->orderBy('id', 'asc')->get();
-          return response()->json(['firstPhoto' => $firstPhoto, 'otherPhotos' =>$otherPhotos]);
-      }
-
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(MealPhoto $photo)
     {
-        // Optionally delete file from storage
-        Storage::disk('public')->delete($photo->path);
-
+        Storage::disk('public')->delete($photo->image_path);
         $photo->delete();
 
         return response()->json(['message' => 'Photo deleted']);
