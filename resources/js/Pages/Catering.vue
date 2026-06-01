@@ -413,9 +413,9 @@ onUnmounted(() => {
           alt=""
           aria-hidden="true"
           class="hero-bg-img absolute inset-0 w-full object-cover"
-          style="height: 130%; top: -15%; will-change: transform"
+          style="height: 130%; top: -15%; will-change: transform; filter: blur(4px)"
         />
-        <div class="absolute inset-0 bg-gradient-to-b from-oynx/85 via-oynx/75 to-oynx"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-oynx/95 via-oynx/88 to-oynx"></div>
       </div>
 
       <!-- Animated grain overlay -->
@@ -435,7 +435,7 @@ onUnmounted(() => {
         <!-- Badge -->
         <div
           ref="heroBadge"
-          class="inline-flex items-center gap-2 bg-persian/15 border border-persian/30 text-persian text-xs font-bold uppercase tracking-[0.18em] px-4 py-2 rounded-full mb-10"
+          class="inline-flex items-center gap-2 bg-persian text-oynx text-xs font-bold uppercase tracking-[0.18em] px-4 py-2 rounded-full mb-10"
           style="will-change: transform, opacity"
         >
           <i class="fa-solid fa-star" style="font-size: 9px"></i>
@@ -445,7 +445,7 @@ onUnmounted(() => {
 
         <!-- Title — each character has its own ref for GSAP stagger -->
         <div class="overflow-hidden pb-2">
-          <h1 class="text-[13vw] sm:text-[11vw] md:text-[9vw] font-black uppercase leading-none tracking-tight" style="text-shadow: 0 2px 24px rgba(0,0,0,0.6)">
+          <h1 class="text-snow text-[13vw] sm:text-[11vw] md:text-[9vw] font-black uppercase leading-none tracking-tight" style="text-shadow: 0 2px 24px rgba(0,0,0,0.6)">
             <span
               v-for="item in titleChars"
               :key="item.i"
@@ -475,7 +475,7 @@ onUnmounted(() => {
           <Reservation v-slot="{ open }">
             <button
               @click="open"
-              class="group inline-flex items-center gap-3 border border-persian/60 text-persian hover:bg-persian hover:text-oynx font-bold text-sm uppercase tracking-widest px-7 py-3 rounded-full transition-all duration-300 hover:border-persian"
+              class="group inline-flex items-center gap-3 bg-persian text-oynx font-bold text-sm uppercase tracking-widest px-7 py-3 rounded-full transition-all duration-300 hover:brightness-110 hover:scale-105 active:scale-95"
             >
               <i class="fa-solid fa-calendar-check text-xs"></i>
               Reserve Your Table
