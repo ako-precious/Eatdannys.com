@@ -2,44 +2,31 @@
 
 namespace App\Http\Controllers;
 
-
-
 use Illuminate\Http\Request;
-use Stripe\Webhook;
-use Stripe\Exception\SignatureVerificationException;
 use Illuminate\Support\Facades\Log;
+use Stripe\Exception\SignatureVerificationException;
+use Stripe\Webhook;
+use UnexpectedValueException;
 
 class WebhookController extends Controller
 {
-
     public function handleWebhook(Request $request)
     {
-        $payload = @file_get_contents('php://input');
-        $sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'] ?? '';
-        $endpoint_secret = config('services.stripe.webhook_secret');
+        $payload = $request->getContent();
+        $sigHeader = $request->header('Stripe-Signature', '');
+        $endpointSecret = config('services.stripe.webhook_secret');
 
         try {
-            $event = \Stripe\Webhook::constructEvent(
-                $payload,
-                $sig_header,
-                $endpoint_secret
-            );
-        } catch (\UnexpectedValueException $e) {
-            // Invalid payload
+            $event = Webhook::constructEvent($payload, $sigHeader, $endpointSecret);
+        } catch (UnexpectedValueException) {
             return response('Invalid Payload', 400);
-        } catch (\Stripe\Exception\SignatureVerificationException $e) {
-            // Invalid signature
+        } catch (SignatureVerificationException) {
             return response('Invalid Signature', 400);
         }
 
-        // Handle the event
         if ($event->type === 'checkout.session.completed') {
             $session = $event->data->object;
-
-            // Fulfill the purchase (save order, mark as paid, etc.)
-            Log::info('Payment success for session: ' . $session->id);
-
-            // You can access $session->customer_email, etc.
+            Log::info("Payment success for session: {$session->id}");
         }
 
         return response('Webhook Handled', 200);
