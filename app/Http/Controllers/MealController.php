@@ -6,182 +6,131 @@ use App\Models\Meal;
 use App\Models\MealPhoto;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
+
 class MealController extends Controller
 {
     public function getMeals(Request $request)
     {
-
         $perPage = $request->get('per_page', 9);
         $search = $request->input('search');
 
-        $query = Meal::with('category','photos')->orderBy("id", "desc") ;
-        
+        $query = Meal::with('category', 'photos')
+            ->whereHas('category', fn ($q) => $q->where('order_type', 'bulk'))
+            ->orderBy('id', 'desc');
 
-
-
-        // Apply search filter if provided
         if ($search) {
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
-                    ->orWhereHas('category', function ($catQuery) use ($search) {
-                        $catQuery->where('name', 'like', "%{$search}%");
-                    });
+                    ->orWhereHas('category', fn ($catQuery) => $catQuery->where('name', 'like', "%{$search}%"));
             });
         }
 
-        return response()->json([
-            'meals' => $query->whereHas('category', function ($query) {
-        $query->where('order_type', 'bulk');
-    })->paginate($perPage),
-        ]);
-    }
-   public function getDineMeals(Request $request)
-{
-    $perPage = $request->get('per_page', 9);
-    $search = $request->input('search');
-
-    $query = Meal::with('category', 'photos')
-        ->whereHas('category', function ($query) {
-            $query->where('order_type', 'dine-in');
-        });
-
-    // Apply search filter if provided
-    if ($search) {
-        $query->where(function ($q) use ($search) {
-            $q->where('name', 'like', "%{$search}%")
-                ->orWhereHas('category', function ($catQuery) use ($search) {
-                    $catQuery->where('name', 'like', "%{$search}%");
-                });
-        });
+        return response()->json(['meals' => $query->paginate($perPage)]);
     }
 
-    // Custom order: categories 6,7,8,9,10,11 first, then others
-    $query->orderByRaw("
-        FIELD(category_id, 6, 7, 8, 9, 10, 11) ASC, id ASC
-    ");
+    public function getDineMeals(Request $request)
+    {
+        $perPage = $request->get('per_page', 9);
+        $search = $request->input('search');
 
-    return response()->json([
-        'meals' => $query->paginate($perPage),
-    ]);
-}
+        $query = Meal::with('category', 'photos')
+            ->whereHas('category', fn ($q) => $q->where('order_type', 'dine-in'))
+            ->orderByRaw('FIELD(category_id, 6, 7, 8, 9, 10, 11) ASC, id ASC');
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhereHas('category', fn ($catQuery) => $catQuery->where('name', 'like', "%{$search}%"));
+            });
+        }
+
+        return response()->json(['meals' => $query->paginate($perPage)]);
+    }
 
     public function index(Request $request)
     {
-
-        return  Inertia::render('Meals/Index');
+        return Inertia::render('Meals/Index');
     }
 
     public function create()
     {
         if (Auth::user()->role !== 'admin') {
-            return abort(403);
+            abort(403);
         }
-        //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         if (Auth::user()->role !== 'admin') {
-            return abort(403);
+            abort(403);
         }
-        //
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         if (Auth::user()->role !== 'admin') {
-            return abort(403);
+            abort(403);
         }
-            $meal = Meal::with('category', 'photos')->find($id);
-        return inertia('Meals/Show', [
-            'Meal' => $meal,
-        ]);
-        //
+
+        $meal = Meal::with('category', 'photos')->findOrFail($id);
+
+        return inertia('Meals/Show', ['Meal' => $meal]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Meal $meal)
     {
         if (Auth::user()->role !== 'admin') {
-            return abort(403);
+            abort(403);
         }
-        // $meal = Meal::with( 'category')->find(1);
-        $meal::with( 'category', 'photo');
+
+        $meal->load('category', 'photos');
         $categories = Category::all();
-        $photos =  MealPhoto::where('meal_id',  $meal->id)->get();
-        // dd($meal, $meal->id, MealPhoto::where('meal_id',  $meal->id)->get());
+        $photos = MealPhoto::where('meal_id', $meal->id)->get();
+
         return inertia('Meals/Edit', [
             'Meal' => $meal,
             'Categories' => $categories,
-            'Photos'=> $photos
+            'Photos' => $photos,
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Meal $meal)
-{
-    if (Auth::user()->role !== 'admin') {
-        return abort(403);
-    }
-    $validated = $request->validate([
-        'name' => 'required|string|max:255',
-        'category_id' => 'nullable|exists:categories,id',
-        'description' => 'nullable|string',
-        'prices' => 'required|json',
-        'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:5120',
-    ]);
-    Log::info('Decoded Prices:', json_decode($request->prices, true));
-
-
-    $meal->update([
-        'name' => $request->name,
-        'category_id' => $request->category_id,
-        'description' => $request->description,
-        'prices' => json_decode($request->prices, true),
-    ]);
-
-    // Save images
-    if ($request->hasFile('images')) {
-        foreach ($request->file('images') as $image) {
-            $path = $image->store('meal_images', 'public');
-            $meal->photos()->create(['image_path' => $path]);
+    {
+        if (Auth::user()->role !== 'admin') {
+            abort(403);
         }
-    }
-    
-  return response()->json([
-            'request' => $request,
-            'meal' => $meal,
-             'raw_input' => file_get_contents('php://input'),
-    'form_data' => $request->all(),
-    'files' => $request->file(),
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'category_id' => 'nullable|exists:categories,id',
+            'description' => 'nullable|string',
+            'prices' => 'required|json',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:5120',
         ]);
 
-    // return back()->with('success', 'Meal updated successfully.');
-}
+        $meal->update([
+            'name' => $request->name,
+            'category_id' => $request->category_id,
+            'description' => $request->description,
+            'prices' => json_decode($request->prices, true),
+        ]);
 
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('meal_images', 'public');
+                $meal->photos()->create(['image_path' => $path]);
+            }
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+        return response()->json(['meal' => $meal->load('photos')]);
+    }
+
     public function destroy(string $id)
     {
         if (Auth::user()->role !== 'admin') {
-            return abort(403);
+            abort(403);
         }
-        //
     }
 }

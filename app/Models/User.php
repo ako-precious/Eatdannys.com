@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Relations\HasMany;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -16,9 +15,6 @@ use App\Notifications\WelcomeNotification;
 
 class User extends Authenticatable
 {
-    use HasApiTokens;
-
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasApiTokens;
     use HasFactory;
     use HasProfilePhoto;
@@ -74,10 +70,5 @@ class User extends Authenticatable
     public function sendWelcomeNotification($token)
     {
         $this->notify(new WelcomeNotification($token));
-    }
-    
-    public function meals():HasMany
-    {
-        return $this->hasMany(Meal::class, 'user_id', 'id');
     }
 }
