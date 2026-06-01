@@ -118,15 +118,17 @@ async function submitReservation() {
 
 <template>
   <div>
-    <!-- Reservation Button -->
-    <a
-      href="#"
-      @click.prevent="openModal"
-      class="group px-6 py-3 bg-polynesian/50 hover:bg-polynesian/60 rounded-lg text-lg font-semibold transition inline-flex items-center"
-    >
-      Make a Reservation
-      <i class="fa-solid fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
-    </a>
+    <!-- Default trigger button, or custom via v-slot="{ open }" -->
+    <slot :open="openModal">
+      <a
+        href="#"
+        @click.prevent="openModal"
+        class="group px-6 py-3 bg-polynesian/50 hover:bg-polynesian/60 rounded-lg text-lg font-semibold transition inline-flex items-center"
+      >
+        Make a Reservation
+        <i class="fa-solid fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+      </a>
+    </slot>
 
     <!-- Modal -->
     <TransitionRoot appear :show="isOpen" as="template">

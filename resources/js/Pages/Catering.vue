@@ -415,7 +415,7 @@ onUnmounted(() => {
           class="hero-bg-img absolute inset-0 w-full object-cover"
           style="height: 130%; top: -15%; will-change: transform"
         />
-        <div class="absolute inset-0 bg-gradient-to-b from-oynx/75 via-oynx/55 to-oynx"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-oynx/85 via-oynx/75 to-oynx"></div>
       </div>
 
       <!-- Animated grain overlay -->
@@ -445,7 +445,7 @@ onUnmounted(() => {
 
         <!-- Title — each character has its own ref for GSAP stagger -->
         <div class="overflow-hidden pb-2">
-          <h1 class="text-[13vw] sm:text-[11vw] md:text-[9vw] font-black uppercase leading-none tracking-tight">
+          <h1 class="text-[13vw] sm:text-[11vw] md:text-[9vw] font-black uppercase leading-none tracking-tight" style="text-shadow: 0 2px 24px rgba(0,0,0,0.6)">
             <span
               v-for="item in titleChars"
               :key="item.i"
@@ -459,7 +459,7 @@ onUnmounted(() => {
         <!-- Subtitle -->
         <p
           ref="heroSubtitle"
-          class="mt-6 text-lg md:text-xl text-snow/62 max-w-xl mx-auto leading-relaxed"
+          class="mt-6 text-lg md:text-xl text-snow/85 max-w-xl mx-auto leading-relaxed"
           style="will-change: transform, opacity"
         >
           Crafting unforgettable culinary experiences for weddings, anniversaries,
@@ -472,10 +472,18 @@ onUnmounted(() => {
           class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
           style="will-change: transform, opacity"
         >
-          <Reservation />
+          <Reservation v-slot="{ open }">
+            <button
+              @click="open"
+              class="group inline-flex items-center gap-3 border border-persian/60 text-persian hover:bg-persian hover:text-oynx font-bold text-sm uppercase tracking-widest px-7 py-3 rounded-full transition-all duration-300 hover:border-persian"
+            >
+              <i class="fa-solid fa-calendar-check text-xs"></i>
+              Reserve Your Table
+            </button>
+          </Reservation>
           <a
             href="#services"
-            class="group flex items-center gap-2 border border-snow/25 text-snow/75 hover:text-snow hover:border-snow/55 font-semibold text-sm uppercase tracking-wider px-6 py-3 rounded-lg transition-all duration-300"
+            class="group flex items-center gap-2 border border-snow/40 text-snow font-semibold text-sm uppercase tracking-wider px-6 py-3 rounded-lg transition-all duration-300 hover:border-snow hover:bg-snow/10"
           >
             Explore Services
             <i class="fa-solid fa-arrow-down transition-transform duration-300 group-hover:translate-y-1"></i>
@@ -593,9 +601,7 @@ onUnmounted(() => {
               {{ service.description }}
             </p>
 
-            <div class="service-cta">
-              <Reservation />
-            </div>
+            <div class="service-cta"></div>
           </div>
         </div>
 
@@ -691,7 +697,16 @@ onUnmounted(() => {
           detail so you can focus on the moments that matter.
         </p>
         <div class="book-anim flex flex-col sm:flex-row items-center justify-center gap-4" style="will-change: transform, opacity">
-          <Reservation />
+          <Reservation v-slot="{ open }">
+            <button
+              @click="open"
+              class="group inline-flex items-center gap-3 bg-persian text-oynx font-bold text-sm uppercase tracking-widest px-8 py-4 rounded-full transition-all duration-300 hover:brightness-110 hover:scale-105 active:scale-95"
+              style="box-shadow: 0 4px 24px rgba(236,167,44,0.35)"
+            >
+              <i class="fa-solid fa-calendar-check"></i>
+              Book Your Event
+            </button>
+          </Reservation>
           <a
             href="tel:+17058886114"
             class="group flex items-center gap-2 border font-semibold text-sm uppercase tracking-wider px-6 py-3 rounded-lg transition-all duration-300 hover:scale-105"
