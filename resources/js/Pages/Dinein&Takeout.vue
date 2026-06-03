@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
+import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 import { Head, Link } from '@inertiajs/vue3'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -22,22 +22,27 @@ const progressRef          = ref(null)
 const heroRef              = ref(null)
 const heroImageLayerRef    = ref(null)
 const heroContentRef       = ref(null)
+const heroEyebrowRef       = ref(null)
 const wordRefs             = ref([])   // per-word spans for stagger
 const heroSubtitleRef      = ref(null)
+const heroTrustRef         = ref(null)
 const heroCtaRef           = ref(null)
 const signatureCardsRef    = ref([])   // [0,1,2]
 const signatureSectionRef  = ref(null)
+const signatureHeadingRef  = ref(null)
 const popularSectionRef    = ref(null)
 const popularHeadingRef    = ref(null)
 const dishCardRefs         = ref([])   // [0,1,2]
 const exploreHeadingRef    = ref(null)
 const exploreSectionRef    = ref(null)
+const exploreCopyRef       = ref(null)
 const gridSectionRef       = ref(null)
 const testimonialSection   = ref(null)
 const testimonialImageRef  = ref(null)
 const testimonialCardRef   = ref(null)
 const finalCtaRef          = ref(null)
 const finalCtaHeadingRef   = ref(null)
+const finalCtaCopyRef      = ref(null)
 const finalCtaButtonsRef   = ref(null)
 const footerRef            = ref(null)
 
@@ -51,8 +56,10 @@ const cleanupFns = []
 const addListener = (el, event, fn, opts) => {
   if (!el) return
   el.addEventListener(event, fn, opts)
-  cleanupFns.push(() => el.removeEventListener(event, fn))
+  cleanupFns.push(() => el.removeEventListener(event, fn, opts))
 }
+
+const safeElements = (items) => items.filter(Boolean)
 
 // ─── GSAP ─────────────────────────────────────────────────────────────────────
 let ctx = null
@@ -63,9 +70,13 @@ onMounted(async () => {
   await nextTick()
 
   const isMobile = window.innerWidth < 768
+  const revealY = isMobile ? 24 : 46
+  const refreshScrollTrigger = () => ScrollTrigger.refresh()
 
   ScrollTrigger.refresh()
-  window.addEventListener('load', () => ScrollTrigger.refresh(), { once: true })
+  addListener(window, 'load', refreshScrollTrigger, { once: true })
+  const refreshTimer = window.setTimeout(refreshScrollTrigger, 450)
+  cleanupFns.push(() => window.clearTimeout(refreshTimer))
 
   ctx = gsap.context(() => {
 
@@ -88,24 +99,31 @@ onMounted(async () => {
     // Hero image layer: floating entrance
     if (heroImageLayerRef.value) {
       gsap.fromTo(heroImageLayerRef.value,
-        { autoAlpha: 0, y: 40, scale: 0.95 },
-        { autoAlpha: 1, y: 0, scale: 1, duration: 1.2, ease: 'power3.out', delay: 0.15 }
+        { autoAlpha: 0, y: isMobile ? 18 : 44, scale: 0.96 },
+        { autoAlpha: 1, y: 0, scale: 1, duration: 1.15, ease: 'power3.out', delay: 0.1 }
       )
     }
 
     // Orchestrated hero entrance: words → subtitle → CTA
-    const heroTl = gsap.timeline({ delay: 0.35 })
+    const heroTl = gsap.timeline({ delay: 0.25 })
+
+    if (heroEyebrowRef.value) {
+      heroTl.fromTo(heroEyebrowRef.value,
+        { y: 14, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.65, ease: 'power3.out' }
+      )
+    }
 
     // Word-by-word 3D lift with stagger
-    const words = wordRefs.value.filter(Boolean)
+    const words = safeElements(wordRefs.value)
     if (words.length) {
       heroTl.fromTo(
         words,
-        { yPercent: 110, autoAlpha: 0, rotationX: -80, transformOrigin: '50% 100%' },
+        { yPercent: 112, autoAlpha: 0, rotationX: isMobile ? 0 : -76, transformOrigin: '50% 100%' },
         {
           yPercent: 0, autoAlpha: 1, rotationX: 0,
-          duration: 0.75,
-          stagger: { each: 0.06, ease: 'power2.out' },
+          duration: isMobile ? 0.58 : 0.78,
+          stagger: { each: isMobile ? 0.035 : 0.055, ease: 'power2.out' },
           ease: 'expo.out',
         }
       )
@@ -114,10 +132,21 @@ onMounted(async () => {
     // Subtitle: blur-to-sharp fade-up
     if (heroSubtitleRef.value) {
       heroTl.fromTo(heroSubtitleRef.value,
-        { y: 20, autoAlpha: 0, filter: 'blur(12px)' },
-        { y: 0, autoAlpha: 1, filter: 'blur(0px)', duration: 0.95, ease: 'power3.out' },
+        { y: 18, autoAlpha: 0, filter: isMobile ? 'blur(0px)' : 'blur(10px)' },
+        { y: 0, autoAlpha: 1, filter: 'blur(0px)', duration: 0.82, ease: 'power3.out' },
         '-=0.4'
       )
+    }
+
+    if (heroTrustRef.value) {
+      const signals = heroTrustRef.value.querySelectorAll('[data-trust-signal]')
+      if (signals.length) {
+        heroTl.fromTo(signals,
+          { y: 14, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: 0.55, stagger: 0.09, ease: 'power3.out' },
+          '-=0.38'
+        )
+      }
     }
 
     // CTA buttons staggered entrance
@@ -130,15 +159,32 @@ onMounted(async () => {
       )
     }
 
-    // Gentle floating motion to CTA buttons
-    heroTl.call(() => {
-      if (heroCtaRef.value) {
-        const btns = heroCtaRef.value.querySelectorAll('button, a')
-        gsap.to(btns, {
-          y: -5, duration: 2.4, ease: 'sine.inOut', yoyo: true, repeat: -1, stagger: 0.2,
-        })
+    if (heroImageLayerRef.value && !isMobile) {
+      const floatCards = heroImageLayerRef.value.querySelectorAll('[data-float-card]')
+      gsap.to(floatCards, {
+        y: -12,
+        duration: 3.2,
+        ease: 'sine.inOut',
+        yoyo: true,
+        repeat: -1,
+        stagger: 0.35,
+      })
+
+      const heroGlows = heroRef.value?.querySelectorAll('[data-hero-glow]')
+      const onHeroMove = (e) => {
+        const r = heroRef.value.getBoundingClientRect()
+        const x = (e.clientX - r.left) / r.width - 0.5
+        const y = (e.clientY - r.top) / r.height - 0.5
+        gsap.to(heroImageLayerRef.value, { x: x * 18, y: y * 14, rotateY: x * 3, rotateX: y * -2, duration: 0.7, ease: 'power2.out' })
+        if (heroGlows?.length) gsap.to(heroGlows, { x: x * -28, y: y * -18, duration: 1, ease: 'power2.out', stagger: 0.03 })
       }
-    })
+      const onHeroLeave = () => {
+        gsap.to(heroImageLayerRef.value, { x: 0, y: 0, rotateY: 0, rotateX: 0, duration: 0.8, ease: 'power3.out' })
+        if (heroGlows?.length) gsap.to(heroGlows, { x: 0, y: 0, duration: 0.8, ease: 'power3.out' })
+      }
+      addListener(heroRef.value, 'mousemove', onHeroMove)
+      addListener(heroRef.value, 'mouseleave', onHeroLeave)
+    }
 
     // Magnetic hover on CTA buttons (desktop)
     if (!isMobile && heroCtaRef.value) {
@@ -151,7 +197,9 @@ onMounted(async () => {
             duration: 0.3, ease: 'power2.out',
           })
         }
-        const onLeave = () => gsap.to(btn, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1.1, 0.45)' })
+        const onEnter = () => gsap.to(btn, { scale: 1.035, duration: 0.3, ease: 'power2.out' })
+        const onLeave = () => gsap.to(btn, { x: 0, y: 0, scale: 1, duration: 0.6, ease: 'elastic.out(1.1, 0.45)' })
+        addListener(btn, 'mouseenter', onEnter)
         addListener(btn, 'mousemove', onMove)
         addListener(btn, 'mouseleave', onLeave)
       })
@@ -159,10 +207,20 @@ onMounted(async () => {
 
     // ── SIGNATURE EXPERIENCE SECTION ────────────────────────────────────────────
     if (signatureSectionRef.value) {
-      const cards = signatureCardsRef.value.filter(Boolean)
+      if (signatureHeadingRef.value) {
+        gsap.fromTo(signatureHeadingRef.value,
+          { y: revealY, autoAlpha: 0 },
+          {
+            y: 0, autoAlpha: 1, duration: 0.82, ease: 'power3.out',
+            scrollTrigger: { trigger: signatureSectionRef.value, start: 'top 78%', once: true, invalidateOnRefresh: true },
+          }
+        )
+      }
+
+      const cards = safeElements(signatureCardsRef.value)
       if (cards.length) {
         gsap.fromTo(cards,
-          { y: 50, autoAlpha: 0, scale: 0.92 },
+          { y: revealY, autoAlpha: 0, scale: 0.94 },
           {
             y: 0, autoAlpha: 1, scale: 1,
             duration: 0.85, stagger: 0.15, ease: 'power3.out',
@@ -173,11 +231,14 @@ onMounted(async () => {
         // Hover lift effect (desktop)
         if (!isMobile) {
           cards.forEach(card => {
+            const icon = card.querySelector('[data-card-icon]')
             const onEnter = () => {
-              gsap.to(card, { y: -8, boxShadow: '0 20px 50px rgba(212, 167, 106, 0.15)', duration: 0.4, ease: 'power2.out' })
+              gsap.to(card, { y: -10, borderColor: '#f59e0b', boxShadow: '0 24px 55px rgba(217, 119, 6, 0.18)', duration: 0.4, ease: 'power2.out' })
+              if (icon) gsap.to(icon, { y: -8, scale: 1.08, duration: 0.38, ease: 'back.out(1.8)' })
             }
             const onLeave = () => {
-              gsap.to(card, { y: 0, boxShadow: '0 8px 20px rgba(0, 0, 0, 0.1)', duration: 0.5, ease: 'power3.out' })
+              gsap.to(card, { y: 0, borderColor: '#e2e8f0', boxShadow: '0 1px 3px rgba(15, 23, 42, 0.08)', duration: 0.5, ease: 'power3.out' })
+              if (icon) gsap.to(icon, { y: 0, scale: 1, duration: 0.45, ease: 'power3.out' })
             }
             addListener(card, 'mouseenter', onEnter)
             addListener(card, 'mouseleave', onLeave)
@@ -192,7 +253,7 @@ onMounted(async () => {
       // Section heading slide in
       if (popularHeadingRef.value) {
         gsap.fromTo(popularHeadingRef.value,
-          { y: 40, autoAlpha: 0 },
+          { y: revealY, autoAlpha: 0 },
           {
             y: 0, autoAlpha: 1, duration: 0.8, ease: 'power3.out',
             scrollTrigger: { trigger: popularSectionRef.value, start: 'top 80%', once: true, invalidateOnRefresh: true },
@@ -201,12 +262,12 @@ onMounted(async () => {
       }
 
       // Dish cards: staggered fade-up + scale
-      const cards = dishCardRefs.value.filter(Boolean)
+      const cards = safeElements(dishCardRefs.value)
       if (cards.length) {
         gsap.fromTo(cards,
-          { y: 60, autoAlpha: 0, scale: 0.93 },
+          { y: isMobile ? 30 : 58, autoAlpha: 0, scale: 0.94, rotate: isMobile ? 0 : -1.5 },
           {
-            y: 0, autoAlpha: 1, scale: 1,
+            y: 0, autoAlpha: 1, scale: 1, rotate: 0,
             duration: 0.9, stagger: 0.16, ease: 'power3.out',
             scrollTrigger: { trigger: popularSectionRef.value, start: 'top 72%', once: true, invalidateOnRefresh: true },
           }
@@ -255,7 +316,7 @@ onMounted(async () => {
       // Heading animation
       if (exploreHeadingRef.value) {
         gsap.fromTo(exploreHeadingRef.value,
-          { y: 40, autoAlpha: 0 },
+          { y: revealY, autoAlpha: 0 },
           {
             y: 0, autoAlpha: 1, duration: 0.8, ease: 'power3.out',
             scrollTrigger: { trigger: exploreSectionRef.value, start: 'top 80%', once: true, invalidateOnRefresh: true },
@@ -263,14 +324,25 @@ onMounted(async () => {
         )
       }
 
-      // Grid section fade-up
-      gsap.fromTo(exploreSectionRef.value,
-        { y: 50, autoAlpha: 0 },
-        {
-          y: 0, autoAlpha: 1, duration: 1, ease: 'power3.out',
-          scrollTrigger: { trigger: exploreSectionRef.value, start: 'top 75%', once: true, invalidateOnRefresh: true },
-        }
-      )
+      if (exploreCopyRef.value) {
+        gsap.fromTo(exploreCopyRef.value,
+          { y: 20, autoAlpha: 0 },
+          {
+            y: 0, autoAlpha: 1, duration: 0.75, ease: 'power3.out',
+            scrollTrigger: { trigger: exploreSectionRef.value, start: 'top 78%', once: true, invalidateOnRefresh: true },
+          }
+        )
+      }
+
+      if (gridSectionRef.value) {
+        gsap.fromTo(gridSectionRef.value,
+          { y: revealY, autoAlpha: 0, scale: 0.985 },
+          {
+            y: 0, autoAlpha: 1, scale: 1, duration: 1, ease: 'power3.out',
+            scrollTrigger: { trigger: gridSectionRef.value, start: 'top 82%', once: true, invalidateOnRefresh: true },
+          }
+        )
+      }
     }
 
     // ── TESTIMONIAL SECTION ───────────────────────────────────────────────────
@@ -279,10 +351,10 @@ onMounted(async () => {
       // Image column: clip-path wipe from right
       if (testimonialImageRef.value) {
         gsap.fromTo(testimonialImageRef.value,
-          { clipPath: 'inset(0% 100% 0% 0%)' },
+          { clipPath: isMobile ? 'inset(0% 0% 18% 0%)' : 'inset(0% 100% 0% 0%)', autoAlpha: isMobile ? 0 : 1 },
           {
-            clipPath: 'inset(0% 0% 0% 0%)',
-            duration: 1.5, ease: 'power3.inOut',
+            clipPath: 'inset(0% 0% 0% 0%)', autoAlpha: 1,
+            duration: isMobile ? 0.9 : 1.35, ease: 'power3.inOut',
             scrollTrigger: { trigger: testimonialSection.value, start: 'top 70%', once: true, invalidateOnRefresh: true },
           }
         )
@@ -305,9 +377,9 @@ onMounted(async () => {
       // Testimonial card: fade-up slide
       if (testimonialCardRef.value) {
         gsap.fromTo(testimonialCardRef.value,
-          { y: 50, autoAlpha: 0, scale: 0.96 },
+          { y: isMobile ? 28 : 50, x: isMobile ? 0 : -18, autoAlpha: 0, scale: 0.96 },
           {
-            y: 0, autoAlpha: 1, scale: 1, duration: 1.1, ease: 'power3.out',
+            y: 0, x: 0, autoAlpha: 1, scale: 1, duration: 1.05, ease: 'power3.out',
             scrollTrigger: { trigger: testimonialSection.value, start: 'top 65%', once: true, invalidateOnRefresh: true },
           }
         )
@@ -331,6 +403,16 @@ onMounted(async () => {
         }
       }
 
+      if (finalCtaCopyRef.value) {
+        gsap.fromTo(finalCtaCopyRef.value,
+          { y: 20, autoAlpha: 0 },
+          {
+            y: 0, autoAlpha: 1, duration: 0.75, ease: 'power3.out',
+            scrollTrigger: { trigger: finalCtaRef.value, start: 'top 72%', once: true, invalidateOnRefresh: true },
+          }
+        )
+      }
+
       // Buttons entrance
       if (finalCtaButtonsRef.value) {
         const btns = finalCtaButtonsRef.value.querySelectorAll('button, a')
@@ -347,10 +429,11 @@ onMounted(async () => {
       const glow = finalCtaRef.value.querySelector('.final-glow')
       if (glow) {
         gsap.to(glow, {
-          opacity: [0.15, 0.3, 0.15],
-          scale: [1, 1.15, 1],
-          duration: 4,
+          opacity: 0.34,
+          scale: 1.08,
+          duration: 3.5,
           ease: 'sine.inOut',
+          yoyo: true,
           repeat: -1,
         })
       }
@@ -404,10 +487,12 @@ onUnmounted(() => {
       <!-- Decorative gradient orb -->
       <div
         class="absolute -top-40 -left-40 w-96 h-96 bg-amber-300 rounded-full opacity-5 blur-3xl pointer-events-none"
+        data-hero-glow
         aria-hidden="true"
       ></div>
       <div
         class="absolute top-1/3 -right-20 w-72 h-72 bg-red-300 rounded-full opacity-3 blur-3xl pointer-events-none"
+        data-hero-glow
         aria-hidden="true"
       ></div>
 
@@ -416,9 +501,16 @@ onUnmounted(() => {
 
           <!-- LEFT: Hero Content -->
           <div ref="heroContentRef" class="text-slate-900">
+            <p
+              ref="heroEyebrowRef"
+              class="mb-5 text-sm font-bold uppercase tracking-[0.28em] text-amber-700"
+              style="will-change: transform, opacity"
+            >
+              Dining, takeout, and warm Nigerian hospitality
+            </p>
 
             <!-- Headline -->
-            <h1 class="text-5xl md:text-6xl lg:text-7xl font-black uppercase leading-[1.1] mb-6">
+            <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-black uppercase leading-[1.08] mb-6">
               <span
                 v-for="(word, wi) in heroTitleWords"
                 :key="wi"
@@ -443,16 +535,16 @@ onUnmounted(() => {
             </p>
 
             <!-- Trust signals -->
-            <div class="flex flex-col sm:flex-row gap-6 mb-10 text-sm font-medium">
-              <div class="flex items-center gap-2 text-amber-300">
+            <div ref="heroTrustRef" class="flex flex-col sm:flex-row gap-4 sm:gap-6 mb-10 text-sm font-semibold">
+              <div data-trust-signal class="flex items-center gap-2 text-amber-700" style="will-change: transform, opacity">
                 <i class="fa-solid fa-check-circle"></i>
                 <span>Freshly Prepared</span>
               </div>
-              <div class="flex items-center gap-2 text-amber-300">
+              <div data-trust-signal class="flex items-center gap-2 text-amber-700" style="will-change: transform, opacity">
                 <i class="fa-solid fa-leaf"></i>
                 <span>Authentic Recipes</span>
               </div>
-              <div class="flex items-center gap-2 text-amber-300">
+              <div data-trust-signal class="flex items-center gap-2 text-amber-700" style="will-change: transform, opacity">
                 <i class="fa-solid fa-truck"></i>
                 <span>Delivery & Takeout</span>
               </div>
@@ -465,18 +557,19 @@ onUnmounted(() => {
             >
               <Link
                 :href="route('dining')"
-                class="group relative inline-flex items-center justify-center gap-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-bold text-base uppercase tracking-widest px-8 py-4 rounded-xl transition-all duration-300 overflow-hidden shadow-lg hover:shadow-amber-600/50"
+                class="group relative inline-flex items-center justify-center gap-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-bold text-base uppercase tracking-widest px-8 py-4 rounded-xl transition-all duration-300 overflow-hidden shadow-lg shadow-amber-600/20 hover:shadow-amber-600/45"
                 style="will-change: transform"
               >
+                <span class="absolute inset-y-0 -left-16 w-12 rotate-12 bg-white/35 blur-sm transition-transform duration-700 group-hover:translate-x-80" aria-hidden="true"></span>
                 <i class="fa-solid fa-shopping-bag text-lg"></i>
-                <span>Order Takeout</span>
+                <span class="relative">Order Takeout</span>
                 <div class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
               </Link>
 
               <Reservation v-slot="{ open }">
                 <button
                   @click="open"
-                  class="group inline-flex items-center justify-center gap-3 border-2 border-slate-300 hover:border-amber-500 text-slate-900 font-bold text-base uppercase tracking-widest px-8 py-4 rounded-xl transition-all duration-300 backdrop-blur-sm hover:bg-slate-50"
+                  class="group inline-flex items-center justify-center gap-3 border-2 border-slate-300 hover:border-amber-500 text-slate-900 font-bold text-base uppercase tracking-widest px-8 py-4 rounded-xl transition-all duration-300 backdrop-blur-sm bg-white/70 hover:bg-amber-50"
                   style="will-change: transform"
                 >
                   <i class="fa-solid fa-calendar-days text-lg"></i>
@@ -505,7 +598,8 @@ onUnmounted(() => {
             <!-- Floating cards -->
             <div
               class="absolute -bottom-8 -left-8 bg-white backdrop-blur-xl border border-slate-200 rounded-2xl p-6 w-64 shadow-2xl"
-              style="animation: float 4s ease-in-out infinite"
+              data-float-card
+              style="will-change: transform"
             >
               <div class="flex items-center gap-4 mb-3">
                 <div class="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center text-2xl">🍲</div>
@@ -520,7 +614,8 @@ onUnmounted(() => {
             <!-- Secondary floating card -->
             <div
               class="absolute top-12 -right-6 bg-white backdrop-blur-xl border border-slate-200 rounded-2xl p-5 w-56 shadow-2xl"
-              style="animation: float 5s ease-in-out infinite 0.5s"
+              data-float-card
+              style="will-change: transform"
             >
               <div class="flex items-center gap-3 mb-2">
                 <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center text-xl">🥘</div>
@@ -544,7 +639,7 @@ onUnmounted(() => {
       class="py-20 px-6 bg-gradient-to-b from-white via-slate-50 to-white"
     >
       <div class="container mx-auto">
-        <div class="text-center mb-16">
+        <div ref="signatureHeadingRef" class="text-center mb-16" style="will-change: transform, opacity">
           <p class="text-amber-600 font-bold uppercase tracking-[0.25em] text-sm mb-4">Our Essence</p>
           <h2 class="text-4xl md:text-5xl font-black uppercase text-slate-900 leading-tight">
             More Than Food<br />
@@ -559,7 +654,7 @@ onUnmounted(() => {
             class="group relative p-8 rounded-2xl border border-slate-200 bg-white hover:border-amber-300 transition-all duration-300 cursor-default shadow-sm"
             style="will-change: transform, box-shadow"
           >
-            <div class="text-5xl mb-4">🌾</div>
+            <div data-card-icon class="text-5xl mb-4" style="will-change: transform">🌾</div>
             <h3 class="text-2xl font-black text-slate-900 mb-3">Authentic Recipes</h3>
             <p class="text-slate-600 leading-relaxed">
               Passed down through generations. Every recipe tells a story of Nigerian heritage and family traditions.
@@ -573,7 +668,7 @@ onUnmounted(() => {
             class="group relative p-8 rounded-2xl border border-slate-200 bg-white hover:border-amber-300 transition-all duration-300 cursor-default shadow-sm"
             style="will-change: transform, box-shadow"
           >
-            <div class="text-5xl mb-4">🔥</div>
+            <div data-card-icon class="text-5xl mb-4" style="will-change: transform">🔥</div>
             <h3 class="text-2xl font-black text-slate-900 mb-3">Fresh Daily Cooking</h3>
             <p class="text-slate-600 leading-relaxed">
               No pre-made shortcuts. Each dish is prepared fresh to order with premium, hand-selected ingredients.
@@ -587,7 +682,7 @@ onUnmounted(() => {
             class="group relative p-8 rounded-2xl border border-slate-200 bg-white hover:border-amber-300 transition-all duration-300 cursor-default shadow-sm"
             style="will-change: transform, box-shadow"
           >
-            <div class="text-5xl mb-4">🎉</div>
+            <div data-card-icon class="text-5xl mb-4" style="will-change: transform">🎉</div>
             <h3 class="text-2xl font-black text-slate-900 mb-3">Perfect for Events</h3>
             <p class="text-slate-600 leading-relaxed">
               Celebrate special moments with authentic catering. Weddings, birthdays, corporate events — we make it memorable.
@@ -638,7 +733,7 @@ onUnmounted(() => {
 
               <!-- Rank Badge -->
               <div
-                class="dish-badge absolute top-6 right-6 w-14 h-14 bg-gradient-to-br from-amber-500 to-amber-600 text-white rounded-full flex items-center justify-center font-black text-2xl shadow-lg border-2 border-white"
+                class="dish-badge absolute top-6 right-6 w-14 h-14 bg-gradient-to-br from-amber-500 to-amber-600 text-slate-500 rounded-full flex items-center justify-center font-black text-2xl shadow-lg border-2 border-white"
                 style="will-change: transform, opacity"
               >
                 #1
@@ -651,7 +746,7 @@ onUnmounted(() => {
               <p class="text-slate-600 text-sm leading-relaxed flex-grow mb-6">
                 Often considered the "king" of Nigerian cuisine. Vibrant, savory, and cooked in a flavorful tomato and pepper sauce.
               </p>
-              <button class="w-full py-3 px-4 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold rounded-xl transition-all duration-300 uppercase tracking-wider text-sm">
+              <button class="w-full py-3 px-4 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-500 font-bold rounded-xl transition-all duration-300 uppercase tracking-wider text-sm">
                 Order Now
               </button>
             </div>
@@ -675,7 +770,7 @@ onUnmounted(() => {
 
               <!-- Rank Badge -->
               <div
-                class="dish-badge absolute top-6 right-6 w-14 h-14 bg-gradient-to-br from-red-500 to-red-600 text-white rounded-full flex items-center justify-center font-black text-2xl shadow-lg border-2 border-white"
+                class="dish-badge absolute top-6 right-6 w-14 h-14 bg-gradient-to-br from-red-500 to-red-600 text-slate-500 rounded-full flex items-center justify-center font-black text-2xl shadow-lg border-2 border-white"
                 style="will-change: transform, opacity"
               >
                 #2
@@ -688,7 +783,7 @@ onUnmounted(() => {
               <p class="text-slate-600 text-sm leading-relaxed flex-grow mb-6">
                 Known for their incredible richness, diverse flavours, and comforting warmth — truly the heart of Nigerian cuisine.
               </p>
-              <button class="w-full py-3 px-4 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold rounded-xl transition-all duration-300 uppercase tracking-wider text-sm">
+              <button class="w-full py-3 px-4 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-500 font-bold rounded-xl transition-all duration-300 uppercase tracking-wider text-sm">
                 Order Now
               </button>
             </div>
@@ -712,7 +807,7 @@ onUnmounted(() => {
 
               <!-- Rank Badge -->
               <div
-                class="dish-badge absolute top-6 right-6 w-14 h-14 bg-gradient-to-br from-amber-600 to-orange-600 text-white rounded-full flex items-center justify-center font-black text-2xl shadow-lg border-2 border-white"
+                class="dish-badge absolute top-6 right-6 w-14 h-14 bg-gradient-to-br from-amber-600 to-orange-600 text-slate-500 rounded-full flex items-center justify-center font-black text-2xl shadow-lg border-2 border-white"
                 style="will-change: transform, opacity"
               >
                 #3
@@ -725,7 +820,7 @@ onUnmounted(() => {
               <p class="text-slate-600 text-sm leading-relaxed flex-grow mb-6">
                 A beloved Nigerian staple, celebrated for its smooth dough-like texture. The perfect "swallow" for rich Nigerian soups.
               </p>
-              <button class="w-full py-3 px-4 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold rounded-xl transition-all duration-300 uppercase tracking-wider text-sm">
+              <button class="w-full py-3 px-4 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-500 font-bold rounded-xl transition-all duration-300 uppercase tracking-wider text-sm">
                 Order Now
               </button>
             </div>
@@ -755,13 +850,14 @@ onUnmounted(() => {
           >
             Explore Our Kitchen
           </h2>
-          <p class="text-lg text-slate-600 max-w-2xl mx-auto">
+          <p ref="exploreCopyRef" class="text-lg text-slate-600 max-w-2xl mx-auto" style="will-change: transform, opacity">
             Step inside our kitchen and discover the passion, precision, and pride that goes into every dish we prepare for you.
           </p>
         </div>
 
         <!-- Gridtemplate wrapped in premium container -->
         <div
+          ref="gridSectionRef"
           class="relative rounded-3xl overflow-hidden border border-slate-200 bg-gradient-to-b from-white to-slate-50 shadow-sm p-8 lg:p-12"
           style="will-change: transform, opacity"
         >
@@ -775,17 +871,18 @@ onUnmounted(() => {
     ═══════════════════════════════════════════════════════════════════════ -->
     <section
       ref="testimonialSection"
-      class="py-24 px-6 bg-gradient-to-b from-white to-slate-50 relative overflow-hidden"
+      class="py-24 px-6 bg-gradient-to-br from-slate-950 via-slate-900 to-red-950 relative overflow-hidden"
     >
       <!-- Decorative glow -->
-      <div class="absolute top-1/2 left-0 w-96 h-96 bg-red-200 rounded-full opacity-3 blur-3xl pointer-events-none -translate-y-1/2" aria-hidden="true"></div>
+      <div class="absolute top-1/2 left-0 w-96 h-96 bg-amber-500 rounded-full opacity-10 blur-3xl pointer-events-none -translate-y-1/2" aria-hidden="true"></div>
+      <div class="absolute -bottom-32 right-8 w-96 h-96 bg-red-500 rounded-full opacity-10 blur-3xl pointer-events-none" aria-hidden="true"></div>
 
       <div class="container mx-auto relative z-10">
         <div class="text-center mb-16">
-          <p class="text-amber-600 font-bold uppercase tracking-[0.25em] text-sm mb-4">Guest Stories</p>
-          <h2 class="text-5xl md:text-6xl font-black uppercase text-slate-900 leading-tight">
+          <p class="text-amber-300 font-bold uppercase tracking-[0.25em] text-sm mb-4">Guest Stories</p>
+          <h2 class="text-4xl md:text-6xl font-black uppercase text-slate-500 leading-tight">
             Loved by Guests,<br />
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 to-red-600">Remembered by Families</span>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-red-200">Remembered by Families</span>
           </h2>
         </div>
 
@@ -793,7 +890,7 @@ onUnmounted(() => {
           <!-- Image -->
           <div
             ref="testimonialImageRef"
-            class="relative h-96 lg:h-[500px] rounded-3xl overflow-hidden shadow-xl border border-slate-200"
+            class="relative h-96 lg:h-[500px] rounded-3xl overflow-hidden shadow-2xl border border-white/10"
             style="will-change: clip-path, transform"
           >
             <img
@@ -801,39 +898,42 @@ onUnmounted(() => {
               src="images/keesha-s-kitchen-3gbiqiGJYUc-unsplash.jpg"
               alt="Danny's kitchen"
             />
-            <div class="absolute inset-0 bg-gradient-to-tr from-black/20 via-transparent to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-tr from-black/45 via-black/10 to-transparent"></div>
           </div>
 
           <!-- Testimonial Card -->
           <div
             ref="testimonialCardRef"
-            class="relative rounded-3xl p-8 lg:p-10 border border-slate-200 bg-white shadow-xl"
+            class="relative rounded-3xl p-8 lg:p-10 border border-white/15 bg-white/10 shadow-2xl backdrop-blur-xl"
             style="will-change: transform, opacity"
           >
+            <div class="absolute -inset-8 bg-amber-400/10 blur-3xl pointer-events-none" aria-hidden="true"></div>
+            <div class="relative">
             <div class="flex gap-1 mb-6">
-              <i class="fa-solid fa-star text-amber-500"></i>
-              <i class="fa-solid fa-star text-amber-500"></i>
-              <i class="fa-solid fa-star text-amber-500"></i>
-              <i class="fa-solid fa-star text-amber-500"></i>
-              <i class="fa-solid fa-star text-amber-500"></i>
+              <i class="fa-solid fa-star text-amber-300"></i>
+              <i class="fa-solid fa-star text-amber-300"></i>
+              <i class="fa-solid fa-star text-amber-300"></i>
+              <i class="fa-solid fa-star text-amber-300"></i>
+              <i class="fa-solid fa-star text-amber-300"></i>
             </div>
 
-            <p class="text-lg text-slate-800 leading-relaxed mb-6 italic">
+            <p class="text-lg text-slate-100 leading-relaxed mb-6 italic">
               "Danny's isn't just food—it's a celebration of our heritage. Every bite takes me home. The Jollof rice is perfection, and the customer service makes you feel like family. Highly recommended for anyone wanting authentic Nigerian cuisine done right."
             </p>
 
             <div class="flex items-center gap-4">
-              <div class="w-14 h-14 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center text-white font-bold text-xl">
+              <div class="w-14 h-14 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center text-slate-500 font-bold text-xl">
                 A
               </div>
               <div>
-                <p class="font-bold text-slate-900 text-lg">Amina Okafor</p>
-                <p class="text-slate-500 text-sm">Verified Customer</p>
+                <p class="font-bold text-slate-500 text-lg">Amina Okafor</p>
+                <p class="text-slate-300 text-sm">Verified Customer</p>
               </div>
             </div>
 
             <!-- Decorative element -->
-            <div class="absolute top-6 right-6 text-7xl text-amber-200 font-black">"</div>
+            <div class="absolute top-0 right-0 text-7xl text-amber-200/20 font-black">"</div>
+            </div>
           </div>
         </div>
       </div>
@@ -844,47 +944,47 @@ onUnmounted(() => {
     ═══════════════════════════════════════════════════════════════════════ -->
     <section
       ref="finalCtaRef"
-      class="py-24 px-6 relative overflow-hidden"
-      style="background: linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #ffffff 100%)"
+      class="py-24 px-6 relative overflow-hidden bg-gradient-to-br from-slate-950 via-red-950 to-amber-950"
     >
       <!-- Animated glow -->
       <div
-        class="final-glow absolute inset-0 bg-gradient-to-br from-amber-200/15 via-transparent to-red-200/10 pointer-events-none"
-        style="opacity: 0.15; will-change: opacity, transform"
+        class="final-glow absolute left-1/2 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-amber-400/25 blur-3xl pointer-events-none"
+        style="opacity: 0.2; will-change: opacity, transform"
         aria-hidden="true"
       ></div>
 
       <!-- Decorative orbs -->
-      <div class="absolute top-1/2 left-1/4 w-80 h-80 bg-amber-300 rounded-full opacity-5 blur-3xl pointer-events-none -translate-y-1/2" aria-hidden="true"></div>
-      <div class="absolute bottom-0 right-1/4 w-72 h-72 bg-red-300 rounded-full opacity-3 blur-3xl pointer-events-none" aria-hidden="true"></div>
+      <div class="absolute top-1/2 left-1/4 w-80 h-80 bg-amber-300 rounded-full opacity-10 blur-3xl pointer-events-none -translate-y-1/2" aria-hidden="true"></div>
+      <div class="absolute bottom-0 right-1/4 w-72 h-72 bg-red-300 rounded-full opacity-10 blur-3xl pointer-events-none" aria-hidden="true"></div>
 
       <div class="container mx-auto text-center relative z-10">
         <div ref="finalCtaHeadingRef" class="mb-12">
-          <p class="text-amber-600 font-bold uppercase tracking-[0.25em] text-sm mb-6">Ready?</p>
-          <h2 class="text-5xl md:text-6xl lg:text-7xl font-black uppercase text-slate-900 leading-[1.1]">
-            <span class="block">Ready to Taste</span>
-            <span class="block text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-amber-500 to-red-600">Something Special?</span>
+          <p class="text-amber-300 font-bold uppercase tracking-[0.25em] text-sm mb-6">Ready?</p>
+          <h2 class="text-4xl md:text-6xl lg:text-7xl font-black uppercase text-white leading-[1.1]">
+            <span class="block text-amber-500 drop-shadow-[0_0_24px_rgba(251,191,36,0.28)]">Ready to Taste</span>
+            <span class="block text-amber-800 drop-shadow-[0_0_24px_rgba(251,191,36,0.28)]">Something Special?</span>
           </h2>
         </div>
 
-        <p class="text-lg text-slate-700 mb-12 max-w-2xl mx-auto">
+        <p ref="finalCtaCopyRef" class="text-lg text-slate-400 mb-12 max-w-2xl mx-auto" style="will-change: transform, opacity">
           Experience authentic Nigerian flavours that celebrate tradition, family, and the art of great food. Order online or reserve your table now.
         </p>
 
         <div ref="finalCtaButtonsRef" class="flex flex-col sm:flex-row gap-6 justify-center">
           <Link
             :href="route('dining')"
-            class="group inline-flex items-center justify-center gap-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold text-lg uppercase tracking-widest px-10 py-5 rounded-xl transition-all duration-300 shadow-lg hover:shadow-amber-500/40 overflow-hidden relative"
+            class="group inline-flex items-center justify-center gap-3 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-500 text-slate-950 font-bold text-lg uppercase tracking-widest px-10 py-5 rounded-xl transition-all duration-300 shadow-lg shadow-amber-500/25 hover:shadow-amber-400/40 overflow-hidden relative"
           >
+            <span class="absolute inset-y-0 -left-16 w-12 rotate-12 bg-white/40 blur-sm transition-transform duration-700 group-hover:translate-x-96" aria-hidden="true"></span>
             <i class="fa-solid fa-shopping-bag text-xl"></i>
-            <span>Order Takeout</span>
+            <span class="relative">Order Takeout</span>
             <div class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           </Link>
 
           <Reservation v-slot="{ open }">
             <button
               @click="open"
-              class="group inline-flex items-center justify-center gap-3 border-2 border-slate-300 hover:border-amber-500 text-slate-900 font-bold text-lg uppercase tracking-widest px-10 py-5 rounded-xl transition-all duration-300 hover:bg-slate-50 hover:shadow-md"
+              class="group inline-flex items-center justify-center gap-3 border-2 border-white/35 hover:border-amber-300 text-slate-500 font-bold text-lg uppercase tracking-widest px-10 py-5 rounded-xl transition-all duration-300 bg-white/10 hover:bg-white/15 hover:shadow-md backdrop-blur-sm"
             >
               <i class="fa-solid fa-calendar-days text-xl"></i>
               <span>Make a Reservation</span>
