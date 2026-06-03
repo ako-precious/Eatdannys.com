@@ -96,11 +96,22 @@ const floatingCta     = ref(null)
 const titleText  = "EAT DANNY'S"
 const titleChars = computed(() => titleText.split('').map((char, i) => ({ char, i })))
 
-// ─── Motion preference ────────────────────────────────────────────────────────
+// ─── Preferences ──────────────────────────────────────────────────────────────
 
 const reduceMotion = typeof window !== 'undefined'
   ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
   : false
+
+// ─── Event-listener cleanup registry ─────────────────────────────────────────
+// gsap.context().revert() kills tweens/ScrollTriggers but not DOM event listeners.
+// Every listener added via addListener() is tracked here and removed on unmount.
+
+const cleanupFns = []
+const addListener = (el, event, fn, opts) => {
+  if (!el) return
+  el.addEventListener(event, fn, opts)
+  cleanupFns.push(() => el.removeEventListener(event, fn))
+}
 
 // ─── GSAP ─────────────────────────────────────────────────────────────────────
 
@@ -110,13 +121,17 @@ onMounted(async () => {
   if (reduceMotion) return
 
   await nextTick()
-  ScrollTrigger.refresh()
 
   const isMobile = window.innerWidth < 768
 
+  // Refresh once immediately, then again after all media has loaded so
+  // ScrollTrigger measures correct positions even if images/videos change layout.
+  ScrollTrigger.refresh()
+  window.addEventListener('load', () => ScrollTrigger.refresh(), { once: true })
+
   ctx = gsap.context(() => {
 
-    // ── 0. Scroll progress bar ─────────────────────────────────────────────
+    // ── SCROLL PROGRESS BAR ────────────────────────────────────────────────
     if (scrollProgress.value) {
       gsap.to(scrollProgress.value, {
         width: '100%',
@@ -130,62 +145,80 @@ onMounted(async () => {
       })
     }
 
-    // ── 1. Hero: orchestrated entrance timeline ────────────────────────────
+    // ── HERO: CINEMATIC ENTRANCE ───────────────────────────────────────────
+
+    // Ken Burns: slow atmospheric zoom on the hero background.
+    // Starts with a short delay so it doesn't interrupt the entrance sequence.
+    gsap.delayedCall(0.4, () => {
+      gsap.to('.hero-bg-img', {
+        scale: 1.08,
+        duration: 14,
+        ease: 'power1.inOut',
+        repeat: -1,
+        yoyo: true,
+      })
+    })
+
+    // Orchestrated entrance: badge → chars → subtitle → CTA
     const heroTl = gsap.timeline({ delay: 0.1 })
 
-    // Badge drops in first
     if (heroBadge.value) {
       heroTl.fromTo(heroBadge.value,
-        { y: -20, autoAlpha: 0 },
-        { y: 0, autoAlpha: 1, duration: 0.7, ease: 'power3.out' }
+        { y: -16, autoAlpha: 0, scale: 0.94 },
+        { y: 0, autoAlpha: 1, scale: 1, duration: 0.65, ease: 'power3.out' }
       )
     }
 
-    // Characters lift up with 3-D flip (fixed: uses charRefs.value)
+    // 3-D character flip — each char lifts from below with perspective rotation.
+    // stagger.ease means earlier chars feel snappier; the wave decelerates naturally.
     if (charRefs.value.length) {
       heroTl.fromTo(
         charRefs.value,
-        { y: '115%', autoAlpha: 0, rotationX: -90, transformOrigin: '50% 100%' },
-        { y: '0%',   autoAlpha: 1, rotationX: 0,
-          duration: 0.95, stagger: 0.03, ease: 'expo.out' },
-        heroBadge.value ? '-=0.25' : 0
+        { yPercent: 120, autoAlpha: 0, rotationX: -85, transformOrigin: '50% 100%', transformPerspective: 600 },
+        {
+          yPercent: 0, autoAlpha: 1, rotationX: 0,
+          duration: 0.92,
+          stagger: { each: 0.032, ease: 'power2.out' },
+          ease: 'expo.out',
+        },
+        heroBadge.value ? '-=0.28' : 0
       )
     }
 
-    // Subtitle blur-fade-up
+    // Subtitle: blur-to-sharp fade-up (premium "focus pull" effect)
     if (heroSubtitle.value) {
       heroTl.fromTo(heroSubtitle.value,
-        { y: 28, autoAlpha: 0, filter: 'blur(10px)' },
-        { y: 0,  autoAlpha: 1, filter: 'blur(0px)', duration: 1, ease: 'power3.out' },
-        '-=0.5'
+        { y: 24, autoAlpha: 0, filter: 'blur(12px)' },
+        { y: 0, autoAlpha: 1, filter: 'blur(0px)', duration: 1.1, ease: 'power3.out' },
+        '-=0.52'
       )
     }
 
-    // CTA slides up behind the subtitle
+    // CTA block slides up behind the subtitle
     if (heroCta.value) {
       heroTl.fromTo(heroCta.value,
-        { y: 22, autoAlpha: 0 },
-        { y: 0,  autoAlpha: 1, duration: 0.8, ease: 'power3.out' },
-        '-=0.65'
+        { y: 20, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.85, ease: 'power3.out' },
+        '-=0.7'
       )
     }
 
-    // ── 2. Hero ambient glow pulse ─────────────────────────────────────────
+    // Ambient glow pulse behind hero content
     if (heroGlow.value) {
       gsap.to(heroGlow.value, {
-        scale: 1.18,
-        opacity: 0.18,
-        duration: 3.5,
+        scale: 1.22,
+        opacity: 0.2,
+        duration: 3.6,
         ease: 'sine.inOut',
         yoyo: true,
         repeat: -1,
       })
     }
 
-    // ── 3. Hero background parallax (desktop only) ─────────────────────────
+    // Background scroll parallax — desktop only (prevents mobile jank)
     if (!isMobile) {
       gsap.to('.hero-bg-img', {
-        yPercent: 25,
+        yPercent: 22,
         ease: 'none',
         scrollTrigger: {
           trigger: heroSection.value,
@@ -197,9 +230,40 @@ onMounted(async () => {
       })
     }
 
-    // ── 4. Floating CTA: reveal after hero exits, then float ───────────────
+    // Mouse-move parallax: glow tracks cursor, bg drifts subtly (desktop only)
+    if (!isMobile && heroSection.value) {
+      const onHeroMove = (e) => {
+        const cx = (e.clientX / window.innerWidth  - 0.5) * 2
+        const cy = (e.clientY / window.innerHeight - 0.5) * 2
+        gsap.to('.hero-bg-img', { x: cx * 10, duration: 1.6, ease: 'power1.out', overwrite: 'auto' })
+        if (heroGlow.value) {
+          gsap.to(heroGlow.value, { x: cx * 28, y: cy * 22, duration: 1.8, ease: 'power1.out', overwrite: 'auto' })
+        }
+      }
+      addListener(heroSection.value, 'mousemove', onHeroMove)
+    }
+
+    // Magnetic hover on CTA buttons: slight pull toward cursor, elastic snap-back
+    if (!isMobile && heroCta.value) {
+      heroCta.value.querySelectorAll('.magnetic-btn').forEach(btn => {
+        const onMove = (e) => {
+          const r = btn.getBoundingClientRect()
+          gsap.to(btn, {
+            x: (e.clientX - r.left - r.width  / 2) * 0.28,
+            y: (e.clientY - r.top  - r.height / 2) * 0.22,
+            duration: 0.35, ease: 'power2.out',
+          })
+        }
+        const onLeave = () => gsap.to(btn, { x: 0, y: 0, duration: 0.65, ease: 'elastic.out(1.1, 0.45)' })
+        addListener(btn, 'mousemove', onMove)
+        addListener(btn, 'mouseleave', onLeave)
+      })
+    }
+
+    // ── FLOATING CTA ────────────────────────────────────────────────────────
     if (floatingCta.value) {
       gsap.set(floatingCta.value, { autoAlpha: 0, y: 16 })
+
       ScrollTrigger.create({
         trigger: heroSection.value,
         start: 'bottom 55%',
@@ -209,18 +273,29 @@ onMounted(async () => {
             autoAlpha: 1, y: 0, duration: 0.7, ease: 'power3.out',
             onComplete() {
               gsap.to(floatingCta.value, {
-                y: -7, duration: 1.8, ease: 'sine.inOut', yoyo: true, repeat: -1,
+                y: -8, duration: 1.9, ease: 'sine.inOut', yoyo: true, repeat: -1,
               })
             },
           })
         },
       })
+
+      // Shine sweep on hover
+      if (!isMobile) {
+        const ctaLink  = floatingCta.value.querySelector('a')
+        const ctaShine = ctaLink?.querySelector('.cta-shine')
+        if (ctaLink && ctaShine) {
+          addListener(ctaLink, 'mouseenter', () => {
+            gsap.fromTo(ctaShine, { x: '-130%' }, { x: '200%', duration: 0.48, ease: 'power2.out' })
+          })
+        }
+      }
     }
 
-    // ── 5. Stats: strip entrance + counter animations ──────────────────────
+    // ── STATS ───────────────────────────────────────────────────────────────
     if (statsSection.value) {
       gsap.fromTo(statsSection.value,
-        { autoAlpha: 0, y: 30 },
+        { autoAlpha: 0, y: 28 },
         {
           autoAlpha: 1, y: 0, duration: 0.9, ease: 'power3.out',
           scrollTrigger: {
@@ -231,6 +306,7 @@ onMounted(async () => {
       )
     }
 
+    // Counters: slight stagger between them + scale pulse on finish
     statEls.value.forEach((el, i) => {
       if (!el) return
       const stat  = stats[i]
@@ -238,82 +314,98 @@ onMounted(async () => {
       const numEl = el.querySelector('.stat-num')
       gsap.to(obj, {
         val: stat.value,
-        duration: 2.8,
+        duration: 2.6,
         ease: 'power2.out',
+        delay: i * 0.09,
         onUpdate() { if (numEl) numEl.textContent = Math.round(obj.val) + stat.suffix },
+        onComplete() {
+          if (numEl) {
+            gsap.fromTo(numEl,
+              { scale: 1 },
+              { scale: 1.12, duration: 0.18, yoyo: true, repeat: 1, ease: 'power2.out' }
+            )
+          }
+        },
         scrollTrigger: { trigger: el, start: 'top 85%', once: true, invalidateOnRefresh: true },
       })
     })
 
-    // ── 6. Service sections ────────────────────────────────────────────────
+    // ── SERVICE SECTIONS ────────────────────────────────────────────────────
     serviceSections.value.forEach((section, i) => {
       if (!section) return
 
-      const isEven    = i % 2 === 0
-      const media     = section.querySelector('.service-media')
-      const inner     = section.querySelector('.media-inner')
+      const isEven     = i % 2 === 0
+      const media      = section.querySelector('.service-media')
+      const mediaInner = section.querySelector('.media-inner')
       const accentLine = section.querySelector('.service-accent-line')
-      const tagline   = section.querySelector('.service-tagline')
-      const title     = section.querySelector('.service-title')
-      const desc      = section.querySelector('.service-desc')
-      const cta       = section.querySelector('.service-cta')
+      const tagline    = section.querySelector('.service-tagline')
+      const title      = section.querySelector('.service-title')
+      const desc       = section.querySelector('.service-desc')
 
-      const stBase = { once: true, invalidateOnRefresh: true }
+      const st = { once: true, invalidateOnRefresh: true }
 
-      // Cinematic clip-path wipe: video panel wipes in from the edge
+      // Cinematic wipe: clip-path reveals from the edge nearest the text panel
       if (media) {
         gsap.fromTo(media,
-          {
-            clipPath: isEven ? 'inset(0% 100% 0% 0%)' : 'inset(0% 0% 0% 100%)',
-          },
+          { clipPath: isEven ? 'inset(0% 100% 0% 0%)' : 'inset(0% 0% 0% 100%)' },
           {
             clipPath: 'inset(0% 0% 0% 0%)',
-            duration: 1.5,
-            ease: 'power3.inOut',
-            scrollTrigger: { ...stBase, trigger: section, start: 'top 78%' },
+            duration: 1.5, ease: 'power3.inOut',
+            scrollTrigger: { ...st, trigger: section, start: 'top 78%' },
           }
         )
       }
 
-      // Accent line draws left-to-right before text arrives
+      // Accent line draws left-to-right ahead of the text arrival
       if (accentLine) {
         gsap.fromTo(accentLine,
           { scaleX: 0, transformOrigin: 'left center' },
           {
             scaleX: 1, duration: 0.65, ease: 'power3.inOut',
-            scrollTrigger: { ...stBase, trigger: section, start: 'top 68%' },
+            scrollTrigger: { ...st, trigger: section, start: 'top 68%' },
           }
         )
       }
 
-      // Text elements stagger up (fromTo prevents invisible-until-trigger issue)
+      // Text: tagline → title → description staggered up
       gsap.fromTo(
-        [tagline, title, desc, cta].filter(Boolean),
+        [tagline, title, desc].filter(Boolean),
         { y: 44, autoAlpha: 0 },
         {
           y: 0, autoAlpha: 1, duration: 0.95, stagger: 0.13, ease: 'power3.out',
-          scrollTrigger: { ...stBase, trigger: section, start: 'top 65%' },
+          scrollTrigger: { ...st, trigger: section, start: 'top 65%' },
         }
       )
 
-      // Video parallax scroll (desktop only)
-      if (inner && !isMobile) {
-        gsap.to(inner, {
-          yPercent: -12,
-          ease: 'none',
+      // Video panel scroll parallax (desktop)
+      if (mediaInner && !isMobile) {
+        gsap.to(mediaInner, {
+          yPercent: -12, ease: 'none',
           scrollTrigger: {
-            trigger: section,
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: 1.5,
-            invalidateOnRefresh: true,
+            trigger: section, start: 'top bottom', end: 'bottom top',
+            scrub: 1.5, invalidateOnRefresh: true,
           },
         })
       }
+
+      // Media panel hover: gentle scale + inner zoom (desktop)
+      if (!isMobile && media) {
+        const onEnter = () => {
+          gsap.to(media,      { scale: 1.02,  duration: 0.55, ease: 'power2.out' })
+          if (mediaInner) gsap.to(mediaInner, { scale: 1.025, duration: 0.55, ease: 'power2.out' })
+        }
+        const onLeave = () => {
+          gsap.to(media,      { scale: 1, duration: 0.65, ease: 'power3.out' })
+          if (mediaInner) gsap.to(mediaInner, { scale: 1, duration: 0.65, ease: 'power3.out' })
+        }
+        addListener(media, 'mouseenter', onEnter)
+        addListener(media, 'mouseleave', onLeave)
+      }
     })
 
-    // ── 7. Why section ─────────────────────────────────────────────────────
+    // ── WHY SECTION ─────────────────────────────────────────────────────────
     if (whySection.value) {
+
       // Heading slides up
       const heading = whySection.value.querySelector('.why-heading')
       if (heading) {
@@ -321,77 +413,141 @@ onMounted(async () => {
           { y: 40, autoAlpha: 0 },
           {
             y: 0, autoAlpha: 1, duration: 1, ease: 'power3.out',
-            scrollTrigger: {
-              trigger: whySection.value, start: 'top 80%',
-              once: true, invalidateOnRefresh: true,
-            },
+            scrollTrigger: { trigger: whySection.value, start: 'top 80%', once: true, invalidateOnRefresh: true },
           }
         )
       }
 
-      // Cards stagger in
+      // Cards entrance stagger
       const cards = whySection.value.querySelectorAll('.why-card')
       if (cards.length) {
-        gsap.fromTo(
-          cards,
+        gsap.fromTo(cards,
           { y: 60, autoAlpha: 0, scale: 0.93 },
           {
             y: 0, autoAlpha: 1, scale: 1,
             duration: 0.85, stagger: 0.09, ease: 'power3.out',
+            scrollTrigger: { trigger: whySection.value, start: 'top 72%', once: true, invalidateOnRefresh: true },
+          }
+        )
+
+        // GSAP hover: card lifts, border glows, icon floats upward
+        // Using GSAP instead of inline style mutations for smooth, interruptible transitions.
+        cards.forEach(card => {
+          const icon = card.querySelector('.why-icon')
+          const onEnter = () => {
+            gsap.to(card, {
+              y: -7, scale: 1.02,
+              borderColor: 'rgba(236,167,44,0.42)',
+              boxShadow: '0 12px 48px rgba(236,167,44,0.13)',
+              duration: 0.38, ease: 'power2.out',
+            })
+            if (icon) gsap.to(icon, { y: -5, scale: 1.1, duration: 0.38, ease: 'power2.out' })
+          }
+          const onLeave = () => {
+            gsap.to(card, {
+              y: 0, scale: 1,
+              borderColor: 'rgba(255,255,255,0.07)',
+              boxShadow: '0 0 0 rgba(0,0,0,0)',
+              duration: 0.48, ease: 'power3.out',
+            })
+            if (icon) gsap.to(icon, { y: 0, scale: 1, duration: 0.48, ease: 'power3.out' })
+          }
+          addListener(card, 'mouseenter', onEnter)
+          addListener(card, 'mouseleave', onLeave)
+        })
+      }
+    }
+
+    // ── BOOKING SECTION ─────────────────────────────────────────────────────
+    if (bookingSection.value) {
+
+      // Background image parallax
+      const bookBg = bookingSection.value.querySelector('.booking-bg-img')
+      if (bookBg && !isMobile) {
+        gsap.to(bookBg, {
+          yPercent: 15, ease: 'none',
+          scrollTrigger: {
+            trigger: bookingSection.value, start: 'top bottom', end: 'bottom top',
+            scrub: 1.5, invalidateOnRefresh: true,
+          },
+        })
+      }
+
+      // Glow pulse behind CTA
+      const bookGlow = bookingSection.value.querySelector('.booking-glow')
+      if (bookGlow) {
+        gsap.to(bookGlow, {
+          opacity: 0.2, scale: 1.2,
+          duration: 3.2, ease: 'sine.inOut',
+          yoyo: true, repeat: -1,
+        })
+      }
+
+      // Text reveal stagger
+      const bookAnims = bookingSection.value.querySelectorAll('.book-anim')
+      if (bookAnims.length) {
+        gsap.fromTo(bookAnims,
+          { y: 44, autoAlpha: 0 },
+          {
+            y: 0, autoAlpha: 1, duration: 1, stagger: 0.14, ease: 'power3.out',
             scrollTrigger: {
-              trigger: whySection.value, start: 'top 72%',
+              trigger: bookingSection.value, start: 'top 75%',
               once: true, invalidateOnRefresh: true,
             },
           }
         )
       }
-    }
 
-    // ── 8. Booking section ─────────────────────────────────────────────────
-    if (bookingSection.value) {
-      gsap.fromTo(
-        bookingSection.value.querySelectorAll('.book-anim'),
-        { y: 44, autoAlpha: 0 },
-        {
-          y: 0, autoAlpha: 1, duration: 1, stagger: 0.14, ease: 'power3.out',
-          scrollTrigger: {
-            trigger: bookingSection.value, start: 'top 75%',
-            once: true, invalidateOnRefresh: true,
-          },
+      // Shine sweep on the primary booking button
+      if (!isMobile) {
+        const bookBtn = bookingSection.value.querySelector('.book-btn')
+        const shine   = bookBtn?.querySelector('.btn-shine')
+        if (bookBtn && shine) {
+          addListener(bookBtn, 'mouseenter', () => {
+            gsap.fromTo(shine, { x: '-130%' }, { x: '200%', duration: 0.5, ease: 'power2.out' })
+          })
         }
-      )
+      }
     }
 
-  })
+  }) // end gsap.context
 })
 
 onUnmounted(() => {
   ctx?.revert()
+  cleanupFns.forEach(fn => fn())
+  cleanupFns.length = 0
 })
 </script>
 
 <template>
   <Head title="Catering Services — Danny's" />
 
-  <!-- ── Scroll progress bar ──────────────────────────────────────────── -->
+  <!-- ── Scroll progress bar (top of page) ────────────────────────────── -->
   <div
     ref="scrollProgress"
     class="fixed top-0 left-0 h-[2px] bg-persian z-[9999] w-0 pointer-events-none"
     aria-hidden="true"
   ></div>
-
-  <!-- ── Floating CTA (desktop only, appears after hero) ──────────────── -->
+  <!-- ── Floating CTA: revealed after hero scro````````````````````````````````````````````````````````````l````````````````````````````````````````````````````````````ls away ───────────────── -->
   <div
     ref="floatingCta"
     class="fixed bottom-8 right-8 z-50 hidden md:block"
     style="filter: drop-shadow(0 8px 24px rgba(236,167,44,0.4)); will-change: transform, opacity"
+    aria-hidden="true"
   >
     <a
       href="#booking"
-      class="flex items-center gap-2 bg-persian text-oynx font-bold text-sm uppercase tracking-wider px-5 py-3 rounded-full transition-all duration-300 hover:brightness-110 hover:scale-105"
+      class="relative overflow-hidden flex items-center gap-2 bg-persian text-oynx font-bold text-sm uppercase tracking-wider px-5 py-3 rounded-full transition-all duration-300 hover:brightness-110 hover:scale-105"
     >
       <i class="fa-solid fa-utensils text-xs"></i>
       Book Your Event
+      <!-- Shine sweep element (animated via GSAP on hover) -->
+      <span
+        class="cta-shine pointer-events-none absolute inset-y-0 w-1/2 -skew-x-12"
+        style="background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent); transform: translateX(-130%)"
+        aria-hidden="true"
+      ></span>
     </a>
   </div>
 
@@ -404,10 +560,12 @@ onUnmounted(() => {
     ═══════════════════════════════════════════════════════════════════════ -->
     <section
       ref="heroSection"
+
       class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
     >
-      <!-- Parallax background -->
-      <div class="hero-bg absolute inset-0 overflow-hidden">
+      <!-- Parallax background — Ken Burns scale animated by GSAP -->
+      <div class="hero-bg absolute inset-0 overflow-hidden" style="background: radial-gradient(ellipse 55% 55% at 50% 50%, rgba(236,167,44,0.11) 0%, transparent 70%); transform-origin: center; will-change: transform, opacity"
+      >
         <img
           src="images/keesha-s-kitchen-3gbiqiGJYUc-unsplash.jpg"
           alt=""
@@ -421,7 +579,7 @@ onUnmounted(() => {
       <!-- Animated grain overlay -->
       <div aria-hidden="true" class="grain-overlay absolute inset-0 pointer-events-none z-10"></div>
 
-      <!-- Warm radial glow (animated via GSAP ref) -->
+      <!-- Warm glow — animated via GSAP ref (scale pulse + mouse-follow) -->
       <div
         ref="heroGlow"
         aria-hidden="true"
@@ -432,7 +590,7 @@ onUnmounted(() => {
       <!-- Hero content -->
       <div class="relative z-20 text-center px-6 max-w-6xl mx-auto">
 
-        <!-- Badge -->
+        <!-- Badge — first element in the entrance timeline -->
         <div
           ref="heroBadge"
           class="inline-flex items-center gap-2 bg-persian text-oynx text-xs font-bold uppercase tracking-[0.18em] px-4 py-2 rounded-full mb-10"
@@ -443,20 +601,23 @@ onUnmounted(() => {
           <i class="fa-solid fa-star" style="font-size: 9px"></i>
         </div>
 
-        <!-- Title — each character has its own ref for GSAP stagger -->
+        <!-- Title — per-character refs for 3-D flip stagger -->
         <div class="overflow-hidden pb-2">
-          <h1 class="text-snow text-[13vw] sm:text-[11vw] md:text-[9vw] font-black uppercase leading-none tracking-tight" style="text-shadow: 0 2px 24px rgba(0,0,0,0.6)">
+          <h1
+            class="text-snow text-[13vw] sm:text-[11vw] md:text-[9vw] font-black uppercase leading-none tracking-tight"
+            style="text-shadow: 0 2px 24px rgba(0,0,0,0.6)"
+          >
             <span
               v-for="item in titleChars"
               :key="item.i"
               :ref="el => { if (el) charRefs[item.i] = el }"
               class="inline-block"
               :style="item.char === ' ' ? 'width: 0.28em' : 'will-change: transform, opacity'"
-            >{{ item.char === ' ' ? ' ' : item.char }}</span>
+            >{{ item.char === ' ' ? ' ' : item.char }}</span>
           </h1>
         </div>
 
-        <!-- Subtitle -->
+        <!-- Subtitle — blur-to-sharp entrance -->
         <p
           ref="heroSubtitle"
           class="mt-6 text-lg md:text-xl text-snow/85 max-w-xl mx-auto leading-relaxed"
@@ -466,7 +627,7 @@ onUnmounted(() => {
           birthdays, and corporate events.
         </p>
 
-        <!-- CTAs -->
+        <!-- CTAs — magnetic-btn class enables GSAP cursor-pull on desktop -->
         <div
           ref="heroCta"
           class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
@@ -475,7 +636,7 @@ onUnmounted(() => {
           <Reservation v-slot="{ open }">
             <button
               @click="open"
-              class="group inline-flex items-center gap-3 bg-persian text-oynx font-bold text-sm uppercase tracking-widest px-7 py-3 rounded-full transition-all duration-300 hover:brightness-110 hover:scale-105 active:scale-95"
+              class="magnetic-btn group inline-flex items-center gap-3 bg-persian text-oynx font-bold text-sm uppercase tracking-widest px-7 py-3 rounded-full transition-colors duration-300 hover:brightness-110 active:scale-95"
             >
               <i class="fa-solid fa-calendar-check text-xs"></i>
               Reserve Your Table
@@ -483,7 +644,7 @@ onUnmounted(() => {
           </Reservation>
           <a
             href="#services"
-            class="group flex items-center gap-2 border border-snow/40 text-snow font-semibold text-sm uppercase tracking-wider px-6 py-3 rounded-lg transition-all duration-300 hover:border-snow hover:bg-snow/10"
+            class="magnetic-btn group flex items-center gap-2 border border-snow/40 text-snow font-semibold text-sm uppercase tracking-wider px-6 py-3 rounded-lg transition-all duration-300 hover:border-snow hover:bg-snow/10"
           >
             Explore Services
             <i class="fa-solid fa-arrow-down transition-transform duration-300 group-hover:translate-y-1"></i>
@@ -513,7 +674,7 @@ onUnmounted(() => {
           :ref="el => { if (el) statEls[i] = el }"
           class="flex flex-col items-center text-center py-4 md:py-0 px-6"
         >
-          <span class="stat-num text-4xl md:text-5xl font-black text-persian tabular-nums">
+          <span class="stat-num text-4xl md:text-5xl font-black text-persian tabular-nums" style="will-change: transform">
             0{{ stat.suffix }}
           </span>
           <span class="mt-2 text-snow/45 text-xs uppercase tracking-widest">{{ stat.label }}</span>
@@ -532,8 +693,7 @@ onUnmounted(() => {
         class="relative flex flex-col min-h-screen border-b border-snow/5"
         :class="i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'"
       >
-
-        <!-- Media panel -->
+        <!-- Media panel — clip-path wipe + scroll parallax + hover zoom -->
         <div
           class="service-media relative w-full md:w-1/2 min-h-[60vw] md:min-h-screen overflow-hidden"
           style="will-change: clip-path"
@@ -551,7 +711,7 @@ onUnmounted(() => {
             <div class="absolute inset-0 bg-oynx/30 md:hidden"></div>
           </div>
 
-          <!-- Gradient vignette toward text -->
+          <!-- Gradient toward text -->
           <div
             class="absolute inset-0 pointer-events-none"
             :class="i % 2 === 0
@@ -560,7 +720,7 @@ onUnmounted(() => {
           ></div>
           <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-oynx md:hidden pointer-events-none"></div>
 
-          <!-- Watermark index -->
+          <!-- Large watermark index -->
           <div
             aria-hidden="true"
             class="absolute bottom-4 font-black leading-none select-none pointer-events-none opacity-[0.055]"
@@ -573,7 +733,7 @@ onUnmounted(() => {
         <div class="service-text relative z-10 w-full md:w-1/2 flex items-center bg-oynx">
           <div class="w-full px-8 md:px-16 lg:px-20 py-16">
 
-            <!-- Accent line (animated via GSAP scaleX) -->
+            <!-- Accent line: GSAP scaleX from 0 → 1 -->
             <div
               class="service-accent-line h-[2px] w-12 mb-6"
               :style="{ background: service.accent }"
@@ -595,16 +755,13 @@ onUnmounted(() => {
             </h2>
 
             <p
-              class="service-desc text-snow/60 leading-relaxed max-w-md mb-10"
+              class="service-desc text-snow/60 leading-relaxed max-w-md"
               style="font-size: clamp(0.95rem, 1.5vw, 1.1rem)"
             >
               {{ service.description }}
             </p>
-
-            <div class="service-cta"></div>
           </div>
         </div>
-
       </section>
     </div>
 
@@ -621,7 +778,7 @@ onUnmounted(() => {
 
       <div class="container mx-auto px-6 relative z-10">
 
-        <!-- Heading (animated separately as .why-heading) -->
+        <!-- Heading animated separately from cards -->
         <div class="why-heading text-center mb-16" style="will-change: transform, opacity">
           <span class="text-xs font-bold uppercase tracking-[0.22em] text-persian mb-4 block">Our Commitment</span>
           <h2 class="font-black uppercase leading-tight" style="font-size: clamp(2rem, 5vw, 3.5rem)">
@@ -635,11 +792,12 @@ onUnmounted(() => {
             v-for="item in whyItems"
             :key="item.title"
             class="why-card relative rounded-2xl p-8 border cursor-default"
-            style="background: rgba(34,30,34,0.6); border-color: rgba(255,255,255,0.07); transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease; will-change: transform, opacity"
-            @mouseenter="e => { e.currentTarget.style.borderColor='rgba(236,167,44,0.35)'; e.currentTarget.style.boxShadow='0 4px 32px rgba(236,167,44,0.09)'; e.currentTarget.style.transform='translateY(-4px)' }"
-            @mouseleave="e => { e.currentTarget.style.borderColor='rgba(255,255,255,0.07)'; e.currentTarget.style.boxShadow='none'; e.currentTarget.style.transform='translateY(0)' }"
+            style="background: rgba(34,30,34,0.6); border-color: rgba(255,255,255,0.07); will-change: transform, opacity"
           >
-            <div class="text-4xl mb-5 leading-none">{{ item.icon }}</div>
+            <!-- why-icon class lets GSAP target the emoji independently on hover -->
+            <div class="why-icon text-4xl mb-5 leading-none" style="will-change: transform">
+              {{ item.icon }}
+            </div>
             <h3 class="font-bold text-lg text-snow mb-3">{{ item.title }}</h3>
             <p class="text-sm leading-relaxed" style="color: rgba(255,252,249,0.52)">{{ item.desc }}</p>
           </div>
@@ -662,26 +820,33 @@ onUnmounted(() => {
       ref="bookingSection"
       class="relative py-32 text-center overflow-hidden"
     >
-      <div class="absolute inset-0">
+      <!-- Background image — booking-bg-img class enables GSAP parallax -->
+      <div class="absolute inset-0 overflow-hidden">
         <img
           src="images/keesha-s-kitchen-PqG32DYCTM8-unsplash.jpg"
           alt=""
           aria-hidden="true"
-          class="w-full h-full object-cover"
+          class="booking-bg-img w-full h-full object-cover"
+          style="will-change: transform"
         />
         <div class="absolute inset-0 bg-oynx/88"></div>
       </div>
 
+      <!-- Booking glow — animated by GSAP scale pulse -->
       <div
         aria-hidden="true"
-        class="absolute inset-0 pointer-events-none"
-        style="background: radial-gradient(ellipse 55% 55% at 50% 50%, rgba(236,167,44,0.11) 0%, transparent 70%)"
+        class="booking-glow absolute inset-0 pointer-events-none"
+        style="background: radial-gradient(ellipse 55% 55% at 50% 50%, rgba(236,167,44,0.11) 0%, transparent 70%); transform-origin: center; will-change: transform, opacity"
       ></div>
 
       <div class="relative z-10 container mx-auto px-6 max-w-3xl">
-        <span class="book-anim inline-block text-persian text-xs font-bold uppercase tracking-[0.22em] mb-6" style="will-change: transform, opacity">
+        <span
+          class="book-anim inline-block text-persian text-xs font-bold uppercase tracking-[0.22em] mb-6"
+          style="will-change: transform, opacity"
+        >
           Let's Create Something Extraordinary
         </span>
+
         <h2
           class="book-anim font-black uppercase leading-tight mb-6"
           style="font-size: clamp(2.2rem, 5vw, 4rem); will-change: transform, opacity"
@@ -689,6 +854,7 @@ onUnmounted(() => {
           Your Perfect Event<br />
           <span class="text-persian">Starts Here</span>
         </h2>
+
         <p
           class="book-anim text-lg leading-relaxed mb-10"
           style="color: rgba(255,252,249,0.58); will-change: transform, opacity"
@@ -696,17 +862,29 @@ onUnmounted(() => {
           From intimate gatherings to grand celebrations — we handle every
           detail so you can focus on the moments that matter.
         </p>
-        <div class="book-anim flex flex-col sm:flex-row items-center justify-center gap-4" style="will-change: transform, opacity">
+
+        <div
+          class="book-anim flex flex-col sm:flex-row items-center justify-center gap-4"
+          style="will-change: transform, opacity"
+        >
           <Reservation v-slot="{ open }">
+            <!-- book-btn class + .btn-shine enable the GSAP shine sweep on hover -->
             <button
               @click="open"
-              class="group inline-flex items-center gap-3 bg-persian text-oynx font-bold text-sm uppercase tracking-widest px-8 py-4 rounded-full transition-all duration-300 hover:brightness-110 hover:scale-105 active:scale-95"
-              style="box-shadow: 0 4px 24px rgba(236,167,44,0.35)"
+              class="book-btn group relative overflow-hidden inline-flex items-center gap-3 bg-persian text-oynx font-bold text-sm uppercase tracking-widest px-8 py-4 rounded-full transition-colors duration-300 hover:brightness-110 hover:scale-105 active:scale-95"
+              style="box-shadow: 0 4px 24px rgba(236,167,44,0.35)"` 
             >
               <i class="fa-solid fa-calendar-check"></i>
               Book Your Event
+              <!-- Shine sweep element -->
+              <span
+                class="btn-shine pointer-events-none absolute inset-y-0 w-1/2 -skew-x-12"
+                style="background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent); transform: translateX(-130%)"
+                aria-hidden="true"
+              ></span>
             </button>
           </Reservation>
+
           <a
             href="tel:+17058886114"
             class="group flex items-center gap-2 border font-semibold text-sm uppercase tracking-wider px-6 py-3 rounded-lg transition-all duration-300 hover:scale-105"
@@ -726,7 +904,7 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-/* Animated film-grain overlay */
+/* Animated film-grain texture */
 .grain-overlay {
   background-image: url('images/noise.png');
   opacity: 0.045;
@@ -741,7 +919,5 @@ onUnmounted(() => {
   75%       { background-position: 9% -12%; }
 }
 
-:global(html) {
-  scroll-behavior: smooth;
-}
+:global(html) { scroll-behavior: smooth; }
 </style>
