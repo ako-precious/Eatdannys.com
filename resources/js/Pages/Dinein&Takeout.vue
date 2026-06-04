@@ -879,11 +879,14 @@ onUnmounted(() => {
 
       <div class="container mx-auto relative z-10">
         <div class="text-center mb-16">
-          <p class="text-amber-300 font-bold uppercase tracking-[0.25em] text-sm mb-4">Guest Stories</p>
-          <h2 class="text-4xl md:text-6xl font-black uppercase text-slate-500 leading-tight">
-            Loved by Guests,<br />
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-red-200">Remembered by Families</span>
+          <p class="text-amber-300 font-bold uppercase tracking-[0.25em] text-sm mb-4">Flexible Portions</p>
+          <h2 class="text-4xl md:text-6xl font-black uppercase text-white leading-tight">
+            Dine In or Take Out,<br />
+            <span class="text-amber-200">Small Plates to Large Trays</span>
           </h2>
+          <p class="mt-6 text-base md:text-lg text-slate-500 max-w-3xl mx-auto leading-relaxed">
+            Whether you are stopping by for one comforting meal or feeding a family, team, or celebration, Danny's prepares Nigerian favourites in the quantity that fits your table.
+          </p>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -896,20 +899,92 @@ onUnmounted(() => {
             <img
               class="w-full h-full object-cover"
               src="images/keesha-s-kitchen-3gbiqiGJYUc-unsplash.jpg"
-              alt="Danny's kitchen"
+              alt="Prepared Nigerian dishes for dine-in and takeout"
             />
-            <div class="absolute inset-0 bg-gradient-to-tr from-black/45 via-black/10 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-tr from-black/55 via-black/40 to-transparent"></div>
+            <div class="absolute left-6 bottom-6 right-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div class="rounded-2xl border border-white/15 bg-white/12 p-4 backdrop-blur-lg">
+                <p class="text-xs font-bold uppercase tracking-[0.2em] text-amber-300">Small Quantity</p>
+                <p class="mt-1 text-sm font-semibold text-white">Single meals, pairs, and quick takeout.</p>
+              </div>
+              <div class="rounded-2xl border border-white/15 bg-white/12 p-4 backdrop-blur-lg">
+                <p class="text-xs font-bold uppercase tracking-[0.2em] text-amber-300">Large Quantity</p>
+                <p class="mt-1 text-sm font-semibold text-white">Family packs, trays, soups, and events.</p>
+              </div>
+            </div>
           </div>
 
           <!-- Testimonial Card -->
           <div
             ref="testimonialCardRef"
-            class="relative rounded-3xl p-8 lg:p-10 border border-white/15 bg-white/10 shadow-2xl backdrop-blur-xl"
+            class="relative rounded-3xl p-8 lg:p-10 border border-white/15 bg-gradient-to-br from-white/14 via-amber-500/10 to-red-500/10 shadow-2xl backdrop-blur-xl"
             style="will-change: transform, opacity"
           >
-            <div class="absolute -inset-8 bg-amber-400/10 blur-3xl pointer-events-none" aria-hidden="true"></div>
+            <div class="absolute -inset-8 bg-amber-700/10 blur-3xl pointer-events-none" aria-hidden="true"></div>
             <div class="relative">
-            <div class="flex gap-1 mb-6">
+              <div class="mb-7 inline-flex items-center gap-2 rounded-full border border-amber-500/25 bg-amber-500/10 px-4 py-2 text-xs font-black uppercase tracking-[0.2em] text-amber-400">
+                <i class="fa-solid fa-bowl-food"></i>
+                Made Fresh for Your Order
+              </div>
+
+              <h3 class="text-3xl md:text-4xl font-black uppercase leading-tight text-amber-700">
+                Choose the way you want to enjoy Danny's.
+              </h3>
+
+              <div class="mt-4 space-y-4">
+                <div class="rounded-2xl border border-white/10 bg-white/8 p-2">
+                  <div class="flex items-start gap-3">
+                    <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-300 text-slate-950">
+                      <i class="fa-solid fa-utensils"></i>
+                    </span>
+                    <div>
+                      <p class="font-black text-amber-300">Dine In</p>
+                      <p class="mt-1 text-sm leading-4 text-slate-500">Come in for hot plates, soups, rice dishes, and a relaxed meal with authentic Nigerian flavour.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="rounded-2xl border border-white/10 bg-white/8 p-2">
+                  <div class="flex items-start gap-3">
+                    <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-300 text-slate-950">
+                      <i class="fa-solid fa-bag-shopping"></i>
+                    </span>
+                    <div>
+                      <p class="font-black text-amber-300">Takeout in Small Quantities</p>
+                      <p class="mt-1 text-sm leading-4 text-slate-500">Order individual meals, quick lunch portions, dinner for two, or a few favourites to enjoy at home.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="rounded-2xl border border-white/10 bg-white/8 p-2">
+                  <div class="flex items-start gap-3">
+                    <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-300 text-slate-950">
+                      <i class="fa-solid fa-boxes-stacked"></i>
+                    </span>
+                    <div>
+                      <p class="font-black text-amber-300">Takeout in Large Quantities</p>
+                      <p class="mt-1 text-sm leading-6 text-slate-500">Request trays, family portions, soups, and larger food orders for gatherings, office meals, and celebrations.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+                <Link
+                  :href="route('dining')"
+                  class="inline-flex items-center justify-center gap-2 rounded-xl bg-amber-400 px-6 py-3 text-sm font-black uppercase tracking-wide text-slate-950 transition hover:bg-amber-300"
+                >
+                  Order Takeout
+                </Link>
+                <a
+                  href="tel:+17058886114"
+                  class="inline-flex items-center justify-center gap-2 rounded-xl border border-white/25 bg-white/8 px-6 py-3 text-sm font-black uppercase tracking-wide text-slate-500 transition  backdrop-blur-xl hover:border-amber-300 hover:bg-white/12"
+                >
+                  Ask About Large Orders
+                </a>
+              </div>
+
+            <div class="hidden gap-1 mb-6">
               <i class="fa-solid fa-star text-amber-300"></i>
               <i class="fa-solid fa-star text-amber-300"></i>
               <i class="fa-solid fa-star text-amber-300"></i>
@@ -917,11 +992,11 @@ onUnmounted(() => {
               <i class="fa-solid fa-star text-amber-300"></i>
             </div>
 
-            <p class="text-lg text-slate-100 leading-relaxed mb-6 italic">
+            <p class="hidden text-lg text-slate-100 leading-relaxed mb-6 italic">
               "Danny's isn't just food—it's a celebration of our heritage. Every bite takes me home. The Jollof rice is perfection, and the customer service makes you feel like family. Highly recommended for anyone wanting authentic Nigerian cuisine done right."
             </p>
 
-            <div class="flex items-center gap-4">
+            <div class="hidden items-center gap-4">
               <div class="w-14 h-14 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center text-slate-500 font-bold text-xl">
                 A
               </div>
@@ -932,11 +1007,20 @@ onUnmounted(() => {
             </div>
 
             <!-- Decorative element -->
-            <div class="absolute top-0 right-0 text-7xl text-amber-200/20 font-black">"</div>
+            <div class="absolute top-0 right-0 text-6xl text-amber-200/20">
+              <i class="fa-solid fa-bag-shopping"></i>
+            </div>
             </div>
           </div>
         </div>
       </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════════════
+         TESTIMONIALS (From Layouts)
+    ═══════════════════════════════════════════════════════════════════════ -->
+    <section class="py-16 px-6 bg-white border-t border-slate-200">
+      <Testimonial />
     </section>
 
     <!-- ══════════════════════════════════════════════════════════════════
@@ -992,13 +1076,6 @@ onUnmounted(() => {
           </Reservation>
         </div>
       </div>
-    </section>
-
-    <!-- ══════════════════════════════════════════════════════════════════
-         TESTIMONIALS (From Layouts)
-    ═══════════════════════════════════════════════════════════════════════ -->
-    <section class="py-16 px-6 bg-white border-t border-slate-200">
-      <Testimonial />
     </section>
 
     <!-- Footer -->

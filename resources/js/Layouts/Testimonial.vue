@@ -202,9 +202,11 @@ body {
 .testimonial-card {
     position: relative;
     border-radius: 16px;
-    background: white;
-    
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    background:
+        radial-gradient(circle at top left, rgba(251, 191, 36, 0.32), transparent 34%),
+        linear-gradient(135deg, #fff7ed 0%, #fffbeb 46%, #fee2e2 100%);
+    border: 1px solid rgba(245, 158, 11, 0.22);
+    box-shadow: 0 18px 45px rgba(146, 64, 14, 0.12);
 }
 
 .quote-icon {
@@ -213,7 +215,7 @@ body {
     left: 30px;
     width: 80px;
     height: 60px;
-    fill: #e0e7ff;
+    fill: rgba(217, 119, 6, 0.16);
     z-index: 1;
 }
 
@@ -223,7 +225,7 @@ body {
 }
 
 .quote {
-    color: #34495e;
+    color: #334155;
     margin-bottom: 30px;
     font-style: italic;
 }
@@ -233,7 +235,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding-top: 20px;
-    border-top: 1px solid #f0f4f8;
+    border-top: 1px solid rgba(245, 158, 11, 0.18);
 }
 
 .author-info {
