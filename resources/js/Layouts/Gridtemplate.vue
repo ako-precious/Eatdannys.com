@@ -6,6 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 const galleryRef = ref(null)
+const liquidBlobRefs = ref([])
 const eyebrowRef = ref(null)
 const headingRef = ref(null)
 const subtitleRef = ref(null)
@@ -249,8 +250,22 @@ onMounted(async () => {
     const cards = cardRefs.value.filter(Boolean)
     const featureCards = cards.filter(card => card.dataset.size === 'feature')
     const standardCards = cards.filter(card => card.dataset.size !== 'feature')
+    const liquidBlobs = liquidBlobRefs.value.filter(Boolean)
 
     ScrollTrigger.refresh()
+
+    if (liquidBlobs.length) {
+      gsap.to(liquidBlobs, {
+        x: (index) => index % 2 === 0 ? 28 : -24,
+        y: (index) => index % 2 === 0 ? -20 : 26,
+        scale: (index) => index % 2 === 0 ? 1.12 : 0.94,
+        duration: 7,
+        ease: 'sine.inOut',
+        repeat: -1,
+        yoyo: true,
+        stagger: 0.8,
+      })
+    }
 
     const intro = gsap.timeline({
       scrollTrigger: {
@@ -273,6 +288,7 @@ onMounted(async () => {
         const image = card.querySelector('.gallery-image')
         const overlay = card.querySelector('.gallery-overlay')
         const caption = card.querySelector('.gallery-caption')
+        const shine = card.querySelector('.liquid-glass-shine')
 
         const onEnter = () => {
           gsap.to(card, {
@@ -288,6 +304,7 @@ onMounted(async () => {
           gsap.to(image, { scale: 1.07, duration: 0.7, ease: 'power3.out', overwrite: 'auto' })
           gsap.to(overlay, { opacity: 1, duration: 0.3, ease: 'power2.out', overwrite: 'auto' })
           gsap.to(caption, { y: 0, autoAlpha: 1, duration: 0.34, ease: 'power2.out', overwrite: 'auto' })
+          gsap.fromTo(shine, { xPercent: -40, opacity: 0 }, { xPercent: 52, opacity: 0.9, duration: 0.75, ease: 'power2.out', overwrite: 'auto' })
         }
 
         const onMove = (event) => {
@@ -320,6 +337,7 @@ onMounted(async () => {
           gsap.to(image, { scale: 1, duration: 0.75, ease: 'power3.out', overwrite: 'auto' })
           gsap.to(overlay, { opacity: 0, duration: 0.34, ease: 'power2.out', overwrite: 'auto' })
           gsap.to(caption, { y: 18, autoAlpha: 0, duration: 0.28, ease: 'power2.out', overwrite: 'auto' })
+          gsap.to(shine, { opacity: 0, duration: 0.25, ease: 'power2.out', overwrite: 'auto' })
         }
 
         addListener(card, 'mouseenter', onEnter)
@@ -349,14 +367,24 @@ onUnmounted(() => {
 <template>
   <section
     ref="galleryRef"
-    class="relative isolate overflow-hidden px-4 py-10 text-slate-950 sm:px-6 lg:px-8"
+    class="relative isolate overflow-hidden rounded-[2rem] px-4 py-10 text-slate-950 sm:px-6 lg:px-8"
     aria-labelledby="gallery-heading"
   >
     <div class="gallery-glow gallery-glow-left" aria-hidden="true"></div>
     <div class="gallery-glow gallery-glow-right" aria-hidden="true"></div>
+    <div
+      :ref="el => { if (el) liquidBlobRefs[0] = el }"
+      class="liquid-glass-blob left-[6%] top-28 h-28 w-28 bg-amber-300/70"
+      aria-hidden="true"
+    ></div>
+    <div
+      :ref="el => { if (el) liquidBlobRefs[1] = el }"
+      class="liquid-glass-blob bottom-24 right-[10%] h-36 w-36 bg-red-300/45"
+      aria-hidden="true"
+    ></div>
 
     <div class="mx-auto max-w-7xl">
-      <div class="mx-auto mb-10 max-w-3xl text-center md:mb-14">
+      <div class="liquid-glass-panel mx-auto mb-10 max-w-3xl rounded-[1.75rem] px-5 py-8 text-center md:mb-14 md:px-10">
         <p
           ref="eyebrowRef"
           class="mb-4 text-xs font-black uppercase tracking-[0.28em] text-amber-600"
@@ -387,7 +415,7 @@ onUnmounted(() => {
           :key="image.src"
           :ref="el => { if (el) cardRefs[index] = el }"
           :data-size="image.size"
-          class="gallery-card group relative min-h-[17rem] overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-[0_14px_35px_rgba(15,23,42,0.08)] outline-none transition-colors duration-300 focus-within:border-amber-500"
+          class="gallery-card liquid-glass-card group relative min-h-[17rem] overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-[0_14px_35px_rgba(15,23,42,0.08)] outline-none transition-colors duration-300 focus-within:border-amber-500"
           :class="sizeClasses[image.size]"
           style="will-change: transform"
         >
@@ -397,6 +425,7 @@ onUnmounted(() => {
             :aria-label="`Open gallery image: ${image.title}`"
             @click="openLightbox(index)"
           >
+            <span class="liquid-glass-shine" aria-hidden="true"></span>
             <img
               :src="image.src"
               :alt="image.alt"
@@ -438,12 +467,12 @@ onUnmounted(() => {
       >
         <div
           ref="lightboxPanelRef"
-          class="relative flex max-h-[92vh] w-full max-w-6xl flex-col overflow-hidden rounded-2xl border border-white/15 bg-slate-950 shadow-2xl"
+          class="liquid-glass-panel liquid-glass-dark relative flex max-h-[92vh] w-full max-w-6xl flex-col overflow-hidden rounded-2xl border border-white/15 bg-slate-950 shadow-2xl"
           style="will-change: transform"
         >
           <button
             type="button"
-            class="absolute right-4 top-4 z-20 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/12 text-xl font-bold text-white backdrop-blur transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-amber-300/70"
+            class="liquid-glass-control absolute right-4 top-4 z-20 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/12 text-xl font-bold text-white backdrop-blur transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-amber-300/70"
             aria-label="Close gallery preview"
             @click="closeLightbox"
           >
@@ -452,7 +481,7 @@ onUnmounted(() => {
 
           <button
             type="button"
-            class="absolute left-4 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-white/12 text-3xl text-white backdrop-blur transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-amber-300/70 sm:inline-flex"
+            class="liquid-glass-control absolute left-4 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-white/12 text-3xl text-white backdrop-blur transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-amber-300/70 sm:inline-flex"
             aria-label="Show previous image"
             @click="showPrevious"
           >
@@ -461,7 +490,7 @@ onUnmounted(() => {
 
           <button
             type="button"
-            class="absolute right-4 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-white/12 text-3xl text-white backdrop-blur transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-amber-300/70 sm:inline-flex"
+            class="liquid-glass-control absolute right-4 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-white/12 text-3xl text-white backdrop-blur transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-amber-300/70 sm:inline-flex"
             aria-label="Show next image"
             @click="showNext"
           >
@@ -492,7 +521,7 @@ onUnmounted(() => {
             <div class="flex gap-3 sm:hidden">
               <button
                 type="button"
-                class="inline-flex flex-1 items-center justify-center rounded-full border border-white/20 px-5 py-3 text-sm font-bold uppercase tracking-wider text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-amber-300/70"
+                class="liquid-glass-control inline-flex flex-1 items-center justify-center rounded-full border border-white/20 px-5 py-3 text-sm font-bold uppercase tracking-wider text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-amber-300/70"
                 aria-label="Show previous image"
                 @click="showPrevious"
               >
@@ -500,7 +529,7 @@ onUnmounted(() => {
               </button>
               <button
                 type="button"
-                class="inline-flex flex-1 items-center justify-center rounded-full border border-white/20 px-5 py-3 text-sm font-bold uppercase tracking-wider text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-amber-300/70"
+                class="liquid-glass-control inline-flex flex-1 items-center justify-center rounded-full border border-white/20 px-5 py-3 text-sm font-bold uppercase tracking-wider text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-amber-300/70"
                 aria-label="Show next image"
                 @click="showNext"
               >
